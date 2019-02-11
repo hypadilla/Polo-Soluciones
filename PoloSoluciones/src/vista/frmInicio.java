@@ -69,6 +69,11 @@ public class frmInicio extends javax.swing.JFrame {
         jMenu3.setText("PERSONAS");
 
         jMenuItem1.setText("CLIENTES");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem1);
 
         jMenuItem2.setText("PROVEEDORES");
@@ -153,7 +158,8 @@ public class frmInicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+ 
+                                   
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         IntProductos intProductos = new IntProductos();
         jdpEscritorio.add(intProductos);
@@ -177,6 +183,12 @@ public class frmInicio extends javax.swing.JFrame {
         jdpEscritorio.add(var);
         var.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        IntClientes intClientes = new IntClientes();
+        jdpEscritorio.add(intClientes);
+        intClientes.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
