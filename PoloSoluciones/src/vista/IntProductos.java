@@ -84,7 +84,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("PRODUCTOS");
+        setTitle("NUEVO PRODUCTO");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/image.png"))); // NOI18N
