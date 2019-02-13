@@ -10,5 +10,72 @@ package modelo;
  * @author hypadilla
  */
 public class Usuarios {
+    int Id;
+    String Usuario;
+    String Clave;
+    String CorreoElectronico;
+    String Pregunta;
+    String RespuestaSecreta;
+
+    public Usuarios() {
+    }
+
+    public Usuarios(int Id, String Usuario, String Clave, String CorreoElectronico, String Pregunta, String RespuestaSecreta) {
+        this.Id = Id;
+        this.Usuario = Usuario;
+        this.Clave = Clave;
+        this.CorreoElectronico = CorreoElectronico;
+        this.Pregunta = Pregunta;
+        this.RespuestaSecreta = RespuestaSecreta;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
+    public String getUsuario() {
+        return Usuario;
+    }
+
+    public void setUsuario(String Usuario) {
+        this.Usuario = Usuario;
+    }
+
+    public String getClave() {
+        return Clave;
+    }
+
+    public void setClave(String Clave) {
+        this.Clave = Clave;
+    }
+
+    public String getCorreoElectronico() {
+        return CorreoElectronico;
+    }
+
+    public void setCorreoElectronico(String CorreoElectronico) {
+        this.CorreoElectronico = CorreoElectronico;
+    }
+
+    public String getPregunta() {
+        return Pregunta;
+    }
+
+    public void setPregunta(String Pregunta) {
+        this.Pregunta = Pregunta;
+    }
+
+    public String getRespuestaSecreta() {
+        return RespuestaSecreta;
+    }
+
+    public void setRespuestaSecreta(String RespuestaSecreta) {
+        this.RespuestaSecreta = RespuestaSecreta;
+    }
+    
     
 }
