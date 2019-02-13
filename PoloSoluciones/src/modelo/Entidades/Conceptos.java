@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src;
+package modelo.Entidades;
 
 /**
  *
  * @author hypadilla
  */
-public class Constantes {
-    public static String NUEVOPRODUCTO = "Nuevo Producto";
-    public static String TERCEROS = "Terceros";
+public class Conceptos {
+    
 }

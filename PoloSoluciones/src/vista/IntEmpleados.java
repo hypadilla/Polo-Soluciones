@@ -632,8 +632,6 @@ public class IntEmpleados extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jPanel1.getAccessibleContext().setAccessibleName("REGISTRO DE EMPLEADOS");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

@@ -135,7 +135,7 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         jRadioButton3.setText("NINGUNA");
 
         jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        jLabel7.setText("NATURALEZA DEL PRODUCTO");
+        jLabel7.setText("NATURALEZA DEL INVENTARIO");
 
         jRadioButton4.setText("ENTRADA");
 
