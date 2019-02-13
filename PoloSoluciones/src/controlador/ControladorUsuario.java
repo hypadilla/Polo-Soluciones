@@ -49,6 +49,29 @@ public class ControladorUsuario implements IUsuario {
             return Rpta;
         }      
         
+        if (usuario.getCorreoElectronico().length()>100){
+            Rpta[0]= "String";
+            Rpta[1]= "El correo es demasiado Largo";
+            return Rpta;
+        }  
+        
+        if (usuario.getCorreoElectronico().length()>100){
+            Rpta[0]= "String";
+            Rpta[1]= "El correo es demasiado Largo";
+            return Rpta;
+        }   
+        
+        if (usuario.getPregunta().length()>50){
+            Rpta[0]= "String";
+            Rpta[1]= "La pregunta es demasiado larga";
+            return Rpta;
+        }      
+        
+        if (usuario.getRespuestaSecreta().length()>20){
+            Rpta[0]= "String";
+            Rpta[1]= "La respuesta es demasiado larga.";
+            return Rpta;
+        }      
         return var.Insertar(object);
     }
 
