@@ -19,7 +19,7 @@ public interface ICrud {
          * @param object
          * @return 
          */    
-        public boolean Insertar(Object object);
+        public Object Insertar(Object object);
         
         /***
          * 
@@ -27,7 +27,7 @@ public interface ICrud {
          * @return 
          */
 	public ArrayList<Object> Mostrar(Object object);	
-	public void Eliminar(Object object);
-        public boolean Editar(Object object);
+	public Object Eliminar(Object object);
+        public Object Editar(Object object);
         public ArrayList<Object> MostrarTodos();
 }

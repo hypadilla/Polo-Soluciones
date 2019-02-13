@@ -88,7 +88,12 @@ public class frmInicio extends javax.swing.JFrame {
         jMenuItem5.setText("EMPLEADOS");
         jMenu3.add(jMenuItem5);
 
-        jMenuItem6.setText("ENTIDAD");
+        jMenuItem6.setText("USUARIOS");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenu1.add(jMenu3);
@@ -189,6 +194,12 @@ public class frmInicio extends javax.swing.JFrame {
         jdpEscritorio.add(intClientes);
         intClientes.setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        IntUsuarios var = new IntUsuarios();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

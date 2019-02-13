@@ -21,7 +21,7 @@ public class Conexion {
         String driver = "com.mysql.jdbc.Driver";
 
     // Nombre de la base de datos
-         String database = "FaroBD";
+         String database = "farodb";
 
     // Host
          String hostname = "localhost";
@@ -36,7 +36,7 @@ public class Conexion {
          String username = "root";
 
     // Clave de usuario
-         String password = "";
+         String password = "root";
 
         try {
             con = DriverManager.getConnection(url, username, password);
