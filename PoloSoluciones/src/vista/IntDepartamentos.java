@@ -5,6 +5,11 @@
  */
 package vista;
 
+import controlador.ControladorCategoria;
+import controlador.ControladorDepartamentos;
+import javax.swing.JOptionPane;
+import modelo.Entidades.Departamentos;
+
 /**
  *
  * @author hypadilla
@@ -33,9 +38,9 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
+        txtDepartamento = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -52,16 +57,21 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         jLabel3.setText("DESCRIPCIÓN");
 
         jButton2.setText("GUARDAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("LIMPIAR");
 
         jButton4.setText("ELIMINAR");
 
-        jTextField1.setText("jTextField1");
+        txtCodigo.setText("jTextField1");
 
-        jTextField2.setText("jTextField2");
+        txtDepartamento.setText("jTextField2");
 
-        jTextField3.setText("jTextField3");
+        txtDescripcion.setText("jTextField3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,7 +80,7 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3)
+                    .addComponent(txtDescripcion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 124, Short.MAX_VALUE)
                         .addComponent(jButton3)
@@ -79,9 +89,9 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                         .addGap(9, 9, 9)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2))
+                        .addComponent(txtDepartamento))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -101,12 +111,12 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
@@ -119,6 +129,30 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Departamentos var = new Departamentos();
+        var.setDepartamento(txtDepartamento.getText());
+        var.setCodigo(txtCodigo.getText());
+        var.setDescripcion(txtDescripcion.getText());
+       
+        ControladorDepartamentos  controladorDepartamento  = new ControladorDepartamentos();
+        
+        Object[] object = new Object[2];
+        object = (Object[])controladorDepartamento.Insertar(var);
+        if(object[0]=="String"){
+            JOptionPane.showMessageDialog(this, object[1]);
+            return;
+        }
+        if(object[0]=="Boolean"){
+            if(((boolean) object[1])){
+                JOptionPane.showMessageDialog(this, "Registro Exitoso");                
+            }else{
+                JOptionPane.showMessageDialog(this, "Registro Fallido");
+            }
+            return;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
@@ -127,8 +161,8 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtDepartamento;
+    private javax.swing.JTextField txtDescripcion;
     // End of variables declaration//GEN-END:variables
 }

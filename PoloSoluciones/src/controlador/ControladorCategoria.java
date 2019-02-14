@@ -6,6 +6,8 @@
 package controlador;
 
 import java.util.ArrayList;
+import modelo.DAO.CategoriaDAO;
+import modelo.Entidades.Categorias;
 import modelo.Interfaces.ICategorias;
 
 /**
@@ -13,10 +15,31 @@ import modelo.Interfaces.ICategorias;
  * @author hypadilla
  */
 public class ControladorCategoria implements ICategorias{
-
+    CategoriaDAO var = new CategoriaDAO();
     @Override
     public Object Insertar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Categorias categoria = (Categorias) object;
+        Object[] Rpta = new Object[2];
+        if (categoria.getCategoria().length()>50){
+            Rpta[0]= "String";
+            Rpta[1]= "El nombre de la categoria es demasiado largo";
+            return Rpta;
+        }        
+        
+        if (categoria.getDescripcion().length()>100){
+            Rpta[0]= "String";
+            Rpta[1]= "El nombre de la descripción es demasiado largo";
+            return Rpta;
+        }
+        
+        if (categoria.getCodigo().length()>20){
+            Rpta[0]= "String";
+            Rpta[1]= "El código de la cotegoria es demasiado largo.";
+            return Rpta;
+        }
+        
+        
+        return var.Insertar(object);
     }
 
     @Override

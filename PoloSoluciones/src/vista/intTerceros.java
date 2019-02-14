@@ -22,8 +22,8 @@ public class intTerceros extends javax.swing.JInternalFrame {
     public intTerceros() {
         initComponents();
     }
-    
-    void Limpiar (){
+
+    void Limpiar() {
         cbTipoTercero.setSelectedIndex(0);
         txtDocumento.setText("");
         txtNombre.setText("");
@@ -47,10 +47,10 @@ public class intTerceros extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cbTipoTercero = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         txtTelefono = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         txtDocumento = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -81,12 +81,12 @@ public class intTerceros extends javax.swing.JInternalFrame {
         cbTipoTercero.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         cbTipoTercero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CLIENTE", "PROVEEDOR" }));
 
-        jButton2.setText("ELIMINAR");
+        btnEliminar.setText("ELIMINAR");
 
-        jButton3.setText("GUARDAR");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -97,7 +97,12 @@ public class intTerceros extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("LIMPIAR");
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         txtDocumento.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
@@ -141,11 +146,11 @@ public class intTerceros extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(btnGuardar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -177,9 +182,9 @@ public class intTerceros extends javax.swing.JInternalFrame {
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnGuardar))
                 .addContainerGap())
         );
 
@@ -214,8 +219,9 @@ public class intTerceros extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Terceros var = new Terceros();
+        /*
         if (txtDocumento.getText() != null && !txtDocumento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "El campo Documento no puede estar vacío" );
             return;
@@ -224,25 +230,43 @@ public class intTerceros extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El campo Nombre no puede estar vacío" );
             return;
         }
-        
+         */
+
         var.setTipoTercero(cbTipoTercero.getSelectedItem().toString());
         var.setDocumento(txtDocumento.getText());
         var.setNombre(txtNombre.getText());
         var.setTelefono(txtTelefono.getText());
         var.setCorreo(txtCorreo.getText());
         var.setDireccion(txtDireccion.getText());
-        
         ControladorTerceros controladorTerceros = new ControladorTerceros();
-        controladorTerceros.Insertar(var);
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+        Object[] object = new Object[2];
+        object = (Object[]) controladorTerceros.Insertar(var);
+        if (object[0] == "String") {
+            JOptionPane.showMessageDialog(this, object[1]);
+            return;
+        }
+        if (object[0] == "Boolean") {
+            if (((boolean) object[1])) {
+                JOptionPane.showMessageDialog(this, "Registro Exitoso");
+            } else {
+                JOptionPane.showMessageDialog(this, "Registro Fallido");
+            }
+            return;
+        }
+
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        Limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbTipoTercero;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

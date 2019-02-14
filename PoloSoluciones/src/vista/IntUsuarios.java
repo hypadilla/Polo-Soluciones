@@ -223,20 +223,25 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
         var.setRespuestaSecreta(txtRespuesta.getText());
         ControladorUsuario controladorUsuario = new ControladorUsuario();
         
-        Object[] object = new Object[2];
-        object = (Object[])controladorUsuario.Insertar(var);
-        if(object[0]=="String"){
-            JOptionPane.showMessageDialog(this, object[1]);
-            return;
-        }
-        if(object[0]=="Boolean"){
-            if(((boolean) object[1])){
-                JOptionPane.showMessageDialog(this, "Registro Exitoso");                
-            }else{
-                JOptionPane.showMessageDialog(this, "Registro Fallido");
+        if (txtContraseña.getText().equals(txtConfirmarContraseña.getText())){
+                Object[] object = new Object[2];
+            object = (Object[])controladorUsuario.Insertar(var);
+            if(object[0]=="String"){
+                JOptionPane.showMessageDialog(this, object[1]);
+                return;
             }
-            return;
+            if(object[0]=="Boolean"){
+                if(((boolean) object[1])){
+                    JOptionPane.showMessageDialog(this, "Registro Exitoso");                
+                }else{
+                    JOptionPane.showMessageDialog(this, "Registro Fallido");
+                }
+                return;
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
         }
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
