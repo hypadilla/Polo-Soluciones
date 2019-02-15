@@ -251,7 +251,7 @@ public class intTerceros extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }
-            return;
+          
         }
 
 

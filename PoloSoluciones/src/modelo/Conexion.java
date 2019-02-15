@@ -18,35 +18,43 @@ import javax.swing.JOptionPane;
  * @author cdap_
  */
 public class Conexion {
-      public  static Connection conectar() {
+
+    public static Connection conectar() {
         Connection con = null;
-         // Librería de MySQL
+        // Librería de MySQL
         String driver = "com.mysql.jdbc.Driver";
 
-    // Nombre de la base de datos
-         String database = "farodb";
+        // Nombre de la base de datos
+        String database = "sql10279128";
 
-    // Host
-         String hostname = "localhost";
+        // Host
+        String hostname = "sql10.freemysqlhosting.net";
+        //String hostname = "localhost";
 
-    // Puerto
-         String port = "3306";
+        // Nombre de usuario
+        String username = "sql10279128";
 
-    // Ruta de nuestra base de datos (desactivamos el uso de SSL con "?useSSL=false")
-         String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";
+        // Clave de usuario
+        String password = "r3UxKqFz9D";
+        // Puerto
 
-    // Nombre de usuario
-         String username = "root";
+        String port = "3306";
 
-    // Clave de usuario
-         String password = "root";
+        // Ruta de nuestra base de datos (desactivamos el uso de SSL con "?useSSL=false")
+        String url = driver + ";Server=" + hostname + ";Database=" + database + ";User=" + username + ";Password=" + password + ";Option=3";
+        String url2 = "jdbc:mysql://"+hostname+":" + port + "/" + database;
+        
+        //String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=true";
 
         try {
-            con = DriverManager.getConnection(url, username, password);
+            con = DriverManager.getConnection(url2, username, password);
+
             if (con != null) {
-				
+                System.out.println(con);
+            }else{
+                System.out.println("Null");
             }
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Conexión fallida a base de datos");
             e.printStackTrace();
@@ -54,5 +62,5 @@ public class Conexion {
 
         return con;
     }
-    
+
 }
