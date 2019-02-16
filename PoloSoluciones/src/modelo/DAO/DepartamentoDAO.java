@@ -10,106 +10,40 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Conexion;
 import modelo.Entidades.Departamentos;
 import modelo.Interfaces.IDepartamentos;
+import src.Constantes;
 
 /**
  *
  * @author hypadilla
  */
 public class DepartamentoDAO implements IDepartamentos{
-    public boolean IfExist(String codigo) {
-        boolean Rpta = false;
-        PreparedStatement ps = null;
-        Connection acceDB = null;
-        String consultarSQL = "SELECT codigo from departamentos where (codigo=?)";
-        try {
-            acceDB = Conexion.conectar();
-            ps = acceDB.prepareStatement(consultarSQL);
-            ps.setString(1, codigo);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                Rpta = true;
-            } else {
-                Rpta = false;
-            }
-            ps.close();
-            acceDB.close();
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase DepartamentoDAO, método ifExist");
-            e.printStackTrace();
-            Rpta = false;
-        }
-        return Rpta;
-    }
+  
     
-    public boolean IfExistDepartamento(String departamento) {
-        boolean Rpta = false;
-        PreparedStatement ps = null;
-        Connection acceDB = null;
-        String consultarSQL = "SELECT departamento from departamentos where (departamento=?)";
-        try {
-            acceDB = Conexion.conectar();
-            ps = acceDB.prepareStatement(consultarSQL);
-            ps.setString(1, departamento);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                Rpta = true;
-            } else {
-                Rpta = false;
-            }
-            ps.close();
-            acceDB.close();
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase DepartamentoDAO, método ifExistDepartamento");
-            e.printStackTrace();
-            Rpta = false;
-        }
-        return Rpta;
-    }
+   
     @Override
     public Object Insertar(Object object) {
-Departamentos   var = (Departamentos) object;
+        Departamentos var = (Departamentos) object;
+        String QuerySQL = "INSERT INTO " + Constantes.TABLADEPARTAMENTOS + " VALUES (?,?,?)";
         Object[] Rpta = new Object[2];
-        PreparedStatement ps = null;
-        Connection acceDB = null;
+        Rpta[0] = "Boolean";
 
-        if (IfExist(var.getCodigo())) {
-            Rpta[0] = "String";
-            Rpta[1] = "El codigo de departamento ya existe";
-        } else {
-                if (IfExistDepartamento(var.getDepartamento())){
-                    Rpta[0] = "String";
-                    Rpta[1] = "El Nombre de departamento ya existe";
-                }else{
-                    String registrarSQL = "INSERT INTO departamentos values (null,?,?,?)";
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, var.getCodigo());
+            preparedStatement.setString(2, var.getDepartamento());
+            preparedStatement.setString(3, var.getDescripcion());
+            preparedStatement.execute();
 
-                try {
-                    acceDB = Conexion.conectar();
-                    ps = acceDB.prepareStatement(registrarSQL);
-                    ps.setString(1, var.getCodigo());
-                    ps.setString(2, var.getDepartamento());
-                    ps.setString(3, var.getDescripcion());
-                    ps.execute();
-                    ps.close();
-                    acceDB.close();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = true;
-                } catch (SQLException e) {
-                    System.out.println("Error: Clase DepartamentoDAO, método insertar");
-                    e.printStackTrace();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = false;
-                }
-            }
-            
+            Rpta[1] = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-                return Rpta ;
+        return Rpta;
+
     }
 
     @Override
@@ -127,9 +61,49 @@ Departamentos   var = (Departamentos) object;
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+
     @Override
-    public ArrayList<Object> MostrarTodos() {
+    public ArrayList<Object> MostrarTodos(Object object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean Existe(Object object) {
+         ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLADEPARTAMENTOS + " WHERE " + CampoFiltro + " = ?";
+        boolean Respuesta = false;
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch (TipoValorFiltro) {
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Respuesta = true;
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartamentoDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + DepartamentoDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return Respuesta;
     }
     
 }

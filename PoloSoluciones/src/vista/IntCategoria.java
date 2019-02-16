@@ -141,7 +141,7 @@ public class IntCategoria extends javax.swing.JInternalFrame {
     }
     
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
+        Limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -160,7 +160,8 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         }
         if(object[0]=="Boolean"){
             if(((boolean) object[1])){
-                JOptionPane.showMessageDialog(this, "Registro Exitoso");                
+                JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                Limpiar();
             }else{
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }

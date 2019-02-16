@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Conexion;
 import modelo.Entidades.Terceros;
 import modelo.Entidades.Usuarios;
@@ -21,100 +23,29 @@ import src.Constantes;
  * @author hypadilla
  */
 public class TerceroDAO implements ITerceros {
-    
-    public boolean IfExist(String documento) {
-        boolean Rpta = false;
-        PreparedStatement ps = null;
-        Connection acceDB = null;
-        String consultarSQL = "SELECT documento from terceros where (documento=?)";
-        try {
-            acceDB = Conexion.conectar();
-            ps = acceDB.prepareStatement(consultarSQL);
-            ps.setString(1, documento);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                Rpta = true;
-            } else {
-                Rpta = false;
-            }
-            ps.close();
-            acceDB.close();
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase TerceroDAO, método ifExist");
-            e.printStackTrace();
-            Rpta = false;
-        }
-        return Rpta;
-    }
 
     @Override
     public Object Insertar(Object object) {
         Terceros var = (Terceros) object;
+        String QuerySQL = "INSERT INTO " + Constantes.TABLATERCEROS + " VALUES (?,?,?,?,?,?)";
         Object[] Rpta = new Object[2];
-        PreparedStatement ps = null;
-        Connection acceDB = null;
+        Rpta[0] = "Boolean";
 
-        if (IfExist(var.getDocumento())) {
-            Rpta[0] = "String";
-            Rpta[1] = "El documento del tercero ya existe";
-        } else {
-                
-                    String registrarSQL = "INSERT INTO terceros values (null,?,?,?,?,?,?)";
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, var.getTipoTercero());
+            preparedStatement.setString(2, var.getDocumento());
+            preparedStatement.setString(3, var.getNombre());
+            preparedStatement.setString(4, var.getDireccion());
+            preparedStatement.setString(5, var.getCorreo());
+            preparedStatement.setString(6, var.getTelefono());
+            preparedStatement.execute();
 
-                try {
-                    acceDB = Conexion.conectar();
-                    ps = acceDB.prepareStatement(registrarSQL);
-                    ps.setString(1, var.getTipoTercero());
-                    ps.setString(2, var.getDocumento());
-                    ps.setString(3, var.getNombre());
-                    ps.setString(4, var.getDireccion());
-                    ps.setString(5, var.getCorreo());
-                    ps.setString(6, var.getTelefono());
-                    ps.execute();
-                    ps.close();
-                    acceDB.close();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = true;
-                } catch (SQLException e) {
-                    System.out.println("Error: Clase TerceroDAO, método insertar");
-                    e.printStackTrace();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = false;
-                }
-            }
-            
-        
-                return Rpta ;
-        /*
-        Terceros var = (Terceros) object;
-        Object[] Rpta = new Object[2];
-        PreparedStatement ps = null;
-        Connection acceDB = null;
-        String registrarSQL = "INSERT INTO " + Constantes.TERCEROS + " values (?,?,?,?,?,?)";
-        try {
-            acceDB = Conexion.conectar();
-            ps = acceDB.prepareStatement(registrarSQL);
-            ps.setString(1, var.getTipoTercero());
-            ps.setString(2, var.getDocumento());
-            ps.setString(3, var.getNombre());
-            ps.setString(4, var.getDireccion());
-            ps.setString(5, var.getCorreo());
-            ps.setString(6, var.getTelefono());
-            ps.execute();
-            ps.close();
-            acceDB.close();
-            Rpta[0] = "Boolean";
             Rpta[1] = true;
-        } catch (SQLException e) {
-            System.out.println("Error: Clase TerceroDAO, método insertar");
-            e.printStackTrace();
-            Rpta[0] = "Boolean";
-            Rpta[1] = false;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Rpta;
-        */
+
     }
 
     @Override
@@ -133,8 +64,46 @@ public class TerceroDAO implements ITerceros {
     }
 
     @Override
-    public ArrayList<Object> MostrarTodos() {
+    public ArrayList<Object> MostrarTodos(Object object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean Existe(Object object) {
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLATERCEROS + " WHERE " + CampoFiltro + " = ?";
+        boolean Respuesta = false;
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch (TipoValorFiltro) {
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Respuesta = true;
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TerceroDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + TerceroDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return Respuesta;
     }
 
 }
