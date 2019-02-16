@@ -65,12 +65,12 @@ public class TerceroDAO implements ITerceros {
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        String QuerySQL = "SELECT * FROM " + Constantes.TABLATERCEROS + " WHERE ((Documento like '%?%')|| (Codigo like '%?%') )";
+        String QuerySQL = "SELECT * FROM Terceros WHERE ((Documento like ?)|| (Nombre like ?) )";
         ResultSet resultSet;
         ArrayList<Object> Respuesta = new ArrayList<>();
         try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
-            preparedStatement.setString(1, String.valueOf(object));
-            preparedStatement.setString(2, String.valueOf(object));
+            preparedStatement.setString(1, "%"+ String.valueOf(object) + "%");
+            preparedStatement.setString(2, "%"+ String.valueOf(object) + "%");
 
             resultSet = preparedStatement.executeQuery();
 
