@@ -27,7 +27,7 @@ public class CategoriaDAO implements ICategorias {
     @Override
     public Object Insertar(Object object) {
         Categorias var = (Categorias) object;
-        String QuerySQL = "INSERT INTO " + Constantes.TABLACATEGORIAS + " VALUES (?,?,?)";
+        String QuerySQL = "INSERT INTO " + Constantes.TABLACATEGORIAS + " VALUES (NULL,?,?,?)";
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
 

@@ -28,7 +28,7 @@ public class DepartamentoDAO implements IDepartamentos{
     @Override
     public Object Insertar(Object object) {
         Departamentos var = (Departamentos) object;
-        String QuerySQL = "INSERT INTO " + Constantes.TABLADEPARTAMENTOS + " VALUES (?,?,?)";
+        String QuerySQL = "INSERT INTO " + Constantes.TABLADEPARTAMENTOS + " VALUES (NULL,?,?,?)";
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
 

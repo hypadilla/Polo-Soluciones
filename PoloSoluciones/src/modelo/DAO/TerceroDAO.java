@@ -27,7 +27,7 @@ public class TerceroDAO implements ITerceros {
     @Override
     public Object Insertar(Object object) {
         Terceros var = (Terceros) object;
-        String QuerySQL = "INSERT INTO " + Constantes.TABLATERCEROS + " VALUES (?,?,?,?,?,?)";
+        String QuerySQL = "INSERT INTO " + Constantes.TABLATERCEROS + " VALUES (NULL,?,?,?,?,?,?)";
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
 
@@ -65,7 +65,34 @@ public class TerceroDAO implements ITerceros {
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLATERCEROS + " WHERE ((Documento like '%?%')|| (Codigo like '%?%') )";
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, String.valueOf(object));
+            preparedStatement.setString(2, String.valueOf(object));
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Terceros terceros = new Terceros();
+                terceros.setIdTerceros(resultSet.getInt("idTerceros"));
+                terceros.setTipoTercero(resultSet.getString("TipoTercero"));
+                terceros.setDocumento(resultSet.getString("Documento"));
+                terceros.setNombre(resultSet.getString("Nombre"));
+                terceros.setDireccion(resultSet.getString("Direccion"));
+                terceros.setCorreo(resultSet.getString("Correo"));
+                terceros.setTelefono(resultSet.getString("Telefono"));
+                Respuesta.add(terceros);
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TerceroDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + TerceroDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
     }
 
     @Override
