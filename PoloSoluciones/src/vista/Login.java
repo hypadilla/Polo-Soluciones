@@ -1,6 +1,6 @@
 package vista;
 
-
+import controlador.ControladorUsuario;
 import modelo.Entidades.Usuarios;
 import vista.frmInicio;
 
@@ -9,7 +9,6 @@ import vista.frmInicio;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author hypadilla
@@ -153,13 +152,26 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        if (txtUsuario.getText().equals("")) {
+            lblError.setText("El nombre de usuario no puede ser vacío");
+            return;
+        }
+        if (txtClave.getText().equals("")) {
+            lblError.setText("La contraseña no puede ser vacío");
+            return;
+        }
+        ControladorUsuario controladorUsuario = new ControladorUsuario();
+        Usuarios usuarios = (Usuarios) controladorUsuario.Mostrar(txtUsuario.getText());
         
-
-
+        if (usuarios != null) {
+            frmInicio inicio = new frmInicio();
+            inicio.setVisible(true);
+            this.dispose();
+        }else{
+            lblError.setText("Usuario y/o contraseña invalidos.");
+        }
         //Todo Hacer la logica de ingreso
-        frmInicio inicio = new frmInicio();
-        inicio.setVisible(true);
-        this.dispose();
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**

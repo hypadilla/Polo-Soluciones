@@ -90,7 +90,11 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public Object Mostrar(Object object) {
-        return var.Mostrar(object);
+        ArrayList<String> Parametros = new ArrayList<>();
+        Parametros.add("Usuario");
+        Parametros.add(object.toString());
+        Parametros.add("String");
+        return var.Mostrar(Parametros);
     }
 
     @Override
