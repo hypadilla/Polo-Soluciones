@@ -15,11 +15,11 @@ public class Productos {
     private String referencia;
     private String descripcion;
     private String rutaImagen;
-    private float costoNeto;
-    private float costoIva;
-    private float ventaNeto;
-    private float ventaIva;
-    private float ventaUtilidad;
+    private double costoNeto;
+    private double costoIva;
+    private double ventaNeto;
+    private double ventaIva;
+    private double ventaUtilidad;
     private int idCategoria;
     private int idDepartamento;
 
@@ -81,7 +81,7 @@ public class Productos {
         this.rutaImagen = rutaImagen;
     }
 
-    public float getCostoNeto() {
+    public double getCostoNeto() {
         return costoNeto;
     }
 
@@ -89,7 +89,7 @@ public class Productos {
         this.costoNeto = costoNeto;
     }
 
-    public float getCostoIva() {
+    public double getCostoIva() {
         return costoIva;
     }
 
@@ -97,7 +97,7 @@ public class Productos {
         this.costoIva = costoIva;
     }
 
-    public float getVentaNeto() {
+    public double getVentaNeto() {
         return ventaNeto;
     }
 
@@ -105,7 +105,7 @@ public class Productos {
         this.ventaNeto = ventaNeto;
     }
 
-    public float getVentaIva() {
+    public double getVentaIva() {
         return ventaIva;
     }
 
@@ -113,7 +113,7 @@ public class Productos {
         this.ventaIva = ventaIva;
     }
 
-    public float getVentaUtilidad() {
+    public double getVentaUtilidad() {
         return ventaUtilidad;
     }
 

@@ -70,7 +70,7 @@ public class DepartamentoDAO implements IDepartamentos{
 
     @Override
     public Boolean Existe(Object object) {
-         ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
         String CampoFiltro = ListaVariables.get(0);
         String ValorFiltro = ListaVariables.get(1);
         String TipoValorFiltro = ListaVariables.get(2);

@@ -5,6 +5,10 @@
  */
 package vista;
 
+import controlador.ControladorConceptos;
+import javax.swing.JOptionPane;
+import modelo.Entidades.Conceptos;
+
 /**
  *
  * @author hypadilla
@@ -28,31 +32,32 @@ public class IntConceptos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         gbxNaturalezaDinero = new javax.swing.ButtonGroup();
+        gbxNaturalezaInventario = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jTextField5 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        txtCodigo = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
+        rbCredito = new javax.swing.JRadioButton();
+        rbDebito = new javax.swing.JRadioButton();
+        txtEtiqueta = new javax.swing.JTextField();
+        checkManejaConsecutivo = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtPrefijo = new javax.swing.JTextField();
+        txtUltConsecutivo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rbNingunDinero = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
+        rbEntrada = new javax.swing.JRadioButton();
+        rbSalida = new javax.swing.JRadioButton();
+        rbNingunInventario = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        txtResolucionDIAN = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -72,26 +77,27 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel6.setText("ETIQUETA ");
 
-        jTextField1.setText("jTextField1");
+        txtCodigo.setText("jTextField1");
 
-        jTextField2.setText("jTextField2");
+        txtDescripcion.setText("jTextField2");
 
-        gbxNaturalezaDinero.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
-        jRadioButton1.setText("CRÉDITO");
+        gbxNaturalezaDinero.add(rbCredito);
+        rbCredito.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
+        rbCredito.setSelected(true);
+        rbCredito.setText("CRÉDITO");
 
-        gbxNaturalezaDinero.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
-        jRadioButton2.setText("DÉBITO");
+        gbxNaturalezaDinero.add(rbDebito);
+        rbDebito.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
+        rbDebito.setText("DÉBITO");
 
-        jTextField5.setText("jTextField5");
+        txtEtiqueta.setText("jTextField5");
 
-        jCheckBox1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        jCheckBox1.setText("¿MANEJA CONSECUTIVO?");
+        checkManejaConsecutivo.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        checkManejaConsecutivo.setText("¿MANEJA CONSECUTIVO?");
 
-        jTextField3.setText("jTextField3");
+        txtPrefijo.setText("jTextField3");
 
-        jTextField4.setText("jTextField4");
+        txtUltConsecutivo.setText("jTextField4");
 
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel3.setText("ÚLTIMO CONSECUTIVO");
@@ -111,9 +117,9 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPrefijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtUltConsecutivo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -125,34 +131,47 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrefijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUltConsecutivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        gbxNaturalezaDinero.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
-        jRadioButton3.setText("NINGUNA");
+        gbxNaturalezaDinero.add(rbNingunDinero);
+        rbNingunDinero.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
+        rbNingunDinero.setText("NINGUNA");
 
         jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel7.setText("NATURALEZA DEL INVENTARIO");
 
-        jRadioButton4.setText("ENTRADA");
+        gbxNaturalezaInventario.add(rbEntrada);
+        rbEntrada.setText("ENTRADA");
 
-        jRadioButton5.setText("SALIDA");
+        gbxNaturalezaInventario.add(rbSalida);
+        rbSalida.setText("SALIDA");
 
-        jRadioButton6.setText("NINGUNA");
+        gbxNaturalezaInventario.add(rbNingunInventario);
+        rbNingunInventario.setText("NINGUNA");
 
         jLabel8.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel8.setText("RESOLUCIÓN DIAN");
 
-        jTextField6.setText("jTextField6");
+        txtResolucionDIAN.setText("jTextField6");
 
-        jButton2.setText("GUARDAR");
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("LIMPIAR");
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("ELIMINAR");
+        btnEliminar.setText("ELIMINAR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,9 +183,9 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(txtDescripcion))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -174,37 +193,37 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel2))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
+                                        .addComponent(rbCredito)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton2)
+                                        .addComponent(rbDebito)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton3))
+                                        .addComponent(rbNingunDinero))
                                     .addComponent(jLabel7)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton4)
+                                        .addComponent(rbEntrada)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton5)
+                                        .addComponent(rbSalida)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton6))
+                                        .addComponent(rbNingunInventario))
                                     .addComponent(jLabel5))
                                 .addGap(0, 28, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField5)
+                            .addComponent(txtEtiqueta)
                             .addComponent(jLabel6)
-                            .addComponent(jCheckBox1)
+                            .addComponent(checkManejaConsecutivo)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField6)
+                    .addComponent(txtResolucionDIAN)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnEliminar)
                         .addGap(9, 9, 9)
-                        .addComponent(jButton2)))
+                        .addComponent(btnGuardar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -217,51 +236,121 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEtiqueta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jCheckBox1))
+                    .addComponent(checkManejaConsecutivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3))
+                            .addComponent(rbCredito)
+                            .addComponent(rbDebito)
+                            .addComponent(rbNingunDinero))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton5)
-                            .addComponent(jRadioButton6)))
+                            .addComponent(rbEntrada)
+                            .addComponent(rbSalida)
+                            .addComponent(rbNingunInventario)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtResolucionDIAN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addComponent(btnLimpiar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton4)))
+                        .addComponent(btnGuardar)
+                        .addComponent(btnEliminar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void Limpiar(){        
+        txtCodigo.setText("");
+        txtEtiqueta.setText("");
+        txtDescripcion.setText("");
+        txtPrefijo.setText("");
+        txtUltConsecutivo.setText("");
+        txtResolucionDIAN.setText("");
+        checkManejaConsecutivo.setSelected(false);
+        rbNingunDinero.setSelected(true);
+        rbNingunInventario.setSelected(true);
+        
+    }
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        Limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Conceptos var = new Conceptos();
+        var.setCodigo(txtCodigo.getText());
+        var.setDescripcion(txtDescripcion.getText());
+        var.setEtiqueta(txtEtiqueta.getText());
+        if (rbCredito.isSelected()){
+            var.setNaturalezaDinero(1);
+        }else if (rbDebito.isSelected()){
+            var.setNaturalezaDinero(2);
+        }else if (rbNingunDinero.isSelected()){
+            var.setNaturalezaDinero(3);
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleecione una naturaleza del dinero");
+            return;
+        }
+        if (rbEntrada.isSelected()){
+            var.setNaturalezaInventario(1);
+        }else if (rbSalida.isSelected()){
+            var.setNaturalezaInventario(2);
+        }else if (rbNingunInventario.isSelected()){
+            var.setNaturalezaInventario(3);
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleecione una naturaleza de inventario");
+            return;
+        }
+        if (checkManejaConsecutivo.isSelected()){
+            var.setManejaConsecutivo(true);
+        }else{
+            var.setManejaConsecutivo(false);
+        }
+        
+        var.setPrefijo(txtPrefijo.getText());
+        var.setUltimoConsecutivo(Integer.parseInt(txtUltConsecutivo.getText()));
+        var.setResolucionDIAN(txtResolucionDIAN.getText());
+       
+        ControladorConceptos  controladorConceptos  = new ControladorConceptos();
+        
+        Object[] object = new Object[2];
+        object = (Object[])controladorConceptos.Insertar(var);
+        if(object[0]=="String"){
+            JOptionPane.showMessageDialog(this, object[1]);
+            return;
+        }
+        if(object[0]=="Boolean"){
+            if(((boolean) object[1])){
+                JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                Limpiar();
+            }else{
+                JOptionPane.showMessageDialog(this, "Registro Fallido");
+            }
+            return;
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JCheckBox checkManejaConsecutivo;
     private javax.swing.ButtonGroup gbxNaturalezaDinero;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.ButtonGroup gbxNaturalezaInventario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -271,17 +360,17 @@ public class IntConceptos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JRadioButton rbCredito;
+    private javax.swing.JRadioButton rbDebito;
+    private javax.swing.JRadioButton rbEntrada;
+    private javax.swing.JRadioButton rbNingunDinero;
+    private javax.swing.JRadioButton rbNingunInventario;
+    private javax.swing.JRadioButton rbSalida;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtEtiqueta;
+    private javax.swing.JTextField txtPrefijo;
+    private javax.swing.JTextField txtResolucionDIAN;
+    private javax.swing.JTextField txtUltConsecutivo;
     // End of variables declaration//GEN-END:variables
 }
