@@ -26,8 +26,9 @@ public interface ICrud {
          * @param object
          * @return 
          */
-	public ArrayList<Object> Mostrar(Object object);	
+	public ArrayList<Object> MostrarTodos(Object object);	
 	public Object Eliminar(Object object);
         public Object Editar(Object object);
-        public ArrayList<Object> MostrarTodos();
+        public Object Mostrar(Object object);
+        public Boolean Existe(Object object);
 }

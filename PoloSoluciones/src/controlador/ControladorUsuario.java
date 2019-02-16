@@ -15,69 +15,62 @@ import modelo.Interfaces.IUsuario;
  * @author cdap_
  */
 public class ControladorUsuario implements IUsuario {
+
     UsuarioDAO var = new UsuarioDAO();
-    /***
-     * Retorna String si hay un error en controlador, ó boolean si hay error en la base de datos
+
+    /**
+     * *
+     * Retorna String si hay un error en controlador, ó boolean si hay error en
+     * la base de datos
+     *
      * @param object
-     * @return 
+     * @return
      */
     @Override
     public Object Insertar(Object object) {
         Usuarios usuario = (Usuarios) object;
         Object[] Rpta = new Object[2];
-        if (usuario.getUsuario().length()>10){
-            Rpta[0]= "String";
-            Rpta[1]= "El nombre de usuario es demasiado largo";
-            return Rpta;
-        }        
-        
-        if (usuario.getUsuario().length()<5){
-            Rpta[0]= "String";
-            Rpta[1]= "El nombre de usuario es demasiado corto";
+        if (usuario.getUsuario().length() > 10) {
+            Rpta[0] = "String";
+            Rpta[1] = "El nombre de usuario es demasiado largo";
             return Rpta;
         }
-        
-        if (usuario.getClave().length()>12){
-            Rpta[0]= "String";
-            Rpta[1]= "La contraseña es demasiado larga";
+        if (usuario.getUsuario().length() < 5) {
+            Rpta[0] = "String";
+            Rpta[1] = "El nombre de usuario es demasiado corto";
             return Rpta;
         }
-        
-        if (usuario.getClave().length()<8){
-            Rpta[0]= "String";
-            Rpta[1]= "La contraseña es demasiado corta";
+        if (usuario.getClave().length() > 12) {
+            Rpta[0] = "String";
+            Rpta[1] = "La contraseña es demasiado larga";
             return Rpta;
-        }      
-        
-        if (usuario.getCorreoElectronico().length()>100){
-            Rpta[0]= "String";
-            Rpta[1]= "El correo es demasiado Largo";
+        }
+        if (usuario.getClave().length() < 8) {
+            Rpta[0] = "String";
+            Rpta[1] = "La contraseña es demasiado corta";
             return Rpta;
-        }  
-        
-        if (usuario.getCorreoElectronico().length()>100){
-            Rpta[0]= "String";
-            Rpta[1]= "El correo es demasiado Largo";
+        }
+        if (usuario.getCorreoElectronico().length() > 100) {
+            Rpta[0] = "String";
+            Rpta[1] = "El correo es demasiado Largo";
             return Rpta;
-        }   
-        
-        if (usuario.getPregunta().length()>50){
-            Rpta[0]= "String";
-            Rpta[1]= "La pregunta es demasiado larga";
+        }
+        if (usuario.getCorreoElectronico().length() > 100) {
+            Rpta[0] = "String";
+            Rpta[1] = "El correo es demasiado Largo";
             return Rpta;
-        }      
-        
-        if (usuario.getRespuestaSecreta().length()>20){
-            Rpta[0]= "String";
-            Rpta[1]= "La respuesta es demasiado larga.";
+        }
+        if (usuario.getPregunta().length() > 50) {
+            Rpta[0] = "String";
+            Rpta[1] = "La pregunta es demasiado larga";
             return Rpta;
-        }      
+        }
+        if (usuario.getRespuestaSecreta().length() > 20) {
+            Rpta[0] = "String";
+            Rpta[1] = "La respuesta es demasiado larga.";
+            return Rpta;
+        }
         return var.Insertar(object);
-    }
-
-    @Override
-    public ArrayList<Object> Mostrar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -91,8 +84,17 @@ public class ControladorUsuario implements IUsuario {
     }
 
     @Override
-    public ArrayList<Object> MostrarTodos() {
+    public ArrayList<Object> MostrarTodos(Object object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public Object Mostrar(Object object) {
+        return var.Mostrar(object);
+    }
+
+    @Override
+    public Boolean Existe(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

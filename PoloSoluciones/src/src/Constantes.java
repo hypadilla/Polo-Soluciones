@@ -12,4 +12,8 @@ package src;
 public class Constantes {
     public static String NUEVOPRODUCTO = "Nuevo Producto";
     public static String TERCEROS = "Terceros";
+    
+    //Nombre Tablas
+    public static String TABLACATEGORIAS = "Categorias";
+    public static String TABLAUSUARIOS = "Usuario";
 }

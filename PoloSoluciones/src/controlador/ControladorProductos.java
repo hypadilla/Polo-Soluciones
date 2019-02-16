@@ -43,8 +43,6 @@ public class ControladorProductos implements IProductos{
             Rpta[1]= "La ruta de la imagen es demasiado larga";
             return Rpta;
         }       
-        
-        
         return var.Insertar(object);
     }
 
@@ -67,5 +65,4 @@ public class ControladorProductos implements IProductos{
     public ArrayList<Object> MostrarTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

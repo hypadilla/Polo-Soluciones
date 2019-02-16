@@ -20,30 +20,36 @@ public class ControladorCategoria implements ICategorias{
     public Object Insertar(Object object) {
         Categorias categoria = (Categorias) object;
         Object[] Rpta = new Object[2];
+        Rpta[0]= "String";
         if (categoria.getCategoria().length()>50){
-            Rpta[0]= "String";
             Rpta[1]= "El nombre de la categoria es demasiado largo";
             return Rpta;
         }        
         
         if (categoria.getDescripcion().length()>100){
-            Rpta[0]= "String";
             Rpta[1]= "El nombre de la descripción es demasiado largo";
             return Rpta;
         }
         
         if (categoria.getCodigo().length()>20){
-            Rpta[0]= "String";
             Rpta[1]= "El código de la cotegoria es demasiado largo.";
             return Rpta;
         }
         
-        
-        return var.Insertar(object);
+        ArrayList<String> Parametros = new ArrayList<>();
+        Parametros.add("Codigo");
+        Parametros.add(categoria.getCodigo());
+        Parametros.add("String");
+        if (Existe(Parametros)) {
+            Rpta[1]= "Esta categoría ya existe.";
+            return Rpta;
+        }else{
+            return var.Insertar(object);
+        }
     }
 
     @Override
-    public ArrayList<Object> Mostrar(Object object) {
+    public ArrayList<Object> MostrarTodos(Object object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -58,8 +64,12 @@ public class ControladorCategoria implements ICategorias{
     }
 
     @Override
-    public ArrayList<Object> MostrarTodos() {
+    public Object Mostrar(Object object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public Boolean Existe(Object object) {
+       return var.Existe(object);
+    }
 }

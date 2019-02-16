@@ -53,7 +53,6 @@ public class ControladorTerceros implements ITerceros{
             return Rpta;
         }
         return var.Insertar(object);
-        
     }
 
     @Override

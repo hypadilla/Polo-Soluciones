@@ -10,10 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Conexion;
 import modelo.Entidades.Categorias;
 
 import modelo.Interfaces.ICategorias;
+import src.Constantes;
 
 /**
  *
@@ -21,103 +24,24 @@ import modelo.Interfaces.ICategorias;
  */
 public class CategoriaDAO implements ICategorias {
 
-    public boolean IfExist(String codigo) {
-        boolean Rpta = false;
-        PreparedStatement ps = null;
-        Connection acceDB = null;
-        String consultarSQL = "SELECT codigo from categorias where (codigo=?)";
-        try {
-            acceDB = Conexion.conectar();
-            ps = acceDB.prepareStatement(consultarSQL);
-            ps.setString(1, codigo);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                Rpta = true;
-            } else {
-                Rpta = false;
-            }
-            ps.close();
-            acceDB.close();
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase CategoriaDAO, método ifExist");
-            e.printStackTrace();
-            Rpta = false;
-        }
-        return Rpta;
-    }
-    
-    public boolean IfExistCategoria(String categoria) {
-        boolean Rpta = false;
-        PreparedStatement ps = null;
-        Connection acceDB = null;
-        String consultarSQL = "SELECT categoria from categorias where (categoria=?)";
-        try {
-            acceDB = Conexion.conectar();
-            ps = acceDB.prepareStatement(consultarSQL);
-            ps.setString(1, categoria);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                Rpta = true;
-            } else {
-                Rpta = false;
-            }
-            ps.close();
-            acceDB.close();
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase CategoriaDAO, método ifExistCategoria");
-            e.printStackTrace();
-            Rpta = false;
-        }
-        return Rpta;
-    }
-
     @Override
     public Object Insertar(Object object) {
         Categorias var = (Categorias) object;
+        String QuerySQL = "INSERT INTO " + Constantes.TABLACATEGORIAS + " VALUES (?,?,?)";
         Object[] Rpta = new Object[2];
-        PreparedStatement ps = null;
-        Connection acceDB = null;
+        Rpta[0] = "Boolean";
 
-        if (IfExist(var.getCodigo())) {
-            Rpta[0] = "String";
-            Rpta[1] = "El codigo de categoria ya existe";
-        } else {
-                if (IfExistCategoria(var.getCategoria())){
-                    Rpta[0] = "String";
-                    Rpta[1] = "El Nombre de categoria ya existe";
-                }else{
-                    String registrarSQL = "INSERT INTO categorias values (null,?,?,?)";
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, var.getCodigo());
+            preparedStatement.setString(2, var.getCategoria());
+            preparedStatement.setString(3, var.getDescripcion());
+            preparedStatement.execute();
 
-                try {
-                    acceDB = Conexion.conectar();
-                    ps = acceDB.prepareStatement(registrarSQL);
-                    ps.setString(1, var.getCodigo());
-                    ps.setString(2, var.getCategoria());
-                    ps.setString(3, var.getDescripcion());
-                    ps.execute();
-                    ps.close();
-                    acceDB.close();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = true;
-                } catch (SQLException e) {
-                    System.out.println("Error: Clase CategoriaDAO, método insertar");
-                    e.printStackTrace();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = false;
-                }
-            }
-            
+            Rpta[1] = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-                return Rpta ;
-    }
-
-    @Override
-    public ArrayList<Object> Mostrar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Rpta;
     }
 
     @Override
@@ -131,12 +55,50 @@ public class CategoriaDAO implements ICategorias {
     }
 
     @Override
-    public ArrayList<Object> MostrarTodos() {
+    public ArrayList<Object> MostrarTodos(Object object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 
+    @Override
+    public Object Mostrar(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean Existe(Object object) {
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLACATEGORIAS + " WHERE " + CampoFiltro + " = ?";
+        boolean Respuesta = false;
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch(TipoValorFiltro){
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Respuesta = true;
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + CategoriaDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return Respuesta;
+    }
 }
-    
-        
-

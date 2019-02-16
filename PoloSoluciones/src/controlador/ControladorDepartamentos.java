@@ -38,8 +38,6 @@ public class ControladorDepartamentos implements IDepartamentos{
             Rpta[1]= "El código del departamento es demasiado largo.";
             return Rpta;
         }
-        
-        
         return var.Insertar(object);
     }
 
