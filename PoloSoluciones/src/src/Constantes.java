@@ -18,4 +18,6 @@ public class Constantes {
     public static String TABLACATEGORIAS = "Categorias";
     public static String TABLAUSUARIOS = "Usuario";
     public static String TABLADEPARTAMENTOS = "Departamentos";
+    public static String TABLACONCEPTOS = "Conceptos";
+    public static String TABLAPRODUCTOS = "Productos";
 }

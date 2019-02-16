@@ -67,11 +67,11 @@ public class ProductoDAO implements IProductos{
                     ps.setString(2, var.getReferencia());
                     ps.setString(3, var.getDescripcion());
                     ps.setString(4, var.getRutaImagen());
-                    ps.setFloat(5, var.getCostoNeto());
-                    ps.setFloat(6, var.getCostoIva());
-                    ps.setFloat(7, var.getVentaNeto());
-                    ps.setFloat(8, var.getVentaIva());
-                    ps.setFloat(9, var.getVentaUtilidad());
+                    ps.setDouble(5, var.getCostoNeto());
+                    ps.setDouble(6, var.getCostoIva());
+                    ps.setDouble(7, var.getVentaNeto());
+                    ps.setDouble(8, var.getVentaIva());
+                    ps.setDouble(9, var.getVentaUtilidad());
                     
                     ps.execute();
                     ps.close();
@@ -105,8 +105,15 @@ public class ProductoDAO implements IProductos{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+   
+
     @Override
-    public ArrayList<Object> MostrarTodos() {
+    public ArrayList<Object> MostrarTodos(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean Existe(Object object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
