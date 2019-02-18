@@ -22,68 +22,50 @@ import src.Constantes;
  *
  * @author hypadilla
  */
-public class ControladorProductos implements IProductos{
+public class ControladorProductos implements IProductos {
+
     ProductoDAO var = new ProductoDAO();
-    
+
     @Override
-    public Object Insertar(Object object) {
-        Productos var = (Productos) object;
-        String QuerySQL = "INSERT INTO " + Constantes.TABLAPRODUCTOS + " VALUES (null,?,?,?,?,?,?,?,?,?)";
+    public Object Insertar(Object object) {        
+        
+        ArrayList<String> Filtro = new ArrayList();
         Object[] Rpta = new Object[2];
-        Rpta[0] = "Boolean";
-        if (var.getCodigo().length()>50){
-            Rpta[0]= "String";
-            Rpta[1]= "El codigo del producto es demasiado largo";
+        Productos productos = (Productos) object;
+        Filtro.add("Codigo");
+        Filtro.add(productos.getCodigo());
+        Filtro.add("String");
+        
+        if(Existe(Filtro)) {
+            Rpta[0] = "String";
+            Rpta[1] = "El Producto ya existe en la base de datos";
+            return Rpta;
+        } 
+        
+        if (productos.getCodigo().length() > 50) {
+            Rpta[0] = "String";
+            Rpta[1] = "El codigo del producto es demasiado largo";
             return Rpta;
         }
-        if (var.getReferencia().length()>50){
-            Rpta[0]= "String";
-            Rpta[1]= "La referencia es demasiado larga";
+        if (productos.getReferencia().length() > 50) {
+            Rpta[0] = "String";
+            Rpta[1] = "La referencia es demasiado larga";
             return Rpta;
         }
-        if (var.getDescripcion().length()>200){
-            Rpta[0]= "String";
-            Rpta[1]= "La Descripción es demasiado larga";
+        if (productos.getDescripcion().length() > 200) {
+            Rpta[0] = "String";
+            Rpta[1] = "La Descripción es demasiado larga";
             return Rpta;
         }
-        if (var.getRutaImagen().length()>1000){
-            Rpta[0]= "String";
-            Rpta[1]= "La ruta de la imagen demasiado larga";
+        if (productos.getRutaImagen().length() > 1000) {
+            Rpta[0] = "String";
+            Rpta[1] = "La ruta de la imagen demasiado larga";
             return Rpta;
         }
         return var.Insertar(object);
-        
+
         //Todo validar que el costo neto costo iva venta neta venta iva y % utilidad guarden logica entre si.
-       
-        
-            
-        }
-
-        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
-            preparedStatement.setString(1, var.getCodigo());
-            preparedStatement.setString(2, var.getReferencia());
-            preparedStatement.setString(3, var.getDescripcion());
-            preparedStatement.setString(4, var.getRutaImagen());
-            preparedStatement.setDouble(5, var.getCostoNeto());
-            preparedStatement.setDouble(6, var.getCostoIva());
-            preparedStatement.setDouble(7, var.getVentaNeto());
-            preparedStatement.setDouble(8, var.getVentaIva());
-            preparedStatement.setDouble(9, var.getVentaUtilidad());
-            preparedStatement.execute();
-
-            Rpta[1] = true;
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return Rpta;
-        
-        
-        /*
-        ProductoDAO var = new ProductoDAO();
-        Object[] Rpta = new Object[2];
-        Productos productos = (Productos) object;
-        
-        
+    }
 
     @Override
     public ArrayList<Object> Mostrar(Object object) {
@@ -102,7 +84,7 @@ public class ControladorProductos implements IProductos{
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.MostrarTodos(object);
     }
 
     @Override
@@ -110,5 +92,4 @@ public class ControladorProductos implements IProductos{
         return var.Existe(object);
     }
 
-    
 }

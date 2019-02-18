@@ -10,84 +10,45 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Conexion;
 import modelo.Entidades.Productos;
 import modelo.Interfaces.IProductos;
+import src.Constantes;
 
 /**
  *
  * @author hypadilla
  */
-public class ProductoDAO implements IProductos{
-    
-    public boolean IfExist(String codigo) {
-        boolean Rpta = false;
-        PreparedStatement ps = null;
-        Connection acceDB = null;
-        String consultarSQL = "SELECT * from productos where (codigo=?)";
-        try {
-            acceDB = Conexion.conectar();
-            ps = acceDB.prepareStatement(consultarSQL);
-            ps.setString(1, codigo);
-            ResultSet rs = ps.executeQuery();
+public class ProductoDAO implements IProductos {
 
-            if (rs.next()) {
-                Rpta = true;
-            } else {
-                Rpta = false;
-            }
-            ps.close();
-            acceDB.close();
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase ProductoDAO, método ifExist");
-            e.printStackTrace();
-            Rpta = false;
-        }
-        return Rpta;
-    }
     @Override
     public Object Insertar(Object object) {
         Productos var = (Productos) object;
+        String QuerySQL = "INSERT INTO " + Constantes.TABLAPRODUCTOS + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?)";
         Object[] Rpta = new Object[2];
-        PreparedStatement ps = null;
-        Connection acceDB = null;
+        Rpta[0] = "Boolean";
 
-        if (IfExist(var.getCodigo())) {
-            Rpta[0] = "String";
-            Rpta[1] = "El Codigo del producto ya existe";
-        } else {
-                
-                    String registrarSQL = "INSERT INTO productos values (null,?,?,?,?,?,?,?,?,?)";
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, var.getCodigo());
+            preparedStatement.setString(2, var.getReferencia());
+            preparedStatement.setString(3, var.getDescripcion());
+            preparedStatement.setString(4, var.getRutaImagen());
+            preparedStatement.setDouble(5, 0.0);//cantidad
+            preparedStatement.setDouble(6, var.getCostoNeto());
+            preparedStatement.setDouble(7, var.getCostoIva());
+            preparedStatement.setDouble(8, var.getVentaNeto());
+            preparedStatement.setDouble(9, var.getVentaIva());
+            preparedStatement.setDouble(10, var.getVentaUtilidad());
+            preparedStatement.execute();
 
-                try {
-                    acceDB = Conexion.conectar();
-                    ps = acceDB.prepareStatement(registrarSQL);
-                    ps.setString(1, var.getCodigo());
-                    ps.setString(2, var.getReferencia());
-                    ps.setString(3, var.getDescripcion());
-                    ps.setString(4, var.getRutaImagen());
-                    ps.setDouble(5, var.getCostoNeto());
-                    ps.setDouble(6, var.getCostoIva());
-                    ps.setDouble(7, var.getVentaNeto());
-                    ps.setDouble(8, var.getVentaIva());
-                    ps.setDouble(9, var.getVentaUtilidad());
-                    
-                    ps.execute();
-                    ps.close();
-                    acceDB.close();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = true;
-                } catch (SQLException e) {
-                    System.out.println("Error: Clase ProductoDAO, método insertar");
-                    e.printStackTrace();
-                    Rpta[0] = "Boolean";
-                    Rpta[1] = false;
-                }
-            }
-            
-        
-                return Rpta ;
+            Rpta[1] = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Rpta;
+
     }
 
     @Override
@@ -105,16 +66,77 @@ public class ProductoDAO implements IProductos{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   
-
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String QuerySQL = "SELECT * FROM Productos WHERE ((Codigo like ?)|| (Referencia like ?)|| (Descripcion like ?) )";
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, "%" + String.valueOf(object) + "%");
+            preparedStatement.setString(2, "%" + String.valueOf(object) + "%");
+            preparedStatement.setString(3, "%" + String.valueOf(object) + "%");
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Productos productos = new Productos();
+                productos.setId(resultSet.getInt("idProductos"));
+                productos.setReferencia(resultSet.getString("Referencia"));
+                productos.setDescripcion(resultSet.getString("Descripcion"));
+                productos.setRutaImagen(resultSet.getString("RutaImagen"));
+                productos.setCostoNeto(resultSet.getDouble("CostoNeto"));
+                productos.setCostoIva(resultSet.getDouble("CostoIva"));
+                productos.setVentaNeto(resultSet.getDouble("VentaNeto"));
+                productos.setVentaIva(resultSet.getDouble("VentaIva"));
+                productos.setVentaUtilidad(resultSet.getDouble("VentaUtilidad"));
+                Respuesta.add(productos);
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TerceroDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + TerceroDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
     }
 
     @Override
     public Boolean Existe(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLAPRODUCTOS + " WHERE " + CampoFiltro + " = ?";
+        boolean Respuesta = false;
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch (TipoValorFiltro) {
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Respuesta = true;
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TerceroDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + TerceroDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return Respuesta;
     }
-    
+
 }

@@ -1,6 +1,7 @@
 package vista;
 
 import src.Constantes;
+import vista.Consulta.ConsultarProductos;
 import vista.Consulta.ConsultarTerceros;
 
 /*
@@ -51,6 +52,7 @@ public class frmInicio extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
+        menuConsultaProductos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faro Soluciones");
@@ -165,6 +167,14 @@ public class frmInicio extends javax.swing.JFrame {
 
         jMenu2.add(jMenu5);
 
+        menuConsultaProductos.setText("PRODUCTOS");
+        menuConsultaProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultaProductosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuConsultaProductos);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -238,6 +248,12 @@ public class frmInicio extends javax.swing.JFrame {
         var.setVisible(true);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void menuConsultaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaProductosActionPerformed
+        ConsultarProductos var = new ConsultarProductos();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+    }//GEN-LAST:event_menuConsultaProductosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,5 +310,6 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JDesktopPane jdpEscritorio;
+    private javax.swing.JMenuItem menuConsultaProductos;
     // End of variables declaration//GEN-END:variables
 }

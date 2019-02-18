@@ -148,12 +148,14 @@ public class IntProductos extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel11.setText("VR NETO");
 
-        txtVrNetoCosto.setText("jTextField4");
-
         jLabel13.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel13.setText("% IVA");
 
-        txtPorcIvaCosto.setText("jTextField4");
+        txtPorcIvaCosto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPorcIvaCostoActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel14.setText("VR IVA");
@@ -163,8 +165,6 @@ public class IntProductos extends javax.swing.JInternalFrame {
 
         jLabel20.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel20.setText("COSTO TOTAL");
-
-        txtCostoTotalCosto.setText("jTextField4");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -214,20 +214,14 @@ public class IntProductos extends javax.swing.JInternalFrame {
         jLabel15.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel15.setText("VR NETO");
 
-        txtVrNetoVenta.setText("jTextField4");
-
         jLabel21.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel21.setText("% IVA");
 
         jLabel22.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel22.setText("VR IVA");
 
-        txtPorcIvaVenta.setText("jTextField4");
-
         jLabel23.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel23.setText("VR IVA");
-
-        txtCostoTotalVenta.setText("jTextField4");
 
         jLabel24.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel24.setText("COSTO TOTAL");
@@ -237,10 +231,6 @@ public class IntProductos extends javax.swing.JInternalFrame {
 
         jLabel26.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel26.setText("VR UTILIDAD");
-
-        txtPorcUtilidad.setText("jTextField4");
-
-        txtVrUtilidad.setText("jTextField4");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -318,7 +308,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -446,12 +436,12 @@ public class IntProductos extends javax.swing.JInternalFrame {
         var.setReferencia(txtReferencia.getText());
         var.setDescripcion(txtDescripcion.getText());
         var.setRutaImagen("Pendiente de agregar");
-        var.setCostoNeto(19);
-        var.setCostoIva(19);
-        var.setVentaNeto(19);
-        var.setVentaIva(19);
+        var.setCostoNeto(19.0);
+        var.setCostoIva(19.0);
+        var.setVentaNeto(19.0);
+        var.setVentaIva(19.0);
         try{
-            var.setVentaUtilidad(Float.parseFloat(txtVrUtilidad.getText()));
+            var.setVentaUtilidad(Double.parseDouble(txtVrUtilidad.getText()));
         }
         catch(Exception e){
             e.printStackTrace();
@@ -474,6 +464,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
                 return;
             }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtPorcIvaCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPorcIvaCostoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPorcIvaCostoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

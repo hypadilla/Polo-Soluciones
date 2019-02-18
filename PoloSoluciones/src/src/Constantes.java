@@ -14,6 +14,7 @@ public class Constantes {
     
     
     //Nombre Tablas
+    
     public static String TABLATERCEROS = "Terceros";
     public static String TABLACATEGORIAS = "Categorias";
     public static String TABLAUSUARIOS = "Usuario";

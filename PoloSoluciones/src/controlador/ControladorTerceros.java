@@ -14,45 +14,59 @@ import modelo.Interfaces.ITerceros;
  *
  * @author hypadilla
  */
-public class ControladorTerceros implements ITerceros{
+public class ControladorTerceros implements ITerceros {
+
     TerceroDAO var = new TerceroDAO();
+
     @Override
-    public Object Insertar(Object object) {        
-       Object[] Rpta = new Object[2];
+    public Object Insertar(Object object) {
+        ArrayList<String> Filtro = new ArrayList();
+        Object[] Rpta = new Object[2];
         Terceros terceros = (Terceros) object;
-        if (terceros.getTipoTercero().length()>30){
-            Rpta[0]= "String";
-            Rpta[1]= "El nombre del tipo de tercero es demasiado largo";
-            return Rpta;
+        Filtro.add("Documento");
+        Filtro.add(terceros.getDocumento());
+        Filtro.add("String");
+        if(Existe(Filtro)) {
+            Rpta[0] = "String";
+                Rpta[1] = "El Tercero ya existe en la base de datos";
+                return Rpta;
+        } else {
+            
+            if (terceros.getTipoTercero().length() > 30) {
+                Rpta[0] = "String";
+                Rpta[1] = "El nombre del tipo de tercero es demasiado largo";
+                return Rpta;
+            }
+            if (terceros.getDocumento().length() > 20) {
+                Rpta[0] = "String";
+                Rpta[1] = "El documento es demasiado largo";
+                return Rpta;
+            }
+
+            if (terceros.getNombre().length() > 100) {
+                Rpta[0] = "String";
+                Rpta[1] = "El nombre  es demasiado largo";
+                return Rpta;
+            }
+            if (terceros.getDireccion().length() > 100) {
+                Rpta[0] = "String";
+                Rpta[1] = "La direccion es demasiado larga";
+                return Rpta;
+            }
+            if (terceros.getCorreo().length() > 100) {
+                Rpta[0] = "String";
+                Rpta[1] = "El correo es demasiado largo";
+                return Rpta;
+            }
+
+            if (terceros.getTelefono().length() > 15) {
+                Rpta[0] = "String";
+                Rpta[1] = "El telefono es demasiado largo";
+                return Rpta;
+            }
+            return var.Insertar(object);
         }
-        if (terceros.getDocumento().length()>20){
-            Rpta[0]= "String";
-            Rpta[1]= "El documento es demasiado largo";
-            return Rpta;
-        }
-        
-        if (terceros.getNombre().length()>100){
-            Rpta[0]= "String";
-            Rpta[1]= "El nombre  es demasiado largo";
-            return Rpta;
-        }
-        if (terceros.getDireccion().length()>100){
-            Rpta[0]= "String";
-            Rpta[1]= "La direccion es demasiado larga";
-            return Rpta;
-        }
-        if(terceros.getCorreo().length()>100){
-            Rpta[0]= "String";
-            Rpta[1]= "El correo es demasiado largo";
-            return Rpta;
-        }
-        
-        if(terceros.getTelefono().length()>15){
-            Rpta[0]= "String";
-            Rpta[1]= "El telefono es demasiado largo";
-            return Rpta;
-        }
-        return var.Insertar(object);
+
     }
 
     @Override
@@ -80,6 +94,4 @@ public class ControladorTerceros implements ITerceros{
         return var.Existe(object);
     }
 
-    
-    
 }

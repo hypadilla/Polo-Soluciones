@@ -26,7 +26,7 @@ public class Productos {
     public Productos() {
     }
 
-    public Productos(int id, String codigo, String referencia, String descripcion, String rutaImagen, float costoNeto, float costoIva, float ventaNeto, float ventaIva, float ventaUtilidad, int idCategoria, int idDepartamento) {
+    public Productos(int id, String codigo, String referencia, String descripcion, String rutaImagen, Double costoNeto, Double costoIva, Double ventaNeto, Double ventaIva, Double ventaUtilidad, int idCategoria, int idDepartamento) {
         this.id = id;
         this.codigo = codigo;
         this.referencia = referencia;
@@ -85,7 +85,7 @@ public class Productos {
         return costoNeto;
     }
 
-    public void setCostoNeto(float costoNeto) {
+    public void setCostoNeto(Double costoNeto) {
         this.costoNeto = costoNeto;
     }
 
@@ -93,7 +93,7 @@ public class Productos {
         return costoIva;
     }
 
-    public void setCostoIva(float costoIva) {
+    public void setCostoIva(Double costoIva) {
         this.costoIva = costoIva;
     }
 
@@ -101,7 +101,7 @@ public class Productos {
         return ventaNeto;
     }
 
-    public void setVentaNeto(float ventaNeto) {
+    public void setVentaNeto(Double ventaNeto) {
         this.ventaNeto = ventaNeto;
     }
 
@@ -109,7 +109,7 @@ public class Productos {
         return ventaIva;
     }
 
-    public void setVentaIva(float ventaIva) {
+    public void setVentaIva(Double ventaIva) {
         this.ventaIva = ventaIva;
     }
 
@@ -117,7 +117,7 @@ public class Productos {
         return ventaUtilidad;
     }
 
-    public void setVentaUtilidad(float ventaUtilidad) {
+    public void setVentaUtilidad(Double ventaUtilidad) {
         this.ventaUtilidad = ventaUtilidad;
     }
 

@@ -5,24 +5,23 @@
  */
 package vista.Consulta;
 
-import controlador.ControladorTerceros;
+import controlador.ControladorProductos;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import modelo.Entidades.Terceros;
+import modelo.Entidades.Productos;
 
 /**
  *
  * @author hypadilla
  */
-public class ConsultarTerceros extends javax.swing.JInternalFrame {
+public class ConsultarProductos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ConsultarTerceros
      */
-    public ConsultarTerceros() {
+    public ConsultarProductos() {
         initComponents();
         LlenarTabla("");
         txtFiltro.getDocument().addDocumentListener(new DocumentListener() {
@@ -45,14 +44,14 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
     }
 
     void LlenarTabla(String Consulta) {
-        String col[] = {"TIPO", "DOCUMENTO", "NOMBRE", "DIRECCIÓN", "CORREO", "TÉLEFONO"};
+        String col[] = {"CODIGO", "REFERENCIA", "DESCRIPCION", "VR VENTA", "CANT"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         tblConsulta.setModel(tableModel);
-        ControladorTerceros controladorTerceros = new ControladorTerceros();
-        ArrayList<Object> terceros = controladorTerceros.MostrarTodos(Consulta);
-        for (Object item : terceros) {
-            Terceros tercero = (Terceros) item;
-            tableModel.addRow(new Object[]{tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getTelefono(), tercero.getDireccion(), tercero.getCorreo()});
+        ControladorProductos controladorProductos = new ControladorProductos();
+        ArrayList<Object> productos = controladorProductos.MostrarTodos(Consulta);
+        for (Object item : productos) {
+            Productos producto = (Productos) item;
+            tableModel.addRow(new Object[]{producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getVentaIva()+producto.getVentaNeto(), 0});
         }
 
     }
@@ -73,12 +72,18 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Consultar Terceros");
+        setResizable(true);
+        setTitle("Consultar Productos");
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("FILTRAR POR CÓDIGO O NOMBRE");
 
         txtFiltro.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        txtFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFiltroActionPerformed(evt);
+            }
+        });
 
         tblConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,8 +124,14 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        getAccessibleContext().setAccessibleName("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
