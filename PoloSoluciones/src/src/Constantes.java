@@ -5,6 +5,8 @@
  */
 package src;
 
+import modelo.Entidades.Usuarios;
+
 /**
  *
  * @author hypadilla
@@ -14,11 +16,13 @@ public class Constantes {
     
     
     //Nombre Tablas
-    
+    public static Usuarios USUARIO;
     public static String TABLATERCEROS = "Terceros";
     public static String TABLACATEGORIAS = "Categorias";
     public static String TABLAUSUARIOS = "Usuario";
     public static String TABLADEPARTAMENTOS = "Departamentos";
     public static String TABLACONCEPTOS = "Conceptos";
     public static String TABLAPRODUCTOS = "Productos";
+    public static String TABLAFACTURACION = "Facturacion";
+    public static String TABLADETALLEFACTURACION = "Detallefacturacion";
 }
