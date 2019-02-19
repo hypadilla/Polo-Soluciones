@@ -5,7 +5,7 @@
  */
 package modelo.Entidades;
 
-import java.sql.Date;
+
 
 /**
  *
@@ -16,7 +16,7 @@ public class Facturacion {
     int idConceptos;
     int idTerceros;
     int idUsuarios;
-    Date Fecha;
+    String Fecha;
     int Consecutivo;
     String Observacion;
     double SubTotal;
@@ -28,7 +28,7 @@ public class Facturacion {
     public Facturacion() {
     }
 
-    public Facturacion(int id, int idConceptos, int idTerceros, int idUsuarios, Date Fecha, int Consecutivo, String Observacion, double SubTotal, double IVA, double Descuento, String FormaPago, double Total) {
+    public Facturacion(int id, int idConceptos, int idTerceros, int idUsuarios, String Fecha, int Consecutivo, String Observacion, double SubTotal, double IVA, double Descuento, String FormaPago, double Total) {
         this.id = id;
         this.idConceptos = idConceptos;
         this.idTerceros = idTerceros;
@@ -75,11 +75,11 @@ public class Facturacion {
         this.idUsuarios = idUsuarios;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
-    public void setFecha(Date Fecha) {
+    public void setFecha(String Fecha) {
         this.Fecha = Fecha;
     }
 

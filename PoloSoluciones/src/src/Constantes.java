@@ -24,5 +24,5 @@ public class Constantes {
     public static String TABLACONCEPTOS = "Conceptos";
     public static String TABLAPRODUCTOS = "Productos";
     public static String TABLAFACTURACION = "Facturacion";
-    public static String TABLADETALLEFACTURACION = "Detallefacturacion";
+    public static String TABLADETALLEFACTURACION = "DetalleFacturacion";
 }
