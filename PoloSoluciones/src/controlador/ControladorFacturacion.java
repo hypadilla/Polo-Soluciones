@@ -84,4 +84,9 @@ public class ControladorFacturacion implements IFacturacion {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    return var.Existe(object);
     }
+
+    @Override
+    public Object RegistrarFactura(Object object, Object object2) {
+       return var.RegistrarFactura(object, object2);
+    }
 }

@@ -10,5 +10,5 @@ package modelo.Interfaces;
  * @author cdap_
  */
 public interface IFacturacion extends ICrud{
-    
+    public Object RegistrarFactura(Object object, Object object2);
 }

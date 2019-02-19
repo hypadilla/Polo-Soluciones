@@ -6,9 +6,9 @@
 package vista;
 
 import controlador.ControladorFacturacion;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 
 /**
@@ -357,6 +357,20 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         var.setIdUsuarios(1);
         var.setFecha("2018-02-05");
         
+        ArrayList<DetalleFacturacion> listaDetalleFactura = new ArrayList();
+        DetalleFacturacion detalleFacturacion = new DetalleFacturacion();
+        detalleFacturacion.setIdProducto(5);
+        detalleFacturacion.setCantidad(5);
+        detalleFacturacion.setVrProducto(5000.0);
+        detalleFacturacion.setVrIVA(19.0);
+        detalleFacturacion.setVrDescuento(0.0);
+        listaDetalleFactura.add(detalleFacturacion);
+        detalleFacturacion.setIdProducto(6);
+        detalleFacturacion.setCantidad(7);
+        detalleFacturacion.setVrProducto(5500.0);
+        detalleFacturacion.setVrIVA(19.0);
+        detalleFacturacion.setVrDescuento(0.0);
+        listaDetalleFactura.add(detalleFacturacion);
         try {
             var.setConsecutivo(Integer.parseInt(txtConsecutivo.getText()));
         } catch (NumberFormatException e) {
@@ -413,7 +427,8 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         }  
         ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
         Object[] object = new Object[2];
-        object = (Object[]) controladorFacturacion.Insertar(var);
+        
+        object = (Object[]) controladorFacturacion.RegistrarFactura( (Object) var,(Object) listaDetalleFactura);
         if (object[0] == "String") {
             JOptionPane.showMessageDialog(this, object[1]);
             return;
