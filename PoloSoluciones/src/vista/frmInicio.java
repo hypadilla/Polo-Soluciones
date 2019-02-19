@@ -309,7 +309,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JDesktopPane jdpEscritorio;
+    public static javax.swing.JDesktopPane jdpEscritorio;
     private javax.swing.JMenuItem menuConsultaProductos;
     // End of variables declaration//GEN-END:variables
 }

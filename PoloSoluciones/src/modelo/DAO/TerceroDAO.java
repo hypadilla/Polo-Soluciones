@@ -49,8 +49,47 @@ public class TerceroDAO implements ITerceros {
     }
 
     @Override
-    public ArrayList<Object> Mostrar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object Mostrar(Object object) {
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLATERCEROS + " WHERE " + CampoFiltro + " = ?";
+        Terceros tercero = new Terceros();
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch (TipoValorFiltro) {
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                tercero.setIdTerceros(resultSet.getInt("idTerceros"));
+                tercero.setTipoTercero(resultSet.getString("TipoTercero"));
+                tercero.setDocumento(resultSet.getString("Documento"));
+                tercero.setNombre(resultSet.getString("Nombre"));
+                tercero.setDireccion(resultSet.getString("Direccion"));
+                tercero.setCorreo(resultSet.getString("Correo"));
+                tercero.setTelefono(resultSet.getString("Telefono"));
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TerceroDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + TerceroDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return tercero;
     }
 
     @Override

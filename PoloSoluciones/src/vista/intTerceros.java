@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.ControladorTerceros;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.TextUI;
 import modelo.Entidades.Terceros;
@@ -16,20 +17,46 @@ import modelo.Entidades.Terceros;
  */
 public class intTerceros extends javax.swing.JInternalFrame {
 
+    int id;
+
     /**
      * Creates new form intTerceros
      */
     public intTerceros() {
         initComponents();
+        id = 0;
+    }
+
+    public intTerceros(int id) {
+        initComponents();
+        this.id = id;
+        txtDocumento.setEnabled(false);
+        ArrayList<String> Filtro = new ArrayList();
+        Filtro.add("IdTerceros");
+        Filtro.add(String.valueOf(id));
+        Filtro.add("Int");
+        ControladorTerceros controladorTerceros = new ControladorTerceros();
+        Terceros terceros = new Terceros();
+        terceros = (Terceros) controladorTerceros.Mostrar(Filtro);
+        txtDocumento.setText(terceros.getDocumento());
+        cbTipoTercero.setSelectedItem(terceros.getTipoTercero());
+        txtNombre.setText(terceros.getNombre());
+        txtTelefono.setText(terceros.getTelefono());
+        txtCorreo.setText(terceros.getCorreo());
+        txtDireccion.setText(terceros.getDireccion());
+        this.setTitle("ACTUALIZANDO TERCERO");
     }
 
     void Limpiar() {
+        this.setTitle("NUEVO TERCERO");
+        txtDocumento.setEnabled(true);
         cbTipoTercero.setSelectedIndex(0);
         txtDocumento.setText("");
         txtNombre.setText("");
         txtTelefono.setText("");
         txtCorreo.setText("");
         txtDireccion.setText("");
+        id = 0;
     }
 
     /**
@@ -57,6 +84,8 @@ public class intTerceros extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+
+        setTitle("NUEVO TERCERO");
 
         txtCorreo.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
@@ -221,17 +250,7 @@ public class intTerceros extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Terceros var = new Terceros();
-        /*
-        if (txtDocumento.getText() != null && !txtDocumento.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El campo Documento no puede estar vacío" );
-            return;
-        }
-        if (txtNombre.getText() != null && !txtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El campo Nombre no puede estar vacío" );
-            return;
-        }
-         */
-
+        var.setIdTerceros(id);
         var.setTipoTercero(cbTipoTercero.getSelectedItem().toString());
         var.setDocumento(txtDocumento.getText());
         var.setNombre(txtNombre.getText());
@@ -240,21 +259,31 @@ public class intTerceros extends javax.swing.JInternalFrame {
         var.setDireccion(txtDireccion.getText());
         ControladorTerceros controladorTerceros = new ControladorTerceros();
         Object[] object = new Object[2];
-        object = (Object[]) controladorTerceros.Insertar(var);
+        if (id > 0) {
+            object = (Object[]) controladorTerceros.Editar(var);
+        } else {
+            object = (Object[]) controladorTerceros.Insertar(var);
+        }
+
         if (object[0] == "String") {
             JOptionPane.showMessageDialog(this, object[1]);
             return;
         }
         if (object[0] == "Boolean") {
+            if (id > 0) {
+                if (((boolean) object[1])) {
+                    JOptionPane.showMessageDialog(this, "Actualización Exitoso");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Actualización Fallido");
+                }
+                return;
+            }
             if (((boolean) object[1])) {
                 JOptionPane.showMessageDialog(this, "Registro Exitoso");
             } else {
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }
-          
         }
-
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed

@@ -6,12 +6,15 @@
 package vista.Consulta;
 
 import controlador.ControladorTerceros;
+import java.awt.Point;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.Entidades.Terceros;
+import vista.frmInicio;
+import vista.intTerceros;
 
 /**
  *
@@ -29,7 +32,7 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-               LlenarTabla(txtFiltro.getText());
+                LlenarTabla(txtFiltro.getText());
             }
 
             @Override
@@ -45,16 +48,26 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
     }
 
     void LlenarTabla(String Consulta) {
-        String col[] = {"TIPO", "DOCUMENTO", "NOMBRE", "DIRECCIÓN", "CORREO", "TÉLEFONO"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        String col[] = {"ID", "TIPO", "DOCUMENTO", "NOMBRE", "DIRECCIÓN", "CORREO", "TÉLEFONO"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
         tblConsulta.setModel(tableModel);
+
+        tblConsulta.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblConsulta.getColumnModel().getColumn(0).setMinWidth(0);
+        tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+
         ControladorTerceros controladorTerceros = new ControladorTerceros();
         ArrayList<Object> terceros = controladorTerceros.MostrarTodos(Consulta);
         for (Object item : terceros) {
             Terceros tercero = (Terceros) item;
-            tableModel.addRow(new Object[]{tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getTelefono(), tercero.getDireccion(), tercero.getCorreo()});
+            tableModel.addRow(new Object[]{tercero.getIdTerceros(), tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getTelefono(), tercero.getDireccion(), tercero.getCorreo()});
         }
-
     }
 
     /**
@@ -91,6 +104,13 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblConsulta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tblConsulta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblConsultaMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblConsulta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -122,11 +142,26 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblConsultaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultaMousePressed
+        if (evt.getClickCount() > 1) {
+            Point point = evt.getPoint();
+            int row = tblConsulta.rowAtPoint(point);
+            int column = tblConsulta.columnAtPoint(point);
+            TableModel model = tblConsulta.getModel();
+
+            intTerceros t = new intTerceros(Integer.parseInt(model.getValueAt(row, 0).toString()));
+            frmInicio.jdpEscritorio.add(t);
+            t.show();
+            dispose();
+            //JOptionPane.showMessageDialog(this, );
+        }
+    }//GEN-LAST:event_tblConsultaMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblConsulta;
+    private static javax.swing.JTable tblConsulta;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

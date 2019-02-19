@@ -67,6 +67,9 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setText("NOMBRE USUARIO");
 
         txtUsuario.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        txtUsuario.setText("hypadilla");
+
+        txtClave.setText("123456");
 
         chbSesionIniciada.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         chbSesionIniciada.setText("¿MANTENER LA SESIÓN INICIADA?");
