@@ -45,6 +45,7 @@ public class intTerceros extends javax.swing.JInternalFrame {
         txtCorreo.setText(terceros.getCorreo());
         txtDireccion.setText(terceros.getDireccion());
         this.setTitle("ACTUALIZANDO TERCERO");
+        btnGuardar.setText("ACTUALIZAR");
     }
 
     void Limpiar() {

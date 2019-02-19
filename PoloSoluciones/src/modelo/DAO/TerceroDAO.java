@@ -45,7 +45,6 @@ public class TerceroDAO implements ITerceros {
             Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Rpta;
-
     }
 
     @Override
@@ -99,7 +98,25 @@ public class TerceroDAO implements ITerceros {
 
     @Override
     public Object Editar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Terceros var = (Terceros) object;
+        String QuerySQL = "UPDATE " + Constantes.TABLATERCEROS + " SET TipoTercero = ?, Nombre = ?, Direccion = ?,Correo = ?, Telefono = ?  WHERE idTerceros = ?";
+        Object[] Rpta = new Object[2];
+        Rpta[0] = "Boolean";
+
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, var.getTipoTercero());
+            preparedStatement.setString(2, var.getNombre());
+            preparedStatement.setString(3, var.getDireccion());
+            preparedStatement.setString(4, var.getCorreo());
+            preparedStatement.setString(5, var.getTelefono());
+            preparedStatement.setInt(6, var.getIdTerceros());
+            preparedStatement.execute();
+
+            Rpta[1] = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Rpta;
     }
 
     @Override

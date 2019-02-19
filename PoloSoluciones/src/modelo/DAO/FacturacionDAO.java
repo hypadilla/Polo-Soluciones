@@ -32,7 +32,7 @@ public class FacturacionDAO implements IFacturacion {
     public Object RegistrarFactura(Object object, Object object2) {
         Facturacion var = (Facturacion) object;
         String QuerySQL = "INSERT INTO " + Constantes.TABLAFACTURACION + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
-        String QueryFacturacionDetalle = "INSERT INTO " + Constantes.TABLADETALLEFACTURACION + " VALUES (NULL,?,?,?,?,?,?)";
+        //String QueryFacturacionDetalle = "INSERT INTO " + Constantes.TABLADETALLEFACTURACION + " VALUES (NULL,?,?,?,?,?,?)";
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
         PreparedStatement preparedStatement = null;
@@ -69,7 +69,7 @@ public class FacturacionDAO implements IFacturacion {
             } else {
                 JOptionPane.showMessageDialog(null, "no se pudo obtener la llave");
             }
-
+            /*
             ArrayList<FacturacionDetalle> detalleFactura = new ArrayList();
             detalleFactura = (ArrayList<FacturacionDetalle>) object2;
             for (Object item : detalleFactura) {
@@ -85,7 +85,7 @@ public class FacturacionDAO implements IFacturacion {
                 preparedStatementDetalle.executeUpdate();
 
             }
-
+            */
             Rpta[1] = true;
             connection.commit();
         } catch (Exception sqlException) {
@@ -141,7 +141,9 @@ public class FacturacionDAO implements IFacturacion {
 
     @Override
     public Object Insertar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return RegistrarFactura(object, object);
+        
     }
 
 }

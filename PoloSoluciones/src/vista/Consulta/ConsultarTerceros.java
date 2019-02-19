@@ -66,7 +66,7 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
         ArrayList<Object> terceros = controladorTerceros.MostrarTodos(Consulta);
         for (Object item : terceros) {
             Terceros tercero = (Terceros) item;
-            tableModel.addRow(new Object[]{tercero.getIdTerceros(), tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getTelefono(), tercero.getDireccion(), tercero.getCorreo()});
+            tableModel.addRow(new Object[]{tercero.getIdTerceros(), tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getDireccion(), tercero.getCorreo(), tercero.getTelefono()});
         }
     }
 
