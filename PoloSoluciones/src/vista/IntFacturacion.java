@@ -5,6 +5,10 @@
  */
 package vista;
 
+import controlador.ControladorFacturacion;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import modelo.Entidades.Facturacion;
 
 /**
@@ -18,6 +22,8 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
      */
     public IntFacturacion() {
         initComponents();
+       
+                
     }
 
     /**
@@ -61,6 +67,8 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         txtEliminar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         cbFormaPago = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaObservacion = new javax.swing.JTextArea();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("FECHA");
@@ -150,19 +158,24 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
 
         txtSubtotal.setEditable(false);
         txtSubtotal.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtSubtotal.setText("jTextField1");
+        txtSubtotal.setText("0.0");
 
         txtDescuento.setEditable(false);
         txtDescuento.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtDescuento.setText("jTextField1");
+        txtDescuento.setText("0.0");
 
         txtIva.setEditable(false);
         txtIva.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtIva.setText("jTextField1");
+        txtIva.setText("0.0");
+        txtIva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIvaActionPerformed(evt);
+            }
+        });
 
         txtTotal.setEditable(false);
         txtTotal.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtTotal.setText("jTextField1");
+        txtTotal.setText("0.0");
 
         txtGuardar.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         txtGuardar.setText("GUARDAR");
@@ -183,6 +196,10 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
 
         cbFormaPago.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         cbFormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "CRÉDITO" }));
+
+        txtAreaObservacion.setColumns(20);
+        txtAreaObservacion.setRows(5);
+        jScrollPane2.setViewportView(txtAreaObservacion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -254,7 +271,8 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel12)
                                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel8)
-                            .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -303,8 +321,10 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
@@ -322,56 +342,78 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtGuardar)
                         .addComponent(txtEliminar)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void txtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGuardarActionPerformed
         Facturacion var = new Facturacion();
         var.setIdConceptos(Integer.parseInt(txtIdConcepto.getText()));
         var.setIdTerceros(Integer.parseInt(txtIdTercero.getText()));
         var.setIdUsuarios(1);
-        //var.setFecha(txtFecha.getText());
-        /*
+        var.setFecha("2018-02-05");
+        
         try {
-            var.setCostoNeto(Double.parseDouble(txtVrNetoCosto.getText()));
+            var.setConsecutivo(Integer.parseInt(txtConsecutivo.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del costo neto debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del consecutivo no es correcto.");
+            return;
+        }
+        
+        
+            var.setObservacion(txtAreaObservacion.getText());
+        
+        
+        try {
+            var.setSubTotal(Double.parseDouble(txtSubtotal.getText()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El vr del subtotal debe ser numerico.");
             return;
         }
         
         try {
-            var.setCostoIva(Double.parseDouble(txtPorcIvaCosto.getText()));
+            var.setDescuento(Double.parseDouble(txtDescuento.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del costo del Iva debe ser numerico.");
-            return;
-        }
-        
-        try {
-            var.setVentaNeto(Double.parseDouble(txtVrNetoVenta.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr de la venta Neta debe ser numerico.");
-            return;
-        }
-        
-        try {
-            var.setVentaIva(Double.parseDouble(txtPorcIvaVenta.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del Iva debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser numerico.");
             return;
         }
         try {
-            var.setVentaUtilidad(Double.parseDouble(txtVrUtilidad.getText()));
+            var.setIVA(Double.parseDouble(txtIva.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr de la Utilidad debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del iva debe ser numerico.");
             return;
         }
-        
-        ControladorProductos controladorProductos = new ControladorProductos();
+         try {
+            var.setTotal(Double.parseDouble(txtTotal.getText()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El vr del total debe ser numerico.");
+            return;
+        }
+          try {
+            var.setIVA(Double.parseDouble(txtIva.getText()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El vr del iva debe ser numerico.");
+            return;
+        }
+          try {
+            var.setDescuento(Double.parseDouble(txtDescuento.getText()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser numerico.");
+            return;
+        } 
+          try {
+            var.setFormaPago(cbFormaPago.getSelectedItem().toString());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Escoja una forma de pago.");
+            return;
+        }  
+        ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
         Object[] object = new Object[2];
-        object = (Object[]) controladorProductos.Insertar(var);
+        object = (Object[]) controladorFacturacion.Insertar(var);
         if (object[0] == "String") {
             JOptionPane.showMessageDialog(this, object[1]);
             return;
@@ -384,8 +426,12 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
             }
             return;
         }
-        */
+        
     }//GEN-LAST:event_txtGuardarActionPerformed
+
+    private void txtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIvaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIvaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -403,7 +449,9 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea txtAreaObservacion;
     private javax.swing.JTextField txtCiudad;
     private javax.swing.JTextField txtConcepto;
     private javax.swing.JTextField txtConsecutivo;

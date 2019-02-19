@@ -147,6 +147,11 @@ public class frmInicio extends javax.swing.JFrame {
         jMenu4.add(jMenuItem10);
 
         jMenuItem11.setText("MOVIMIENTOS");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem11);
 
         jMenu1.add(jMenu4);
@@ -253,6 +258,13 @@ public class frmInicio extends javax.swing.JFrame {
         jdpEscritorio.add(var);
         var.setVisible(true);
     }//GEN-LAST:event_menuConsultaProductosActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        IntFacturacion var = new IntFacturacion();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
