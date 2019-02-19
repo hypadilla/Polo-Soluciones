@@ -48,7 +48,7 @@ public class Conexion {
 
         try {
             con = DriverManager.getConnection(url2, username, password);
-
+            
             if (con != null) {
                 System.out.println(con);
             }else{
