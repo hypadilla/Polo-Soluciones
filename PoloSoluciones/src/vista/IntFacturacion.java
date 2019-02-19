@@ -367,12 +367,13 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         detalleFacturacion.setVrIVA(19.0);
         detalleFacturacion.setVrDescuento(0.0);
         listaDetalleFactura.add(detalleFacturacion);
-        detalleFacturacion.setIdProducto(6);
-        detalleFacturacion.setCantidad(7);
-        detalleFacturacion.setVrProducto(5500.0);
-        detalleFacturacion.setVrIVA(19.0);
-        detalleFacturacion.setVrDescuento(0.0);
-        listaDetalleFactura.add(detalleFacturacion);
+        DetalleFacturacion detalleFacturacion2 = new DetalleFacturacion();
+        detalleFacturacion2.setIdProducto(6);
+        detalleFacturacion2.setCantidad(7);
+        detalleFacturacion2.setVrProducto(5500.0);
+        detalleFacturacion2.setVrIVA(19.0);
+        detalleFacturacion2.setVrDescuento(0.0);
+        listaDetalleFactura.add(detalleFacturacion2);
         try {
             var.setConsecutivo(Integer.parseInt(txtConsecutivo.getText()));
         } catch (NumberFormatException e) {

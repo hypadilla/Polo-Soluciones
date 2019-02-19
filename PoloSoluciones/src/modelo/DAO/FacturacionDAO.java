@@ -11,16 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import java.util.Date;
 import modelo.Conexion;
 import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 import modelo.Entidades.FacturacionDetalle;
-import modelo.Entidades.Productos;
-import modelo.Entidades.Terceros;
 import modelo.Interfaces.IFacturacion;
 import src.Constantes;
 
@@ -29,12 +24,13 @@ import src.Constantes;
  * @author cdap_
  */
 public class FacturacionDAO implements IFacturacion {
+
     @Override
     public Object RegistrarFactura(Object object, Object object2) {
-        
+
         Facturacion var = (Facturacion) object;
         String QuerySQL = "INSERT INTO " + Constantes.TABLAFACTURACION + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
-        //String QueryFacturacionDetalle = "INSERT INTO " + Constantes.TABLADETALLEFACTURACION + " VALUES (NULL,?,?,?,?,?,?)";
+        String QueryFacturacionDetalle = "INSERT INTO " + Constantes.TABLADETALLEFACTURACION + " VALUES (NULL,?,?,?,?,?,?)";
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
         PreparedStatement preparedStatement = null;
@@ -66,16 +62,13 @@ public class FacturacionDAO implements IFacturacion {
             ResultSet rs = preparedStatement.getGeneratedKeys();
             int llave = 0;
             if (rs != null && rs.next()) {
-                llave = rs.getInt(1);
-                JOptionPane.showMessageDialog(null, "La llave es:" + llave);
-            } else {
-                JOptionPane.showMessageDialog(null, "no se pudo obtener la llave");
-            }
-            /*
+                llave = rs.getInt(1);                
+            } 
+
             ArrayList<FacturacionDetalle> detalleFactura = new ArrayList();
             detalleFactura = (ArrayList<FacturacionDetalle>) object2;
             for (Object item : detalleFactura) {
-                
+
                 DetalleFacturacion var2 = (DetalleFacturacion) item;
                 preparedStatementDetalle = connection.prepareStatement(QueryFacturacionDetalle);
                 preparedStatementDetalle.setInt(1, llave);
@@ -84,21 +77,18 @@ public class FacturacionDAO implements IFacturacion {
                 preparedStatementDetalle.setDouble(4, var2.getVrProducto());
                 preparedStatementDetalle.setDouble(5, var2.getVrIVA());
                 preparedStatementDetalle.setDouble(6, var2.getVrDescuento());
-                preparedStatementDetalle.executeUpdate();
+                preparedStatementDetalle.execute();
 
             }
-            */
+
             Rpta[1] = true;
             connection.commit();
         } catch (Exception sqlException) {
             Rpta[1] = false;
-            JOptionPane.showMessageDialog(null, "Error al registrar factura, intentando rollback...");
             sqlException.printStackTrace();
             try {
                 connection.rollback(saveObj);
-                JOptionPane.showMessageDialog(null, "rollback exitoso");
             } catch (SQLException sqlEx) {
-                JOptionPane.showMessageDialog(null, "rollback fallido");
                 sqlEx.printStackTrace();
             }
         } finally {
@@ -143,9 +133,7 @@ public class FacturacionDAO implements IFacturacion {
 
     @Override
     public Object Insertar(Object object) {
-        
-        return RegistrarFactura(object, object);
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
