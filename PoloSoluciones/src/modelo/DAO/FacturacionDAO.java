@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import modelo.Conexion;
+import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 import modelo.Entidades.FacturacionDetalle;
 import modelo.Entidades.Productos;
@@ -28,8 +29,9 @@ import src.Constantes;
  * @author cdap_
  */
 public class FacturacionDAO implements IFacturacion {
-
+    @Override
     public Object RegistrarFactura(Object object, Object object2) {
+        
         Facturacion var = (Facturacion) object;
         String QuerySQL = "INSERT INTO " + Constantes.TABLAFACTURACION + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
         //String QueryFacturacionDetalle = "INSERT INTO " + Constantes.TABLADETALLEFACTURACION + " VALUES (NULL,?,?,?,?,?,?)";
@@ -74,7 +76,7 @@ public class FacturacionDAO implements IFacturacion {
             detalleFactura = (ArrayList<FacturacionDetalle>) object2;
             for (Object item : detalleFactura) {
                 
-                FacturacionDetalle var2 = (FacturacionDetalle) item;
+                DetalleFacturacion var2 = (DetalleFacturacion) item;
                 preparedStatementDetalle = connection.prepareStatement(QueryFacturacionDetalle);
                 preparedStatementDetalle.setInt(1, llave);
                 preparedStatementDetalle.setInt(2, var2.getIdProducto());
