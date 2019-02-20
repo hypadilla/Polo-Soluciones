@@ -22,7 +22,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
      */
     public IntProductos() {
         initComponents();
-    
+        
     
     txtVrNetoCosto.getDocument().addDocumentListener(new DocumentListener() {
 

@@ -26,7 +26,7 @@ public class UsuarioDAO implements IUsuario {
         PreparedStatement ps = null;
         Connection acceDB = null;
 
-        String registrarSQL = "INSERT INTO usuario values (null,?,?,?,?,?)";
+        String registrarSQL = "INSERT INTO " +Constantes.TABLAUSUARIOS+ " values (null,?,?,?,?,?)";
 
         try {
             acceDB = Conexion.conectar();
@@ -52,7 +52,33 @@ public class UsuarioDAO implements IUsuario {
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String QuerySQL = "SELECT * FROM Usuario WHERE ((Usuario like ?)|| (Correo like ?) )";
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, "%"+ String.valueOf(object) + "%");
+            preparedStatement.setString(2, "%"+ String.valueOf(object) + "%");
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Usuarios usuarios = new Usuarios();
+                usuarios.setId(resultSet.getInt("IdUsuario"));
+                usuarios.setUsuario(resultSet.getString("Usuario"));
+                usuarios.setClave(resultSet.getString("Contraseña"));
+                usuarios.setCorreoElectronico(resultSet.getString("Correo"));
+                usuarios.setPregunta(resultSet.getString("PreguntaSecreta"));
+                usuarios.setRespuestaSecreta(resultSet.getString("RespuestaSecreta"));                
+                Respuesta.add(usuarios);
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + UsuarioDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
     }
 
     @Override
@@ -62,7 +88,31 @@ public class UsuarioDAO implements IUsuario {
 
     @Override
     public Object Editar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Usuarios usuario = (Usuarios) object;
+        Object[] Rpta = new Object[2];
+        PreparedStatement ps = null;
+        Connection acceDB = null;
+
+        String registrarSQL = "UPDATE "  +Constantes.TABLAUSUARIOS+ " SET Contraseña = ?,Correo = ?,PreguntaSecreta = ?,RespuestaSecreta = ? WHERE Usuario = ?";
+        Rpta[0] = "Boolean";
+        try {
+            acceDB = Conexion.conectar();
+            ps = acceDB.prepareStatement(registrarSQL);            
+            ps.setString(1, usuario.getClave());
+            ps.setString(2, usuario.getCorreoElectronico());
+            ps.setString(3, usuario.getPregunta());
+            ps.setString(4, usuario.getRespuestaSecreta());
+            ps.setString(5, usuario.getUsuario());
+            ps.execute();
+            ps.close();
+            acceDB.close();
+            
+            Rpta[1] = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return Rpta;
     }
 
     @Override

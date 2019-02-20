@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.ControladorUsuario;
+import java.util.ArrayList;
 import modelo.Entidades.Usuarios;
 import vista.frmInicio;
 
@@ -164,7 +165,11 @@ public class Login extends javax.swing.JFrame {
             return;
         }
         ControladorUsuario controladorUsuario = new ControladorUsuario();
-        Usuarios usuarios = (Usuarios) controladorUsuario.Mostrar(txtUsuario.getText());
+        ArrayList<String> Filtro = new ArrayList();
+        Filtro.add("Usuario");
+        Filtro.add(txtUsuario.getText());
+        Filtro.add("String");
+        Usuarios usuarios = (Usuarios) controladorUsuario.Mostrar(Filtro);
         
         if (usuarios != null) {
             frmInicio inicio = new frmInicio();

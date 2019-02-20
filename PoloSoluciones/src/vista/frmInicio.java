@@ -3,6 +3,7 @@ package vista;
 import src.Constantes;
 import vista.Consulta.ConsultarProductos;
 import vista.Consulta.ConsultarTerceros;
+import vista.Consulta.ConsultarUsuarios;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -52,6 +53,7 @@ public class frmInicio extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         menuConsultaProductos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -170,6 +172,14 @@ public class frmInicio extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem13);
 
+        jMenuItem14.setText("USUARIOS");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem14);
+
         jMenu2.add(jMenu5);
 
         menuConsultaProductos.setText("PRODUCTOS");
@@ -266,6 +276,12 @@ public class frmInicio extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        ConsultarUsuarios var = new ConsultarUsuarios();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -313,6 +329,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

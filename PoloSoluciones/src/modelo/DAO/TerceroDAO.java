@@ -114,7 +114,7 @@ public class TerceroDAO implements ITerceros {
 
             Rpta[1] = true;
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TerceroDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Rpta;
     }

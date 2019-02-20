@@ -6,7 +6,9 @@
 package vista;
 
 import controlador.ControladorUsuario;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.Entidades.Terceros;
 import modelo.Entidades.Usuarios;
 
 /**
@@ -20,6 +22,28 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
      */
     public IntUsuarios() {
         initComponents();
+    }
+    int id;
+
+    public IntUsuarios(int id) {
+        initComponents();
+        this.id = id;
+        txtUsuario.setEnabled(false);
+        ArrayList<String> Filtro = new ArrayList();
+        Filtro.add("IdUsuario");
+        Filtro.add(String.valueOf(id));
+        Filtro.add("Int");
+        ControladorUsuario controladorUsuario = new ControladorUsuario();
+        Usuarios usuarios = new Usuarios();
+        usuarios = (Usuarios) controladorUsuario.Mostrar(Filtro);
+        txtUsuario.setText(usuarios.getUsuario());
+        txtContraseña.setText(usuarios.getClave());
+        txtConfirmarContraseña.setText(usuarios.getClave());
+        txtCorreo.setText(usuarios.getCorreoElectronico());
+        cbPregunta.setSelectedItem(usuarios.getPregunta());
+        txtRespuesta.setText(usuarios.getRespuestaSecreta());
+        this.setTitle("ACTUALIZANDO USUARIO");
+        btnGuardar.setText("ACTUALIZAR");
     }
 
     /**
@@ -131,23 +155,23 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtContraseña, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtConfirmarContraseña, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbPregunta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRespuesta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtConfirmarContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRespuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +200,7 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRespuesta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -194,16 +218,17 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /***
+    /**
+     * *
      * Metodo que limpia los campos del formulario IntUsuarios.
      */
-    private void Limpiar(){        
+    private void Limpiar() {
         txtUsuario.setText("");
         txtContraseña.setText("");
         txtConfirmarContraseña.setText("");
@@ -222,26 +247,32 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
         var.setPregunta(cbPregunta.getSelectedItem().toString());
         var.setRespuestaSecreta(txtRespuesta.getText());
         ControladorUsuario controladorUsuario = new ControladorUsuario();
-        
-        if (txtContraseña.getText().equals(txtConfirmarContraseña.getText())){
-                Object[] object = new Object[2];
-            object = (Object[])controladorUsuario.Insertar(var);
-            if(object[0]=="String"){
+
+        if (txtContraseña.getText().equals(txtConfirmarContraseña.getText())) {
+            Object[] object = new Object[2];
+
+            if (id > 0) {
+                object = (Object[]) controladorUsuario.Editar(var);
+            } else {
+                object = (Object[]) controladorUsuario.Insertar(var);
+            }
+
+            if (object[0] == "String") {
                 JOptionPane.showMessageDialog(this, object[1]);
                 return;
             }
-            if(object[0]=="Boolean"){
-                if(((boolean) object[1])){
-                    JOptionPane.showMessageDialog(this, "Registro Exitoso");                
-                }else{
+            if (object[0] == "Boolean") {
+                if (((boolean) object[1])) {
+                    JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                } else {
                     JOptionPane.showMessageDialog(this, "Registro Fallido");
                 }
                 return;
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
         }
-        
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 

@@ -80,21 +80,59 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public Object Editar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuarios usuario = (Usuarios) object;
+        Object[] Rpta = new Object[2];
+        if (usuario.getUsuario().length() > 10) {
+            Rpta[0] = "String";
+            Rpta[1] = "El nombre de usuario es demasiado largo";
+            return Rpta;
+        }
+        if (usuario.getUsuario().length() < 5) {
+            Rpta[0] = "String";
+            Rpta[1] = "El nombre de usuario es demasiado corto";
+            return Rpta;
+        }
+        if (usuario.getClave().length() > 12) {
+            Rpta[0] = "String";
+            Rpta[1] = "La contraseña es demasiado larga";
+            return Rpta;
+        }
+        if (usuario.getClave().length() < 8) {
+            Rpta[0] = "String";
+            Rpta[1] = "La contraseña es demasiado corta";
+            return Rpta;
+        }
+        if (usuario.getCorreoElectronico().length() > 100) {
+            Rpta[0] = "String";
+            Rpta[1] = "El correo es demasiado Largo";
+            return Rpta;
+        }
+        if (usuario.getCorreoElectronico().length() > 100) {
+            Rpta[0] = "String";
+            Rpta[1] = "El correo es demasiado Largo";
+            return Rpta;
+        }
+        if (usuario.getPregunta().length() > 50) {
+            Rpta[0] = "String";
+            Rpta[1] = "La pregunta es demasiado larga";
+            return Rpta;
+        }
+        if (usuario.getRespuestaSecreta().length() > 20) {
+            Rpta[0] = "String";
+            Rpta[1] = "La respuesta es demasiado larga.";
+            return Rpta;
+        }
+        return var.Editar(object);
     }
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.MostrarTodos(object);
     }
 
     @Override
     public Object Mostrar(Object object) {
-        ArrayList<String> Parametros = new ArrayList<>();
-        Parametros.add("Usuario");
-        Parametros.add(object.toString());
-        Parametros.add("String");
-        return var.Mostrar(Parametros);
+      return var.Mostrar(object);
     }
 
     @Override
