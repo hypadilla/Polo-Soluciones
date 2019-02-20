@@ -88,7 +88,7 @@ public class ControladorConceptos implements IConceptos{
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.MostrarTodos(object);
     }
 
     @Override

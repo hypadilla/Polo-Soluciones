@@ -5,9 +5,16 @@
  */
 package vista;
 
+import controlador.ControladorConceptos;
 import controlador.ControladorFacturacion;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import modelo.Entidades.Conceptos;
 import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 
@@ -17,13 +24,48 @@ import modelo.Entidades.Facturacion;
  */
 public class IntFacturacion extends javax.swing.JInternalFrame {
 
+    Date date;
+    DateFormat dateFormat;
+    ArrayList<Conceptos> conceptos;
+
     /**
      * Creates new form IntFacturacion
      */
     public IntFacturacion() {
         initComponents();
-       
-                
+        date = new Date();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        txtFecha.setText(dateFormat.format(date));
+
+        conceptos = new ArrayList<>();
+        LlenarConceptos();
+    }
+
+    /*int ObtenerConcepto() {
+        int i;
+        boolean flat = false;
+        for (i = 0; i < conceptos.size(); i++) {
+            if (conceptos.get(i).getCodigo().equals(txtConceptos.getText())) {
+                flat = true;
+                break;
+            }
+        }
+        if (flat) {
+            return i;
+        }else{return -1;}
+    }*/
+
+    void LlenarConceptos() {
+        conceptos.clear();
+        ArrayList<Object> objects = new ArrayList<>();
+        ControladorConceptos controladorConceptos = new ControladorConceptos();
+        objects = controladorConceptos.MostrarTodos("");
+        for (Object object : objects) {
+            Conceptos concepto = (Conceptos) object;
+            conceptos.add(concepto);
+            cbConceptos.addItem(concepto.getDescripcion());
+        }
+
     }
 
     /**
@@ -39,8 +81,7 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
-        txtIdConcepto = new javax.swing.JTextField();
-        txtConcepto = new javax.swing.JTextField();
+        txtConceptos = new javax.swing.JTextField();
         txtPrefijoConsecutivo = new javax.swing.JTextField();
         txtConsecutivo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -69,6 +110,10 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         cbFormaPago = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaObservacion = new javax.swing.JTextArea();
+        cbConceptos = new javax.swing.JComboBox<>();
+
+        setClosable(true);
+        setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("FECHA");
@@ -79,25 +124,21 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel3.setText("CONCEPTO");
 
+        txtFecha.setEditable(false);
         txtFecha.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtFecha.setText("12/02/2019");
 
-        txtIdConcepto.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtIdConcepto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtIdConcepto.setText("1");
-
-        txtConcepto.setEditable(false);
-        txtConcepto.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtConcepto.setText("COMPRAS");
+        txtConceptos.setEditable(false);
+        txtConceptos.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        txtConceptos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         txtPrefijoConsecutivo.setEditable(false);
         txtPrefijoConsecutivo.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtPrefijoConsecutivo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPrefijoConsecutivo.setText("SB");
 
+        txtConsecutivo.setEditable(false);
         txtConsecutivo.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtConsecutivo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtConsecutivo.setText("123456789");
         txtConsecutivo.setMargin(new java.awt.Insets(2, 2, 2, 5));
 
         jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
@@ -201,6 +242,13 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         txtAreaObservacion.setRows(5);
         jScrollPane2.setViewportView(txtAreaObservacion);
 
+        cbConceptos.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        cbConceptos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbConceptosItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -242,9 +290,9 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtIdConcepto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtConceptos, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtConcepto)))
+                                .addComponent(cbConceptos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -296,9 +344,9 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtConcepto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtIdConcepto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtConceptos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbConceptos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -344,21 +392,20 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtGuardar)
                         .addComponent(txtEliminar)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
     private void txtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGuardarActionPerformed
         Facturacion var = new Facturacion();
-        var.setIdConceptos(Integer.parseInt(txtIdConcepto.getText()));
+        var.setIdConceptos(Integer.parseInt(txtConceptos.getText()));
         var.setIdTerceros(Integer.parseInt(txtIdTercero.getText()));
         var.setIdUsuarios(1);
         var.setFecha("2018-02-05");
-        
+
         ArrayList<DetalleFacturacion> listaDetalleFactura = new ArrayList();
         DetalleFacturacion detalleFacturacion = new DetalleFacturacion();
         detalleFacturacion.setIdProducto(5);
@@ -380,58 +427,56 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El vr del consecutivo no es correcto.");
             return;
         }
-        
-        
-            var.setObservacion(txtAreaObservacion.getText());
-        
-        
+
+        var.setObservacion(txtAreaObservacion.getText());
+
         try {
             var.setSubTotal(Double.parseDouble(txtSubtotal.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del subtotal debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del subtotal debe ser númerico.");
             return;
         }
-        
+
         try {
             var.setDescuento(Double.parseDouble(txtDescuento.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser númerico.");
             return;
         }
         try {
             var.setIVA(Double.parseDouble(txtIva.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del iva debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del iva debe ser númerico.");
             return;
         }
-         try {
+        try {
             var.setTotal(Double.parseDouble(txtTotal.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del total debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del total debe ser númerico.");
             return;
         }
-          try {
+        try {
             var.setIVA(Double.parseDouble(txtIva.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del iva debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del iva debe ser númerico.");
             return;
         }
-          try {
+        try {
             var.setDescuento(Double.parseDouble(txtDescuento.getText()));
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser numerico.");
+            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser númerico.");
             return;
-        } 
-          try {
+        }
+        try {
             var.setFormaPago(cbFormaPago.getSelectedItem().toString());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Escoja una forma de pago.");
             return;
-        }  
+        }
         ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
         Object[] object = new Object[2];
-        
-        object = (Object[]) controladorFacturacion.RegistrarFactura( (Object) var,(Object) listaDetalleFactura);
+
+        object = (Object[]) controladorFacturacion.RegistrarFactura((Object) var, (Object) listaDetalleFactura);
         if (object[0] == "String") {
             JOptionPane.showMessageDialog(this, object[1]);
             return;
@@ -442,17 +487,27 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }
-            return;
         }
-        
     }//GEN-LAST:event_txtGuardarActionPerformed
+
+    void Limpiar() {
+        txtFecha.setText(dateFormat.format(date));
+    }
 
     private void txtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIvaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIvaActionPerformed
 
+    private void cbConceptosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbConceptosItemStateChanged
+        txtConceptos.setText(conceptos.get(cbConceptos.getSelectedIndex()).getCodigo());
+        txtPrefijoConsecutivo.setText(conceptos.get(cbConceptos.getSelectedIndex()).getPrefijo());
+        txtConsecutivo.setText("");
+        txtConsecutivo.setEditable(!conceptos.get(cbConceptos.getSelectedIndex()).isManejaConsecutivo());
+    }//GEN-LAST:event_cbConceptosItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbConceptos;
     private javax.swing.JComboBox<String> cbFormaPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -471,14 +526,13 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea txtAreaObservacion;
     private javax.swing.JTextField txtCiudad;
-    private javax.swing.JTextField txtConcepto;
+    private javax.swing.JTextField txtConceptos;
     private javax.swing.JTextField txtConsecutivo;
     private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JButton txtEliminar;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JButton txtGuardar;
-    private javax.swing.JTextField txtIdConcepto;
     private javax.swing.JTextField txtIdTercero;
     private javax.swing.JTextField txtIva;
     private javax.swing.JButton txtLimpiar;
