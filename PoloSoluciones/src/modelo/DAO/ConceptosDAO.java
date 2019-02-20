@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Conexion;
 import modelo.Entidades.Conceptos;
+import modelo.Entidades.Terceros;
 import modelo.Interfaces.IConceptos;
 import src.Constantes;
 
@@ -66,7 +67,37 @@ public class ConceptosDAO implements IConceptos{
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLACONCEPTOS + " WHERE ((Descripción like ?)|| (Codigo like ?) )";
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, "%"+ String.valueOf(object) + "%");
+            preparedStatement.setString(2, "%"+ String.valueOf(object) + "%");
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Conceptos concepto = new Conceptos();
+                concepto.setId(resultSet.getInt("idConceptos"));
+                concepto.setCodigo(resultSet.getString("Codigo"));
+                concepto.setDescripcion(resultSet.getString("Descripción"));
+                concepto.setEtiqueta(resultSet.getString("Etiqueta"));
+                concepto.setNaturalezaDinero(resultSet.getInt("NaturalezaDinero"));
+                concepto.setNaturalezaInventario(resultSet.getInt("NaturalezaInventario"));
+                concepto.setManejaConsecutivo(resultSet.getBoolean("ManejaConsecutivo"));
+                concepto.setPrefijo(resultSet.getString("Prefijo"));
+                concepto.setUltimoConsecutivo(resultSet.getInt("UltimoConsecutivo"));
+                concepto.setResolucionDIAN(resultSet.getString("ResolucionDIAN"));
+                Respuesta.add(concepto);
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ConceptosDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + ConceptosDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
     }
 
     @Override

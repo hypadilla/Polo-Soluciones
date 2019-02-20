@@ -10,6 +10,7 @@ package modelo.Entidades;
  * @author hypadilla
  */
 public class Conceptos {
+    private int id;
     private String codigo;
     private String descripcion;
     private String etiqueta;
@@ -23,7 +24,8 @@ public class Conceptos {
     public Conceptos() {
     }
 
-    public Conceptos(String codigo, String descripcion, String etiqueta, int naturalezaDinero, int naturalezaInventario, boolean manejaConsecutivo, String prefijo, int ultimoConsecutivo, String resolucionDIAN) {
+    public Conceptos(int id, String codigo, String descripcion, String etiqueta, int naturalezaDinero, int naturalezaInventario, boolean manejaConsecutivo, String prefijo, int ultimoConsecutivo, String resolucionDIAN) {
+        this.id = id;
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.etiqueta = etiqueta;
@@ -35,6 +37,14 @@ public class Conceptos {
         this.resolucionDIAN = resolucionDIAN;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getCodigo() {
         return codigo;
     }
