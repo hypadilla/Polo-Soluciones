@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.ControladorProductos;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -16,13 +17,13 @@ import modelo.Entidades.Productos;
  * @author hypadilla
  */
 public class IntProductos extends javax.swing.JInternalFrame {
-
+        int id;
     /**
      * Creates new form IntProductos
      */
     public IntProductos() {
         initComponents();
-        
+        id = 0;
     
     txtVrNetoCosto.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -42,7 +43,35 @@ public class IntProductos extends javax.swing.JInternalFrame {
             }
         });
     }
-
+ public IntProductos(int id) {
+        initComponents();
+        this.id = id;
+        txtCodigo.setEnabled(false);
+        ArrayList<String> Filtro = new ArrayList();
+        Filtro.add("IdProductos");
+        Filtro.add(String.valueOf(id));
+        Filtro.add("Int");
+        ControladorProductos controladorProductos = new ControladorProductos();
+        Productos productos = new Productos();
+        productos = (Productos) controladorProductos.Mostrar(Filtro);
+        txtCodigo.setText(productos.getCodigo());
+        txtReferencia.setText(productos.getReferencia());
+        txtDescripcion.setText(productos.getDescripcion());
+        lblRutaImagen.setText(productos.getRutaImagen());
+        txtVrNetoCosto.setText(""+productos.getCostoNeto());
+        txtVrNetoVenta.setText(""+productos.getVentaNeto());
+        txtPorcIvaCosto.setText(""+productos.getCostoIva());
+        txtPorcIvaVenta.setText(""+productos.getVentaIva());
+        lblCostoIva.setText(""+productos.getCostoNeto()*(productos.getCostoIva()/100));
+        lblIvaVenta.setText(""+productos.getVentaNeto()*(productos.getVentaIva()/100));
+        txtCostoTotalCosto.setText(""+(productos.getCostoNeto()*(1+(productos.getCostoIva()/100))));
+        txtCostoTotalVenta.setText(""+(productos.getVentaNeto()*(1+(productos.getVentaIva()/100))));
+        txtVrUtilidad.setText(""+productos.getVentaUtilidad());
+        txtPorcUtilidad.setText(""+(productos.getVentaUtilidad()*100)/((productos.getCostoNeto()*(1+productos.getCostoIva()/100))));
+        
+        this.setTitle("ACTUALIZANDO PRODUCTO");
+        btnGuardar.setText("ACTUALIZAR");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,6 +91,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         txtCostoTotalVenta.setText("");
         txtPorcUtilidad.setText("");
         txtVrUtilidad.setText("");
+        id=0;
     }
     
     @SuppressWarnings("unchecked")
@@ -72,7 +102,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        lblRutaImagen = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -136,7 +166,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
 
         jButton1.setText("CARGAR IMAGEN");
 
-        jLabel3.setText("RUTA DE LA IMAGEN.JPG");
+        lblRutaImagen.setText("RUTA DE LA IMAGEN.JPG");
 
         jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel4.setText("DESCRIPCIÓN");
@@ -369,7 +399,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblRutaImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -447,7 +477,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jLabel3)
+                .addComponent(lblRutaImagen)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -483,6 +513,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
     
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Productos var = new Productos();
+        var.setId(id);
         var.setCodigo(txtCodigo.getText());
         var.setReferencia(txtReferencia.getText());
         var.setDescripcion(txtDescripcion.getText());
@@ -524,12 +555,26 @@ public class IntProductos extends javax.swing.JInternalFrame {
         
         ControladorProductos controladorProductos = new ControladorProductos();
         Object[] object = new Object[2];
-        object = (Object[]) controladorProductos.Insertar(var);
+        
+        if (id > 0) {
+            object = (Object[]) controladorProductos.Editar(var);
+        } else {
+            object = (Object[]) controladorProductos.Insertar(var);
+        }
+        
         if (object[0] == "String") {
             JOptionPane.showMessageDialog(this, object[1]);
             return;
         }
         if (object[0] == "Boolean") {
+            if (id > 0) {
+                if (((boolean) object[1])) {
+                    JOptionPane.showMessageDialog(this, "Actualización Exitoso");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Actualización Fallido");
+                }
+                return;
+            }
             if (((boolean) object[1])) {
                 JOptionPane.showMessageDialog(this, "Registro Exitoso");
             } else {
@@ -564,7 +609,6 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -576,6 +620,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lblCostoIva;
     private javax.swing.JLabel lblIvaVenta;
+    private javax.swing.JLabel lblRutaImagen;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCostoTotalCosto;
     private javax.swing.JTextField txtCostoTotalVenta;

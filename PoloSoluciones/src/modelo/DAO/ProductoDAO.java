@@ -35,11 +35,11 @@ public class ProductoDAO implements IProductos {
             preparedStatement.setString(2, var.getReferencia());
             preparedStatement.setString(3, var.getDescripcion());
             preparedStatement.setString(4, var.getRutaImagen());
-            preparedStatement.setDouble(5, 0.0);//cantidad
+            preparedStatement.setDouble(5, var.getCantidad());//cantidad
             preparedStatement.setDouble(6, var.getCostoNeto());
-            preparedStatement.setDouble(7, var.getCostoIva());
+            preparedStatement.setDouble(7, var.getPorcCostoIva());
             preparedStatement.setDouble(8, var.getVentaNeto());
-            preparedStatement.setDouble(9, var.getVentaIva());
+            preparedStatement.setDouble(9, var.getPorcVentaIva());
             preparedStatement.setDouble(10, var.getVentaUtilidad());
             preparedStatement.execute();
 
@@ -81,13 +81,15 @@ public class ProductoDAO implements IProductos {
             while (resultSet.next()) {
                 Productos productos = new Productos();
                 productos.setId(resultSet.getInt("idProductos"));
+                productos.setCodigo(resultSet.getString("Codigo"));
                 productos.setReferencia(resultSet.getString("Referencia"));
                 productos.setDescripcion(resultSet.getString("Descripcion"));
                 productos.setRutaImagen(resultSet.getString("RutaImagen"));
+                productos.setCantidad(resultSet.getDouble("Cantidad"));
                 productos.setCostoNeto(resultSet.getDouble("CostoNeto"));
-                productos.setCostoIva(resultSet.getDouble("CostoIva"));
+                productos.setCostoIva(resultSet.getDouble("PorcCostoIva"));
                 productos.setVentaNeto(resultSet.getDouble("VentaNeto"));
-                productos.setVentaIva(resultSet.getDouble("VentaIva"));
+                productos.setVentaIva(resultSet.getDouble("PorcVentaIva"));
                 productos.setVentaUtilidad(resultSet.getDouble("VentaUtilidad"));
                 Respuesta.add(productos);
             }

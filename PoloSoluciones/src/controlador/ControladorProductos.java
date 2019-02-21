@@ -68,8 +68,8 @@ public class ControladorProductos implements IProductos {
     }
 
     @Override
-    public ArrayList<Object> Mostrar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object Mostrar(Object object) {
+        return var.Mostrar(object);
     }
 
     @Override
@@ -79,7 +79,46 @@ public class ControladorProductos implements IProductos {
 
     @Override
     public Object Editar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> Filtro = new ArrayList();
+        Object[] Rpta = new Object[2];
+        Productos productos = (Productos) object;
+        Filtro.add("Codigo");
+        Filtro.add(productos.getCodigo());
+        Filtro.add("String");
+        if(!Existe(Filtro)) {
+            Rpta[0] = "String";
+                Rpta[1] = "El Producto no existe en la base de datos";
+                return Rpta;
+        } else {
+            
+            if(Existe(Filtro)) {
+            Rpta[0] = "String";
+            Rpta[1] = "El Producto ya existe en la base de datos";
+            return Rpta;
+        } 
+        
+        if (productos.getCodigo().length() > 50) {
+            Rpta[0] = "String";
+            Rpta[1] = "El codigo del producto es demasiado largo";
+            return Rpta;
+        }
+        if (productos.getReferencia().length() > 50) {
+            Rpta[0] = "String";
+            Rpta[1] = "La referencia es demasiado larga";
+            return Rpta;
+        }
+        if (productos.getDescripcion().length() > 200) {
+            Rpta[0] = "String";
+            Rpta[1] = "La Descripción es demasiado larga";
+            return Rpta;
+        }
+        if (productos.getRutaImagen().length() > 1000) {
+            Rpta[0] = "String";
+            Rpta[1] = "La ruta de la imagen demasiado larga";
+            return Rpta;
+        }
+            return var.Editar(object);
+        }
     }
 
     @Override
