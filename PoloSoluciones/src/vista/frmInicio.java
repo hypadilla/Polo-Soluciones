@@ -2,6 +2,7 @@ package vista;
 
 import src.Constantes;
 import vista.Consulta.ConsultarCategorias;
+import vista.Consulta.ConsultarConceptos;
 import vista.Consulta.ConsultarDepartamentos;
 import vista.Consulta.ConsultarProductos;
 import vista.Consulta.ConsultarTerceros;
@@ -59,6 +60,7 @@ public class frmInicio extends javax.swing.JFrame {
         menuConsultaProductos = new javax.swing.JMenuItem();
         menuConsultaDepartamentos = new javax.swing.JMenuItem();
         menuConsultaCategorias = new javax.swing.JMenuItem();
+        menuConsultaConceptos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faro Soluciones");
@@ -210,6 +212,14 @@ public class frmInicio extends javax.swing.JFrame {
         });
         jMenu2.add(menuConsultaCategorias);
 
+        menuConsultaConceptos.setText("CONEPTOS");
+        menuConsultaConceptos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultaConceptosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuConsultaConceptos);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -314,6 +324,12 @@ public class frmInicio extends javax.swing.JFrame {
         var.setVisible(true);    
     }//GEN-LAST:event_menuConsultaCategoriasActionPerformed
 
+    private void menuConsultaConceptosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaConceptosActionPerformed
+        ConsultarConceptos var = new ConsultarConceptos();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+    }//GEN-LAST:event_menuConsultaConceptosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -372,6 +388,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     public static javax.swing.JDesktopPane jdpEscritorio;
     private javax.swing.JMenuItem menuConsultaCategorias;
+    private javax.swing.JMenuItem menuConsultaConceptos;
     private javax.swing.JMenuItem menuConsultaDepartamentos;
     private javax.swing.JMenuItem menuConsultaProductos;
     // End of variables declaration//GEN-END:variables
