@@ -20,9 +20,19 @@ public class ControladorDepartamentos implements IDepartamentos {
 
     @Override
     public Object Insertar(Object object) {
-
-        Departamentos departamentos = (Departamentos) object;
+        ArrayList<String> Filtro = new ArrayList();
         Object[] Rpta = new Object[2];
+        Departamentos departamentos = (Departamentos) object;
+        Filtro.add("Codigo");
+        Filtro.add(departamentos.getCodigo());
+        Filtro.add("String");
+
+        if (Existe(Filtro)) {
+            Rpta[0] = "String";
+            Rpta[1] = "El Departamento ya existe en la base de datos";
+            return Rpta;
+        }
+
         if (departamentos.getDepartamento().length() > 50) {
             Rpta[0] = "String";
             Rpta[1] = "El nombre del departamento es demasiado largo";
@@ -44,8 +54,8 @@ public class ControladorDepartamentos implements IDepartamentos {
     }
 
     @Override
-    public ArrayList<Object> Mostrar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object Mostrar(Object object) {
+        return var.Mostrar(object);
     }
 
     @Override
@@ -55,17 +65,41 @@ public class ControladorDepartamentos implements IDepartamentos {
 
     @Override
     public Object Editar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> Filtro = new ArrayList();
+        Object[] Rpta = new Object[2];
+        Departamentos departamentos = (Departamentos) object;
+        Filtro.add("Codigo");
+        Filtro.add(departamentos.getCodigo());
+        Filtro.add("String");
+
+        
+        if (departamentos.getDepartamento().length() > 50) {
+            Rpta[0] = "String";
+            Rpta[1] = "El nombre del departamento es demasiado largo";
+            return Rpta;
+        }
+
+        if (departamentos.getDescripcion().length() > 100) {
+            Rpta[0] = "String";
+            Rpta[1] = "La descripción es demasiado larga";
+            return Rpta;
+        }
+
+        if (departamentos.getCodigo().length() > 20) {
+            Rpta[0] = "String";
+            Rpta[1] = "El código del departamento es demasiado largo.";
+            return Rpta;
+        }
+        return var.Editar(object);
     }
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.MostrarTodos(object);
     }
 
     @Override
     public Boolean Existe(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.Existe(object);
     }
-
 }

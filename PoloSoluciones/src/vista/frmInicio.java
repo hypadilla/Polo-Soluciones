@@ -1,6 +1,7 @@
 package vista;
 
 import src.Constantes;
+import vista.Consulta.ConsultarDepartamentos;
 import vista.Consulta.ConsultarProductos;
 import vista.Consulta.ConsultarTerceros;
 import vista.Consulta.ConsultarUsuarios;
@@ -55,6 +56,7 @@ public class frmInicio extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         menuConsultaProductos = new javax.swing.JMenuItem();
+        menuConsultaDepartamentos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faro Soluciones");
@@ -190,6 +192,14 @@ public class frmInicio extends javax.swing.JFrame {
         });
         jMenu2.add(menuConsultaProductos);
 
+        menuConsultaDepartamentos.setText("DEPARTAMENTOS");
+        menuConsultaDepartamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultaDepartamentosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuConsultaDepartamentos);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -282,6 +292,12 @@ public class frmInicio extends javax.swing.JFrame {
         var.setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    private void menuConsultaDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaDepartamentosActionPerformed
+        ConsultarDepartamentos var = new ConsultarDepartamentos();
+        jdpEscritorio.add(var);
+        var.setVisible(true);    
+    }//GEN-LAST:event_menuConsultaDepartamentosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -339,6 +355,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     public static javax.swing.JDesktopPane jdpEscritorio;
+    private javax.swing.JMenuItem menuConsultaDepartamentos;
     private javax.swing.JMenuItem menuConsultaProductos;
     // End of variables declaration//GEN-END:variables
 }

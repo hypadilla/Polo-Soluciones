@@ -7,6 +7,7 @@ package vista;
 
 import controlador.ControladorCategoria;
 import controlador.ControladorDepartamentos;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Departamentos;
 
@@ -15,12 +16,41 @@ import modelo.Entidades.Departamentos;
  * @author hypadilla
  */
 public class IntDepartamentos extends javax.swing.JInternalFrame {
-
+    int id;
     /**
      * Creates new form IntDepartamentos
      */
     public IntDepartamentos() {
         initComponents();
+        id=0;
+    }
+    
+     public IntDepartamentos(int id) {
+        initComponents();
+        this.id = id;
+        txtCodigo.setEnabled(false);
+        ArrayList<String> Filtro = new ArrayList();
+        Filtro.add("idDepartamentos");
+        Filtro.add(String.valueOf(id));
+        Filtro.add("Int");
+        ControladorDepartamentos controladorDepartamentos = new ControladorDepartamentos();
+        Departamentos departamentos = new Departamentos();
+        departamentos = (Departamentos) controladorDepartamentos.Mostrar(Filtro);
+        txtCodigo.setText(departamentos.getCodigo());
+        txtDepartamento.setText(departamentos.getDepartamento());
+        txtDescripcion.setText(departamentos.getDescripcion());
+        this.setTitle("ACTUALIZANDO DEPARTAMENTO");
+        btnGuardar.setText("ACTUALIZAR");
+    }
+     
+     void Limpiar() {
+        this.setTitle("NUEVO DEPARTAMENTO");
+        txtCodigo.setEnabled(true);        
+        txtCodigo.setText("");
+        txtDepartamento.setText("");
+        txtDescripcion.setText("");     
+        btnGuardar.setText("GUARDAR");
+        id = 0;
     }
 
     /**
@@ -35,9 +65,9 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         txtDepartamento = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
@@ -56,16 +86,21 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel3.setText("DESCRIPCIÓN");
 
-        jButton2.setText("GUARDAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("LIMPIAR");
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("ELIMINAR");
+        btnEliminar.setText("ELIMINAR");
 
         txtCodigo.setText("jTextField1");
 
@@ -83,11 +118,11 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                     .addComponent(txtDescripcion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 124, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnEliminar)
                         .addGap(9, 9, 9)
-                        .addComponent(jButton2))
+                        .addComponent(btnGuardar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -119,18 +154,19 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addComponent(btnLimpiar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton4)))
+                        .addComponent(btnGuardar)
+                        .addComponent(btnEliminar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Departamentos var = new Departamentos();
+        var.setId(id);
         var.setDepartamento(txtDepartamento.getText());
         var.setCodigo(txtCodigo.getText());
         var.setDescripcion(txtDescripcion.getText());
@@ -138,26 +174,45 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         ControladorDepartamentos  controladorDepartamento  = new ControladorDepartamentos();
         
         Object[] object = new Object[2];
-        object = (Object[])controladorDepartamento.Insertar(var);
+        if (id > 0) {
+            object = (Object[]) controladorDepartamento.Editar(var);
+        } else {
+            object = (Object[]) controladorDepartamento.Insertar(var);
+        }
+        
+        
         if(object[0]=="String"){
             JOptionPane.showMessageDialog(this, object[1]);
             return;
         }
         if(object[0]=="Boolean"){
+            if (id > 0) {
+                if (((boolean) object[1])) {
+                    JOptionPane.showMessageDialog(this, "Actualización Exitoso");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Actualización Fallido");
+                }
+                return;
+            }
+            
             if(((boolean) object[1])){
                 JOptionPane.showMessageDialog(this, "Registro Exitoso");                
             }else{
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }
-            return;
+            
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        Limpiar();        
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
