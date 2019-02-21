@@ -54,7 +54,7 @@ public class TerceroDAO implements ITerceros {
         String ValorFiltro = ListaVariables.get(1);
         String TipoValorFiltro = ListaVariables.get(2);
         String QuerySQL = "SELECT * FROM " + Constantes.TABLATERCEROS + " WHERE " + CampoFiltro + " = ?";
-        Terceros tercero = new Terceros();
+        Terceros tercero = null;
 
         ResultSet resultSet;
         try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
@@ -71,6 +71,7 @@ public class TerceroDAO implements ITerceros {
             }
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                tercero = new Terceros();
                 tercero.setIdTerceros(resultSet.getInt("idTerceros"));
                 tercero.setTipoTercero(resultSet.getString("TipoTercero"));
                 tercero.setDocumento(resultSet.getString("Documento"));

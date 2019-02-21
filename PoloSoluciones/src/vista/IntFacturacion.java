@@ -7,16 +7,16 @@ package vista;
 
 import controlador.ControladorConceptos;
 import controlador.ControladorFacturacion;
+import controlador.ControladorTerceros;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import modelo.Entidades.Conceptos;
 import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
+import modelo.Entidades.Terceros;
 
 /**
  *
@@ -54,7 +54,6 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
             return i;
         }else{return -1;}
     }*/
-
     void LlenarConceptos() {
         conceptos.clear();
         ArrayList<Object> objects = new ArrayList<>();
@@ -91,8 +90,6 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         txtTelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        txtCiudad = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
@@ -145,32 +142,26 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         jLabel4.setText("TERCERO");
 
         txtIdTercero.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtIdTercero.setText("1038117288-7");
+        txtIdTercero.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtIdTerceroFocusLost(evt);
+            }
+        });
 
         txtTercero.setEditable(false);
         txtTercero.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtTercero.setText("HAROLD YESID PADILLA BARRETO");
 
         jLabel5.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel5.setText("TÉLEFONO");
 
         txtTelefono.setEditable(false);
         txtTelefono.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtTelefono.setText("3124193639");
 
         jLabel6.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel6.setText("DIRECCIÓN");
 
         txtDireccion.setEditable(false);
         txtDireccion.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtDireccion.setText("CRA 9 NUMERO 26 50");
-
-        jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        jLabel7.setText("CIUDAD");
-
-        txtCiudad.setEditable(false);
-        txtCiudad.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtCiudad.setText("CAUCASIA");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -263,16 +254,12 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTercero, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6)
-                            .addComponent(jLabel4)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                            .addComponent(txtCiudad, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel7))
+                                .addComponent(jLabel5)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -323,7 +310,8 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
                                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -357,15 +345,9 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                     .addComponent(txtTercero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(5, 5, 5)
-                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(5, 5, 5)
-                        .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel6)
+                .addGap(5, 5, 5)
+                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -392,7 +374,7 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtGuardar)
                         .addComponent(txtEliminar)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -505,6 +487,36 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         txtConsecutivo.setEditable(!conceptos.get(cbConceptos.getSelectedIndex()).isManejaConsecutivo());
     }//GEN-LAST:event_cbConceptosItemStateChanged
 
+    private void txtIdTerceroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdTerceroFocusLost
+        Terceros tercero;
+        ArrayList<String> Filtro = new ArrayList<>();
+        Filtro.add("Documento");
+        Filtro.add(txtIdTercero.getText());
+        Filtro.add("String");
+        ControladorTerceros controladorTerceros = new ControladorTerceros();
+        tercero = (Terceros) controladorTerceros.Mostrar(Filtro);
+
+        if (tercero != null) {
+            txtTercero.setText(tercero.getNombre());
+            txtDireccion.setText(tercero.getDireccion());
+            txtTelefono.setText(tercero.getTelefono());
+        } else {
+            int seleccion = JOptionPane.showOptionDialog(
+                    this,
+                    "El Tercero no existe ¿Consulte o cree un tercero?",
+                    "EL TERCERO NO EXISTE",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, // null para icono por defecto.
+                    new Object[]{"Crear", "Consultar"}, // null para YES, NO y CANCEL
+                    "Consultar");
+
+            if (seleccion != -1) {
+                System.out.println("seleccionada opcion " + (seleccion + 1));
+            }
+        }
+    }//GEN-LAST:event_txtIdTerceroFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbConceptos;
@@ -518,14 +530,12 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea txtAreaObservacion;
-    private javax.swing.JTextField txtCiudad;
     private javax.swing.JTextField txtConceptos;
     private javax.swing.JTextField txtConsecutivo;
     private javax.swing.JTextField txtDescuento;
