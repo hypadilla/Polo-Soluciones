@@ -5,7 +5,6 @@
  */
 package vista;
 
-import controlador.ControladorCategoria;
 import controlador.ControladorDepartamentos;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;

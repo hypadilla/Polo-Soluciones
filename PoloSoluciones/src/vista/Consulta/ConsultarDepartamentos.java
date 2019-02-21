@@ -6,7 +6,6 @@
 package vista.Consulta;
 
 import controlador.ControladorDepartamentos;
-import controlador.ControladorTerceros;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;
@@ -14,10 +13,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.Entidades.Departamentos;
-import modelo.Entidades.Terceros;
 import vista.IntDepartamentos;
 import vista.frmInicio;
-import vista.intTerceros;
 
 /**
  *

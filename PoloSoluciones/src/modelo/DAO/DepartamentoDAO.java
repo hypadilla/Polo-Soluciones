@@ -141,7 +141,7 @@ public class DepartamentoDAO implements IDepartamentos{
             resultSet.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(TerceroDAO.class
+            Logger.getLogger(DepartamentoDAO.class
                     .getName()).log(Level.SEVERE, null, ex);
             System.err.println("Error al consultar en " + DepartamentoDAO.class.getName() + " Método Mostrar(object)");
         }

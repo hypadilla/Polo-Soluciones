@@ -5,6 +5,8 @@
  */
 package vista.Consulta;
 
+import controlador.ControladorCategoria;
+import controlador.ControladorDepartamentos;
 import controlador.ControladorTerceros;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -12,7 +14,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import modelo.Entidades.Categorias;
+import modelo.Entidades.Departamentos;
 import modelo.Entidades.Terceros;
+import vista.IntCategoria;
 import vista.frmInicio;
 import vista.intTerceros;
 
@@ -48,7 +53,7 @@ public class ConsultarCategorias extends javax.swing.JInternalFrame {
     }
 
     void LlenarTabla(String Consulta) {
-        String col[] = {"ID", "TIPO", "DOCUMENTO", "NOMBRE", "DIRECCIÓN", "CORREO", "TÉLEFONO"};
+        String col[] = {"ID", "CODIGO", "CATEGORIA", "DESCRIPCION"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
@@ -62,11 +67,11 @@ public class ConsultarCategorias extends javax.swing.JInternalFrame {
         tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 
-        ControladorTerceros controladorTerceros = new ControladorTerceros();
-        ArrayList<Object> terceros = controladorTerceros.MostrarTodos(Consulta);
-        for (Object item : terceros) {
-            Terceros tercero = (Terceros) item;
-            tableModel.addRow(new Object[]{tercero.getIdTerceros(), tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getDireccion(), tercero.getCorreo(), tercero.getTelefono()});
+        ControladorCategoria controladorCategoria = new ControladorCategoria();
+        ArrayList<Object> categorias = controladorCategoria.MostrarTodos(Consulta);
+        for (Object item : categorias) {
+            Categorias categoria = (Categorias) item;
+            tableModel.addRow(new Object[]{categoria.getId(), categoria.getCodigo(), categoria.getCategoria(), categoria.getDescripcion(), });
         }
     }
 
@@ -149,7 +154,7 @@ public class ConsultarCategorias extends javax.swing.JInternalFrame {
             int column = tblConsulta.columnAtPoint(point);
             TableModel model = tblConsulta.getModel();
 
-            intTerceros t = new intTerceros(Integer.parseInt(model.getValueAt(row, 0).toString()));
+            IntCategoria t = new IntCategoria(Integer.parseInt(model.getValueAt(row, 0).toString()));
             frmInicio.jdpEscritorio.add(t);
             t.show();
             dispose();

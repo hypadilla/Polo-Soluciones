@@ -7,6 +7,7 @@ package vista;
 
 import controlador.ControladorCategoria;
 import controlador.ControladorUsuario;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Categorias;
 import modelo.Entidades.Usuarios;
@@ -16,12 +17,30 @@ import modelo.Entidades.Usuarios;
  * @author hypadilla
  */
 public class IntCategoria extends javax.swing.JInternalFrame {
-
+    int id;
     /**
      * Creates new form IntCategoria
      */
     public IntCategoria() {
         initComponents();
+        id=0;
+    }
+    public IntCategoria(int id) {
+        initComponents();
+        this.id = id;
+        txtCodigo.setEnabled(false);
+        ArrayList<String> Filtro = new ArrayList();
+        Filtro.add("idCategorias");
+        Filtro.add(String.valueOf(id));
+        Filtro.add("Int");
+        ControladorCategoria controladorCategoria = new ControladorCategoria();
+        Categorias categorias = new Categorias();
+        categorias = (Categorias) controladorCategoria.Mostrar(Filtro);
+        txtCodigo.setText(categorias.getCodigo());
+        txtCategoria.setText(categorias.getCategoria());
+        txtDescripcion.setText(categorias.getDescripcion());
+        this.setTitle("ACTUALIZANDO CATEGORIA");
+        btnGuardar.setText("ACTUALIZAR");
     }
 
     /**
@@ -135,9 +154,13 @@ public class IntCategoria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Limpiar(){        
+        this.setTitle("NUEVA CATEGORIA");
+        txtCodigo.setEnabled(true);        
         txtCodigo.setText("");
         txtCategoria.setText("");
-        txtDescripcion.setText("");        
+        txtDescripcion.setText("");     
+        btnGuardar.setText("GUARDAR");
+        id = 0;    
     }
     
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -146,6 +169,7 @@ public class IntCategoria extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Categorias var = new Categorias();
+        var.setId(id);
         var.setCategoria(txtCategoria.getText());
         var.setCodigo(txtCodigo.getText());
         var.setDescripcion(txtDescripcion.getText());
@@ -153,21 +177,34 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         ControladorCategoria  controladorCategoria  = new ControladorCategoria();
         
         Object[] object = new Object[2];
-        object = (Object[])controladorCategoria.Insertar(var);
+        if (id > 0) {
+            object = (Object[]) controladorCategoria.Editar(var);
+        } else {
+            object = (Object[]) controladorCategoria.Insertar(var);
+        }
+        
+        
         if(object[0]=="String"){
             JOptionPane.showMessageDialog(this, object[1]);
             return;
         }
         if(object[0]=="Boolean"){
+            if (id > 0) {
+                if (((boolean) object[1])) {
+                    JOptionPane.showMessageDialog(this, "Actualización Exitoso");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Actualización Fallido");
+                }
+                return;
+            }
+            
             if(((boolean) object[1])){
-                JOptionPane.showMessageDialog(this, "Registro Exitoso");
-                Limpiar();
+                JOptionPane.showMessageDialog(this, "Registro Exitoso");                
             }else{
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }
-            return;
+            
         }
-        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
