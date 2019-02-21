@@ -5,18 +5,10 @@
  */
 package controlador;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import modelo.Conexion;
-import modelo.DAO.CategoriaDAO;
 import modelo.DAO.ProductoDAO;
 import modelo.Entidades.Productos;
 import modelo.Interfaces.IProductos;
-import src.Constantes;
 
 /**
  *
@@ -27,21 +19,21 @@ public class ControladorProductos implements IProductos {
     ProductoDAO var = new ProductoDAO();
 
     @Override
-    public Object Insertar(Object object) {        
-        
+    public Object Insertar(Object object) {
+
         ArrayList<String> Filtro = new ArrayList();
         Object[] Rpta = new Object[2];
         Productos productos = (Productos) object;
         Filtro.add("Codigo");
         Filtro.add(productos.getCodigo());
         Filtro.add("String");
-        
-        if(Existe(Filtro)) {
+
+        if (Existe(Filtro)) {
             Rpta[0] = "String";
             Rpta[1] = "El Producto ya existe en la base de datos";
             return Rpta;
-        } 
-        
+        }
+
         if (productos.getCodigo().length() > 50) {
             Rpta[0] = "String";
             Rpta[1] = "El codigo del producto es demasiado largo";
@@ -85,38 +77,31 @@ public class ControladorProductos implements IProductos {
         Filtro.add("Codigo");
         Filtro.add(productos.getCodigo());
         Filtro.add("String");
-        if(!Existe(Filtro)) {
+        if (!Existe(Filtro)) {
             Rpta[0] = "String";
-                Rpta[1] = "El Producto no existe en la base de datos";
-                return Rpta;
+            Rpta[1] = "El Producto no existe en la base de datos";
+            return Rpta;
         } else {
-            
-            if(Existe(Filtro)) {
-            Rpta[0] = "String";
-            Rpta[1] = "El Producto ya existe en la base de datos";
-            return Rpta;
-        } 
-        
-        if (productos.getCodigo().length() > 50) {
-            Rpta[0] = "String";
-            Rpta[1] = "El codigo del producto es demasiado largo";
-            return Rpta;
-        }
-        if (productos.getReferencia().length() > 50) {
-            Rpta[0] = "String";
-            Rpta[1] = "La referencia es demasiado larga";
-            return Rpta;
-        }
-        if (productos.getDescripcion().length() > 200) {
-            Rpta[0] = "String";
-            Rpta[1] = "La Descripción es demasiado larga";
-            return Rpta;
-        }
-        if (productos.getRutaImagen().length() > 1000) {
-            Rpta[0] = "String";
-            Rpta[1] = "La ruta de la imagen demasiado larga";
-            return Rpta;
-        }
+            if (productos.getCodigo().length() > 50) {
+                Rpta[0] = "String";
+                Rpta[1] = "El codigo del producto es demasiado largo";
+                return Rpta;
+            }
+            if (productos.getReferencia().length() > 50) {
+                Rpta[0] = "String";
+                Rpta[1] = "La referencia es demasiado larga";
+                return Rpta;
+            }
+            if (productos.getDescripcion().length() > 200) {
+                Rpta[0] = "String";
+                Rpta[1] = "La Descripción es demasiado larga";
+                return Rpta;
+            }
+            if (productos.getRutaImagen().length() > 1000) {
+                Rpta[0] = "String";
+                Rpta[1] = "La ruta de la imagen demasiado larga";
+                return Rpta;
+            }
             return var.Editar(object);
         }
     }

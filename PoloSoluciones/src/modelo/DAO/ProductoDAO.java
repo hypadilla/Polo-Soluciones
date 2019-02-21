@@ -52,8 +52,51 @@ public class ProductoDAO implements IProductos {
     }
 
     @Override
-    public ArrayList<Object> Mostrar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object Mostrar(Object object) {
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLAPRODUCTOS + " WHERE " + CampoFiltro + " = ?";
+        Productos producto = new Productos();
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch (TipoValorFiltro) {
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                producto.setId(resultSet.getInt("idProductos"));
+                producto.setCodigo(resultSet.getString("Codigo"));
+                producto.setReferencia(resultSet.getString("Referencia"));
+                producto.setDescripcion(resultSet.getString("Descripcion"));
+                producto.setRutaImagen(resultSet.getString("RutaImagen"));
+                producto.setCantidad(resultSet.getDouble("Cantidad"));
+                producto.setCostoNeto(resultSet.getDouble("CostoNeto"));
+                producto.setPorcCostoIva(resultSet.getDouble("PorcCostoIVA"));
+                producto.setVentaNeto(resultSet.getDouble("VentaNeto"));
+                producto.setPorcVentaIva(resultSet.getDouble("PorcVentaIVA"));
+                producto.setVentaUtilidad(resultSet.getDouble("VentaUtilidad"));
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + ProductoDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return producto;
     }
 
     @Override
@@ -63,7 +106,28 @@ public class ProductoDAO implements IProductos {
 
     @Override
     public Object Editar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Productos var = (Productos) object;
+        String QuerySQL = "UPDATE " + Constantes.TABLAPRODUCTOS + " SET Referencia = ?, Descripcion = ?, RutaImagen = ?,Cantidad = ?, CostoNeto = ?, PorcCostoIVA = ?, VentaNeto = ?, PorcVentaIVA = ?, VentaUtilidad = ?  WHERE Codigo = ?";
+        Object[] Rpta = new Object[2];
+        Rpta[0] = "Boolean";
+
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, var.getReferencia());
+            preparedStatement.setString(2, var.getDescripcion());
+            preparedStatement.setString(3, var.getRutaImagen());
+            preparedStatement.setDouble(4, var.getCantidad());
+            preparedStatement.setDouble(5, var.getCostoNeto());
+            preparedStatement.setDouble(6, var.getPorcCostoIva());
+            preparedStatement.setDouble(7, var.getVentaNeto());
+            preparedStatement.setDouble(8, var.getPorcVentaIva());
+            preparedStatement.setDouble(9, var.getVentaUtilidad());
+            preparedStatement.execute();
+
+            Rpta[1] = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(TerceroDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Rpta;
     }
 
     @Override

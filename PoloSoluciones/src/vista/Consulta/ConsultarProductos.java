@@ -66,7 +66,7 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
         ArrayList<Object> productos = controladorProductos.MostrarTodos(Consulta);
         for (Object item : productos) {
             Productos producto = (Productos) item;
-            tableModel.addRow(new Object[]{producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getVentaIva()+producto.getVentaNeto(), 0});
+            tableModel.addRow(new Object[]{producto.getId(), producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getVentaIva()+producto.getVentaNeto(), producto.getCantidad()});
         }
         
         /*
@@ -123,6 +123,11 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblConsultaMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblConsulta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,8 +161,13 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblConsultaMousePressed(java.awt.event.MouseEvent evt) {                                         
-        if (evt.getClickCount() > 1) {
+            
+    private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltroActionPerformed
+
+    private void tblConsultaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultaMousePressed
+      if (evt.getClickCount() > 1) {
             Point point = evt.getPoint();
             int row = tblConsulta.rowAtPoint(point);
             int column = tblConsulta.columnAtPoint(point);
@@ -169,10 +179,7 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
             dispose();
             //JOptionPane.showMessageDialog(this, );
         }
-    }           
-    private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFiltroActionPerformed
+    }//GEN-LAST:event_tblConsultaMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
