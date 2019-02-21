@@ -5,16 +5,16 @@
  */
 package vista.Consulta;
 
-import controlador.ControladorTerceros;
+import controlador.ControladorDepartamentos;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import modelo.Entidades.Terceros;
+import modelo.Entidades.Departamentos;
+import vista.IntDepartamentos;
 import vista.frmInicio;
-import vista.intTerceros;
 
 /**
  *
@@ -48,7 +48,7 @@ public class ConsultarDepartamentos extends javax.swing.JInternalFrame {
     }
 
     void LlenarTabla(String Consulta) {
-        String col[] = {"ID", "TIPO", "DOCUMENTO", "NOMBRE", "DIRECCIÓN", "CORREO", "TÉLEFONO"};
+        String col[] = {"ID", "CODIGO", "DEPARTAMENTO", "DESCRIPCION"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
@@ -62,11 +62,11 @@ public class ConsultarDepartamentos extends javax.swing.JInternalFrame {
         tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 
-        ControladorTerceros controladorTerceros = new ControladorTerceros();
-        ArrayList<Object> terceros = controladorTerceros.MostrarTodos(Consulta);
-        for (Object item : terceros) {
-            Terceros tercero = (Terceros) item;
-            tableModel.addRow(new Object[]{tercero.getIdTerceros(), tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getDireccion(), tercero.getCorreo(), tercero.getTelefono()});
+        ControladorDepartamentos controladorDepartamentos = new ControladorDepartamentos();
+        ArrayList<Object> departamentos = controladorDepartamentos.MostrarTodos(Consulta);
+        for (Object item : departamentos) {
+            Departamentos departamento = (Departamentos) item;
+            tableModel.addRow(new Object[]{departamento.getId(), departamento.getCodigo(), departamento.getDepartamento(), departamento.getDescripcion(), });
         }
     }
 
@@ -149,7 +149,7 @@ public class ConsultarDepartamentos extends javax.swing.JInternalFrame {
             int column = tblConsulta.columnAtPoint(point);
             TableModel model = tblConsulta.getModel();
 
-            intTerceros t = new intTerceros(Integer.parseInt(model.getValueAt(row, 0).toString()));
+            IntDepartamentos t = new IntDepartamentos(Integer.parseInt(model.getValueAt(row, 0).toString()));
             frmInicio.jdpEscritorio.add(t);
             t.show();
             dispose();

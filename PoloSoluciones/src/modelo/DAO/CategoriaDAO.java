@@ -31,7 +31,8 @@ public class CategoriaDAO implements ICategorias {
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
 
-        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+        try (Connection connection = Conexion.conectar(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
             preparedStatement.setString(1, var.getCodigo());
             preparedStatement.setString(2, var.getCategoria());
             preparedStatement.setString(3, var.getDescripcion());
@@ -51,17 +52,95 @@ public class CategoriaDAO implements ICategorias {
 
     @Override
     public Object Editar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Categorias var = (Categorias) object;
+        String QuerySQL = "UPDATE " + Constantes.TABLACATEGORIAS + " SET Codigo = ?, Categoria = ?, Descripcion = ?   WHERE(idCategorias = ?)";
+        Object[] Rpta = new Object[2];
+        Rpta[0] = "Boolean";
+
+        try (Connection connection = Conexion.conectar(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, var.getCodigo());
+            preparedStatement.setString(2, var.getCategoria());
+            preparedStatement.setString(3, var.getDescripcion());
+            preparedStatement.setInt(4, var.getId());
+            preparedStatement.execute();
+
+            Rpta[1] = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Rpta;
     }
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String QuerySQL = "SELECT * FROM Categorias WHERE ((Codigo like ?)|| (Categoria like ?) )";
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, "%"+ String.valueOf(object) + "%");
+            preparedStatement.setString(2, "%"+ String.valueOf(object) + "%");
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Categorias categorias = new Categorias();
+                categorias.setId(resultSet.getInt("idCategorias"));
+                categorias.setCodigo(resultSet.getString("Codigo"));
+                categorias.setCategoria(resultSet.getString("Categoria"));
+                categorias.setDescripcion(resultSet.getString("Descripcion"));                
+                Respuesta.add(categorias);
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + CategoriaDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
     }
 
     @Override
     public Object Mostrar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLACATEGORIAS + " WHERE " + CampoFiltro + " = ?";
+        Categorias categoria = new Categorias();
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch (TipoValorFiltro) {
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                categoria.setId(resultSet.getInt("idCategorias"));
+                categoria.setCodigo(resultSet.getString("Codigo"));
+                categoria.setCategoria(resultSet.getString("Categoria"));
+                categoria.setDescripcion(resultSet.getString("Descripcion"));
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + CategoriaDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return categoria;
     }
 
     @Override

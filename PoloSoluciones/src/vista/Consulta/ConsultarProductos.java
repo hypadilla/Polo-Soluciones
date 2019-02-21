@@ -6,11 +6,15 @@
 package vista.Consulta;
 
 import controlador.ControladorProductos;
+import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.Entidades.Productos;
+import vista.IntProductos;
+import vista.frmInicio;
 
 /**
  *
@@ -44,6 +48,29 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
     }
 
     void LlenarTabla(String Consulta) {
+        String col[] = {"ID", "CODIGO", "REFERENCIA", "DESCRIPCIÓN", "IVA", "VENTA NETO", "CANTIDAD"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+        tblConsulta.setModel(tableModel);
+
+        tblConsulta.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblConsulta.getColumnModel().getColumn(0).setMinWidth(0);
+        tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+
+        ControladorProductos controladorProductos = new ControladorProductos();
+        ArrayList<Object> productos = controladorProductos.MostrarTodos(Consulta);
+        for (Object item : productos) {
+            Productos producto = (Productos) item;
+            tableModel.addRow(new Object[]{producto.getId(), producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getVentaIva()+producto.getVentaNeto(), producto.getCantidad()});
+        }
+        
+        /*
+        
         String col[] = {"CODIGO", "REFERENCIA", "DESCRIPCION", "VR VENTA", "CANT"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         tblConsulta.setModel(tableModel);
@@ -53,7 +80,7 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
             Productos producto = (Productos) item;
             tableModel.addRow(new Object[]{producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getVentaIva()+producto.getVentaNeto(), 0});
         }
-
+        */
     }
 
     /**
@@ -96,6 +123,11 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblConsultaMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblConsulta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,9 +161,25 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+            
     private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFiltroActionPerformed
+
+    private void tblConsultaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultaMousePressed
+      if (evt.getClickCount() > 1) {
+            Point point = evt.getPoint();
+            int row = tblConsulta.rowAtPoint(point);
+            int column = tblConsulta.columnAtPoint(point);
+            TableModel model = tblConsulta.getModel();
+
+            IntProductos t = new IntProductos(Integer.parseInt(model.getValueAt(row, 0).toString()));
+            frmInicio.jdpEscritorio.add(t);
+            t.show();
+            dispose();
+            //JOptionPane.showMessageDialog(this, );
+        }
+    }//GEN-LAST:event_tblConsultaMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
