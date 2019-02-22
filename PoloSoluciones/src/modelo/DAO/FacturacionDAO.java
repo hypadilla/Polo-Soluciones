@@ -133,7 +133,83 @@ public class FacturacionDAO implements IFacturacion {
 
     @Override
     public Object Insertar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Object> obj = (ArrayList<Object>) object;
+        Facturacion var = (Facturacion) obj.get(0);
+        String QuerySQL = "INSERT INTO " + Constantes.TABLAFACTURACION + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
+        String QueryFacturacionDetalle = "INSERT INTO " + Constantes.TABLADETALLEFACTURACION + " VALUES (NULL,?,?,?,?,?,?)";
+        Object[] Rpta = new Object[2];
+        Rpta[0] = "Boolean";
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatementDetalle = null;
+        Savepoint saveObj = null;
+        Connection connection = Conexion.conectar();
+
+        try {
+            connection.setAutoCommit(false);
+            saveObj = connection.setSavepoint();
+            preparedStatement = connection.prepareStatement(QuerySQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, var.getIdConceptos());
+            preparedStatement.setInt(2, var.getIdTerceros());
+            preparedStatement.setInt(3, var.getIdUsuarios());
+            //SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
+            //Date date;
+            //date = sdf1.parse(var.getFecha());
+            java.util.Date d = new java.util.Date();
+            java.sql.Date date2 = new java.sql.Date(d.getTime());
+            preparedStatement.setDate(4, date2);
+            preparedStatement.setInt(5, var.getConsecutivo());
+            preparedStatement.setString(6, var.getObservacion());
+            preparedStatement.setDouble(7, var.getSubTotal());
+            preparedStatement.setDouble(8, var.getIVA());
+            preparedStatement.setDouble(9, var.getDescuento());
+            preparedStatement.setString(10, var.getFormaPago());
+            preparedStatement.setDouble(11, var.getTotal());
+            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            int llave = 0;
+            if (rs != null && rs.next()) {
+                llave = rs.getInt(1);                
+            } 
+
+            ArrayList<FacturacionDetalle> detalleFactura = new ArrayList();
+            detalleFactura = (ArrayList<FacturacionDetalle>) obj.get(1);
+            for (Object item : detalleFactura) {
+
+                DetalleFacturacion var2 = (DetalleFacturacion) item;
+                preparedStatementDetalle = connection.prepareStatement(QueryFacturacionDetalle);
+                preparedStatementDetalle.setInt(1, llave);
+                preparedStatementDetalle.setInt(2, var2.getIdProducto());
+                preparedStatementDetalle.setDouble(3, var2.getCantidad());
+                preparedStatementDetalle.setDouble(4, var2.getVrProducto());
+                preparedStatementDetalle.setDouble(5, var2.getVrIVA());
+                preparedStatementDetalle.setDouble(6, var2.getVrDescuento());
+                preparedStatementDetalle.execute();
+
+            }
+
+            Rpta[1] = true;
+            connection.commit();
+        } catch (Exception sqlException) {
+            Rpta[1] = false;
+            sqlException.printStackTrace();
+            try {
+                connection.rollback(saveObj);
+            } catch (SQLException sqlEx) {
+                sqlEx.printStackTrace();
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+
+                connection.setAutoCommit(true);
+            } catch (Exception sqlException) {
+                sqlException.printStackTrace();
+            }
+        }
+        return Rpta;
+
     }
 
 }

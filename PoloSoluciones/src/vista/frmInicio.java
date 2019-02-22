@@ -1,6 +1,9 @@
 package vista;
 
-import src.Constantes;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 import vista.Consulta.ConsultarCategorias;
 import vista.Consulta.ConsultarConceptos;
 import vista.Consulta.ConsultarDepartamentos;
@@ -24,7 +27,7 @@ public class frmInicio extends javax.swing.JFrame {
      */
     public frmInicio() {
         initComponents();
-        setExtendedState(this.MAXIMIZED_BOTH);
+        setExtendedState(frmInicio.MAXIMIZED_BOTH);
     }
 
     /**
@@ -36,7 +39,13 @@ public class frmInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jdpEscritorio = new javax.swing.JDesktopPane();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/src/faro.jpg"));
+        Image image = icon.getImage();
+        jdpEscritorio = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0, 0,getWidth(), getHeight(), this);
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -248,8 +257,8 @@ public class frmInicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- 
-                                   
+
+
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         IntProductos intProductos = new IntProductos();
         jdpEscritorio.add(intProductos);
@@ -320,13 +329,13 @@ public class frmInicio extends javax.swing.JFrame {
     private void menuConsultaDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaDepartamentosActionPerformed
         ConsultarDepartamentos var = new ConsultarDepartamentos();
         jdpEscritorio.add(var);
-        var.setVisible(true);    
+        var.setVisible(true);
     }//GEN-LAST:event_menuConsultaDepartamentosActionPerformed
 
     private void menuConsultaCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaCategoriasActionPerformed
         ConsultarCategorias var = new ConsultarCategorias();
         jdpEscritorio.add(var);
-        var.setVisible(true);    
+        var.setVisible(true);
     }//GEN-LAST:event_menuConsultaCategoriasActionPerformed
 
     private void menuConsultaConceptosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaConceptosActionPerformed

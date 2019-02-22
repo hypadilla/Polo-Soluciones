@@ -504,79 +504,17 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         var.setIdConceptos(Integer.parseInt(txtConceptos.getText()));
         var.setIdTerceros(Integer.parseInt(txtIdTercero.getText()));
         var.setIdUsuarios(1);
-        var.setFecha("2018-02-05");
-
-        ArrayList<DetalleFacturacion> listaDetalleFactura = new ArrayList();
-        DetalleFacturacion detalleFacturacion = new DetalleFacturacion();
-        detalleFacturacion.setIdProducto(5);
-        detalleFacturacion.setCantidad(5);
-        detalleFacturacion.setVrProducto(5000.0);
-        detalleFacturacion.setVrIVA(19.0);
-        detalleFacturacion.setVrDescuento(0.0);
-        listaDetalleFactura.add(detalleFacturacion);
-        DetalleFacturacion detalleFacturacion2 = new DetalleFacturacion();
-        detalleFacturacion2.setIdProducto(6);
-        detalleFacturacion2.setCantidad(7);
-        detalleFacturacion2.setVrProducto(5500.0);
-        detalleFacturacion2.setVrIVA(19.0);
-        detalleFacturacion2.setVrDescuento(0.0);
-        listaDetalleFactura.add(detalleFacturacion2);
-        try {
-            var.setConsecutivo(Integer.parseInt(txtConsecutivo.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del consecutivo no es correcto.");
-            return;
-        }
-
+        var.setFecha(txtFecha.getText());
         var.setObservacion(txtAreaObservacion.getText());
+        var.setFormaPago(cbFormaPago.getSelectedItem().toString());
+        
+        ArrayList<Object> Parametros = new ArrayList<>();
+        Parametros.add(var);
+        Parametros.add(DetalleFactura);
 
-        try {
-            var.setSubTotal(Double.parseDouble(txtSubtotal.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del subtotal debe ser númerico.");
-            return;
-        }
-
-        try {
-            var.setDescuento(Double.parseDouble(txtDescuento.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser númerico.");
-            return;
-        }
-        try {
-            var.setIVA(Double.parseDouble(txtIva.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del iva debe ser númerico.");
-            return;
-        }
-        try {
-            var.setTotal(Double.parseDouble(txtTotal.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del total debe ser númerico.");
-            return;
-        }
-        try {
-            var.setIVA(Double.parseDouble(txtIva.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del iva debe ser númerico.");
-            return;
-        }
-        try {
-            var.setDescuento(Double.parseDouble(txtDescuento.getText()));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El vr del descuento debe ser númerico.");
-            return;
-        }
-        try {
-            var.setFormaPago(cbFormaPago.getSelectedItem().toString());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Escoja una forma de pago.");
-            return;
-        }
         ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
-        Object[] object = new Object[2];
+        Object[] object = (Object[]) controladorFacturacion.Insertar(Parametros);
 
-        object = (Object[]) controladorFacturacion.RegistrarFactura((Object) var, (Object) listaDetalleFactura);
         if (object[0] == "String") {
             JOptionPane.showMessageDialog(this, object[1]);
             return;
