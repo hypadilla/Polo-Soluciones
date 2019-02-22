@@ -48,7 +48,7 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
     }
 
     void LlenarTabla(String Consulta) {
-        String col[] = {"ID", "CODIGO", "REFERENCIA", "DESCRIPCIÓN", "IVA", "VENTA NETO", "CANTIDAD"};
+        String col[] = {"ID", "CODIGO", "REFERENCIA", "DESCRIPCIÓN", "CANTIDAD", "VR VENTA"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
@@ -65,8 +65,8 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
         ControladorProductos controladorProductos = new ControladorProductos();
         ArrayList<Object> productos = controladorProductos.MostrarTodos(Consulta);
         for (Object item : productos) {
-            Productos producto = (Productos) item;
-            tableModel.addRow(new Object[]{producto.getId(), producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getVentaIva()+producto.getVentaNeto(), producto.getCantidad()});
+            Productos producto = (Productos) item;            
+            tableModel.addRow(new Object[]{producto.getId(), producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getCantidad(), (producto.getVentaNeto()*(1+(producto.getPorcVentaIva()/100)))});
         }
         
         /*
