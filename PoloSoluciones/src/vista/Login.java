@@ -1,9 +1,14 @@
 package vista;
 
 import controlador.ControladorUsuario;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Properties;
+import javax.swing.JOptionPane;
 import modelo.Entidades.Usuarios;
-import vista.frmInicio;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,11 +21,45 @@ import vista.frmInicio;
  */
 public class Login extends javax.swing.JFrame {
 
+    Properties config = new Properties();
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        loadConfig();
+    }
+
+    public void loadConfig() {
+        try {
+            config.load(new FileReader("src/src/config.properties"));
+            if (Boolean.parseBoolean(config.getProperty("SesionIniciada"))) {
+                txtClave.setText(config.getProperty("Clave"));
+                txtUsuario.setText(config.getProperty("Usuario"));
+                chbSesionIniciada.setSelected(true);
+            }
+            //System.out.println();
+            //System.out.println(config.getProperty("look_and_feel"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error cargando configuración\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void escribirPropiedades(boolean sesion) {
+        try {
+            if (sesion) {
+                config.setProperty("SesionIniciada", "true");
+                config.setProperty("Usuario", txtUsuario.getText());
+                config.setProperty("Clave", new String(txtClave.getPassword()));
+            } else {
+                config.setProperty("SesionIniciada", "false");
+                config.setProperty("Usuario", "null");
+                config.setProperty("Clave", "null");
+            }
+            config.store(new FileWriter("src/src/config.properties"),"Modificado");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error guardando configuración\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -51,6 +90,8 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INICIAR SESIÓN");
         setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        setResizable(false);
+        setSize(new java.awt.Dimension(445, 336));
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 10)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -63,21 +104,26 @@ public class Login extends javax.swing.JFrame {
         lblOlvidasteClave.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         lblOlvidasteClave.setForeground(new java.awt.Color(0, 0, 153));
         lblOlvidasteClave.setText("¿OLVIDASTE TU CONTRASEÑA?");
+        lblOlvidasteClave.setVisible(false);
 
         jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel4.setText("NOMBRE USUARIO");
 
         txtUsuario.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtUsuario.setText("hypadilla");
+        txtUsuario.setMargin(new java.awt.Insets(2, 10, 2, 2));
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
 
-        txtClave.setText("123456");
+        txtClave.setMargin(new java.awt.Insets(2, 10, 2, 2));
 
         chbSesionIniciada.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         chbSesionIniciada.setText("¿MANTENER LA SESIÓN INICIADA?");
 
         lblError.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 0, 0));
-        lblError.setText("MENSAJES DE ERRORES");
 
         btnIngresar.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         btnIngresar.setText("INGRESAR");
@@ -100,55 +146,61 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtUsuario)
                             .addComponent(txtClave)))
-                    .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chbSesionIniciada, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(chbSesionIniciada))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblOlvidasteClave, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                        .addComponent(lblOlvidasteClave, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnIngresar)))
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(chbSesionIniciada)
+                .addComponent(chbSesionIniciada, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblError)
+                .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblOlvidasteClave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+                .addGap(32, 32, 32)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -160,7 +212,7 @@ public class Login extends javax.swing.JFrame {
             lblError.setText("El nombre de usuario no puede ser vacío");
             return;
         }
-        if (txtClave.getText().equals("")) {
+        if (txtClave.getPassword().equals("")) {
             lblError.setText("La contraseña no puede ser vacío");
             return;
         }
@@ -170,17 +222,26 @@ public class Login extends javax.swing.JFrame {
         Filtro.add(txtUsuario.getText());
         Filtro.add("String");
         Usuarios usuarios = (Usuarios) controladorUsuario.Mostrar(Filtro);
-        
+
         if (usuarios != null) {
-            frmInicio inicio = new frmInicio();
-            inicio.setVisible(true);
-            this.dispose();
-        }else{
+            if ((new String(txtClave.getPassword())).equals(usuarios.getClave().trim())) {
+                escribirPropiedades(chbSesionIniciada.isSelected());
+                frmInicio inicio = new frmInicio();
+                inicio.setVisible(true);
+                this.dispose();
+            } else {
+                lblError.setText("Usuario y/o contraseña invalidos.");
+            }
+        } else {
             lblError.setText("Usuario y/o contraseña invalidos.");
         }
         //Todo Hacer la logica de ingreso
 
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,16 +257,24 @@ public class Login extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

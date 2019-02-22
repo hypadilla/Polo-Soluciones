@@ -20,43 +20,7 @@ public class ControladorFacturacion implements IFacturacion {
 
     @Override
     public Object Insertar(Object object) {
-        ArrayList<String> Filtro = new ArrayList();
-        Object[] Rpta = new Object[2];
-        Facturacion facturacion = (Facturacion) object;
-        Filtro.add("Consecutivo");
-        Filtro.add("" + facturacion.getConsecutivo());
-        Filtro.add("int");
-        /*
-        if (Existe(Filtro)) {
-            Rpta[0] = "String";
-            Rpta[1] = "El Producto ya existe en la base de datos";
-            return Rpta;
-        }
-        /*
-        /*
-        if (facturacion.getCodigo().length() > 50) {
-            Rpta[0] = "String";
-            Rpta[1] = "El codigo del producto es demasiado largo";
-            return Rpta;
-        }
-        if (facturacion.getReferencia().length() > 50) {
-            Rpta[0] = "String";
-            Rpta[1] = "La referencia es demasiado larga";
-            return Rpta;
-        }
-        if (facturacion.getDescripcion().length() > 200) {
-            Rpta[0] = "String";
-            Rpta[1] = "La Descripción es demasiado larga";
-            return Rpta;
-        }
-        if (facturacion.getRutaImagen().length() > 1000) {
-            Rpta[0] = "String";
-            Rpta[1] = "La ruta de la imagen demasiado larga";
-            return Rpta;
-        }
-         */
         return var.Insertar(object);
-
     }
 
     @Override

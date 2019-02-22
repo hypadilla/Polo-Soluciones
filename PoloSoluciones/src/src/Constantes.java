@@ -5,6 +5,11 @@
  */
 package src;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
+import javax.swing.JOptionPane;
 import modelo.Entidades.Usuarios;
 
 /**
@@ -12,6 +17,7 @@ import modelo.Entidades.Usuarios;
  * @author hypadilla
  */
 public class Constantes {
+
     public static String NUEVOPRODUCTO = "Nuevo Producto";
     
     
@@ -25,4 +31,5 @@ public class Constantes {
     public static String TABLAPRODUCTOS = "Productos";
     public static String TABLAFACTURACION = "Facturacion";
     public static String TABLADETALLEFACTURACION = "DetalleFacturacion";
+    
 }
