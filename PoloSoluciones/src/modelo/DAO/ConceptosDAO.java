@@ -44,7 +44,7 @@ public class ConceptosDAO implements IConceptos{
 
             Rpta[1] = true;
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConceptosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Rpta;
     }

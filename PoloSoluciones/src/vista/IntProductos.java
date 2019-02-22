@@ -1,10 +1,17 @@
 package vista;
 
 import controlador.ControladorProductos;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.Entidades.Productos;
 
 /*
@@ -103,9 +110,9 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnCargarImagen = new javax.swing.JButton();
         lblRutaImagen = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -161,14 +168,19 @@ public class IntProductos extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("NUEVO PRODUCTO");
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/image.png"))); // NOI18N
-        jLabel1.setDisabledIcon(null);
+        lblImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/image.png"))); // NOI18N
+        lblImagen.setDisabledIcon(null);
 
         jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 8)); // NOI18N
         jLabel2.setText("TAMAÑO DE LA IMAGEN IDEAL 256 X 256 PIXELES");
 
-        jButton1.setText("CARGAR IMAGEN");
+        btnCargarImagen.setText("CARGAR IMAGEN");
+        btnCargarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarImagenActionPerformed(evt);
+            }
+        });
 
         lblRutaImagen.setText("RUTA DE LA IMAGEN.JPG");
 
@@ -401,10 +413,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2)
                     .addComponent(lblRutaImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCargarImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -479,13 +491,13 @@ public class IntProductos extends javax.swing.JInternalFrame {
                         .addComponent(btnLEliminar)))
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lblRutaImagen)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnCargarImagen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
@@ -591,16 +603,57 @@ public class IntProductos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPorcIvaCostoActionPerformed
 
+    private void btnCargarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImagenActionPerformed
+        JFileChooser fileChooser = new JFileChooser();; 
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter(".jpg & .gif", "jpg", "gif"); 
+        fileChooser.setFileFilter(filtro); 
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); 
+        int result = fileChooser.showOpenDialog(this); 
+        if (result == JFileChooser.APPROVE_OPTION){ 
+            File name= fileChooser.getSelectedFile(); 
+            
+            if(name!= null){
+                try{
+                    //Definimos el destino del archivo, que será la carpeta de imagenes
+                    String Dest = ("user.dir"+"\\src\\imagenes");
+                    Path Destino = Paths.get(Dest);
+                    //Definimos el Origen, que será el archivo seleccionado
+                    String Orig = name.getPath();
+                    Path Origen = Paths.get(Orig);
+                    System.out.println("directorio origen: " +Orig);
+                    System.out.println("directorio destino: " +Dest);
+                    //Copiamos el nuevo archivo con la clase Files, reemplazamos si ya existe uno igual
+                    Files.copy(Origen, Destino, REPLACE_EXISTING);
+                    //Mostramos mensaje de confirmacion de la copia realizada y la ruta
+                    JOptionPane.showMessageDialog(null, "El archivo fue copiado con exito a la carpeta: "+Dest);
+                }catch(IOException ex) {
+                    ex.printStackTrace();
+                    System.err.println("Error al copiar en " + IntProductos.class.getName() + " cargar imagen");
+                    //Logger.getLogger(IntProductos.class.getName())log(Level.SEVERE, null, ex);
+                }
+            }
+            
+                
+            ImageIcon image = new ImageIcon(fileChooser.getSelectedFile().getPath()); 
+            if(image.getIconHeight() > 256 || image.getIconWidth() > 256){ 
+                ImageIcon imageScalada = new ImageIcon(image.getImage().getScaledInstance(256, 256, 100)); 
+                lblImagen.setIcon(imageScalada);                
+            } 
+            else{ 
+                lblImagen.setIcon(image); 
+            } 
+        }  
+    }//GEN-LAST:event_btnCargarImagenActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargarImagen;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbDepartamento;
-    private javax.swing.JButton jButton1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -622,6 +675,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lblCostoIva;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblIvaVenta;
     private javax.swing.JLabel lblRutaImagen;
     private javax.swing.JTextField txtCodigo;

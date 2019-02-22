@@ -8,7 +8,6 @@ package vista;
 import controlador.ControladorUsuario;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.Entidades.Terceros;
 import modelo.Entidades.Usuarios;
 
 /**
@@ -16,17 +15,21 @@ import modelo.Entidades.Usuarios;
  * @author cdap_
  */
 public class IntUsuarios extends javax.swing.JInternalFrame {
-
+    int id;
     /**
      * Creates new form IntUsuarios
      */
     public IntUsuarios() {
         initComponents();
+        checkEstado.setVisible(false);
+        checkEstado.setSelected(true);
+        id=0;
     }
-    int id;
+    
 
     public IntUsuarios(int id) {
         initComponents();
+        checkEstado.setVisible(true);
         this.id = id;
         txtUsuario.setEnabled(false);
         ArrayList<String> Filtro = new ArrayList();
@@ -37,13 +40,19 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
         Usuarios usuarios = new Usuarios();
         usuarios = (Usuarios) controladorUsuario.Mostrar(Filtro);
         txtUsuario.setText(usuarios.getUsuario());
-        txtContraseña.setText(usuarios.getClave());
-        txtConfirmarContraseña.setText(usuarios.getClave());
+        pwContraseña.setText(usuarios.getClave());
+        pwConfirmarContraseña.setText(usuarios.getClave());
         txtCorreo.setText(usuarios.getCorreoElectronico());
         cbPregunta.setSelectedItem(usuarios.getPregunta());
         txtRespuesta.setText(usuarios.getRespuestaSecreta());
+        if(usuarios.getEstado()){
+            checkEstado.setSelected(true);
+        }else{
+            checkEstado.setSelected(false);
+        }
         this.setTitle("ACTUALIZANDO USUARIO");
         btnGuardar.setText("ACTUALIZAR");
+        btnLimpiar.setText("NUEVO");
     }
 
     /**
@@ -65,18 +74,18 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
-        txtContraseña = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtConfirmarContraseña = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnLimpiar = new javax.swing.JButton();
-        btnDesactivar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        pwContraseña = new javax.swing.JPasswordField();
+        pwConfirmarContraseña = new javax.swing.JPasswordField();
+        checkEstado = new javax.swing.JCheckBox();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setClosable(true);
         setIconifiable(true);
-        setTitle("Registrar Usuario");
+        setTitle("REGISTRAR USUARIO");
 
         jPanel1.setPreferredSize(new java.awt.Dimension(391, 200));
 
@@ -104,12 +113,8 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
 
         txtCorreo.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
-        txtContraseña.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-
         jLabel6.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel6.setText("Confirmar contraseña");
-
-        txtConfirmarContraseña.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
         btnLimpiar.setText("LIMPIAR");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -117,8 +122,6 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
                 btnLimpiarActionPerformed(evt);
             }
         });
-
-        btnDesactivar.setText("DESACTIVAR");
 
         btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -135,8 +138,6 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLimpiar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDesactivar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar)
                 .addContainerGap())
         );
@@ -146,10 +147,17 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar)
-                    .addComponent(btnDesactivar)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pwContraseña.setText("jPasswordField1");
+
+        pwConfirmarContraseña.setText("jPasswordField1");
+
+        checkEstado.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        checkEstado.setSelected(true);
+        checkEstado.setText("Activo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -159,18 +167,20 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkEstado)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtConfirmarContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRespuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRespuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(pwContraseña, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                        .addComponent(pwConfirmarContraseña)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -183,11 +193,11 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pwContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtConfirmarContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pwConfirmarContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -200,9 +210,11 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRespuesta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(checkEstado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -218,7 +230,7 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -229,11 +241,18 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
      * Metodo que limpia los campos del formulario IntUsuarios.
      */
     private void Limpiar() {
+        txtUsuario.setEnabled(true);
         txtUsuario.setText("");
-        txtContraseña.setText("");
-        txtConfirmarContraseña.setText("");
+        checkEstado.setVisible(false);
+        checkEstado.setSelected(true);
+        pwContraseña.setText("");
+        pwConfirmarContraseña.setText("");
         txtCorreo.setText("");
         txtRespuesta.setText("");
+        btnGuardar.setText("GUARDAR");
+        btnLimpiar.setText("LIMPIAR");
+        this.setTitle("REGISTRAR USUARIO");
+        id=0;
     }
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         Limpiar();
@@ -242,13 +261,18 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Usuarios var = new Usuarios();
         var.setUsuario(txtUsuario.getText());
-        var.setClave(txtContraseña.getText());
+        var.setClave(pwContraseña.getText());
         var.setCorreoElectronico(txtCorreo.getText());
         var.setPregunta(cbPregunta.getSelectedItem().toString());
         var.setRespuestaSecreta(txtRespuesta.getText());
+        if (checkEstado.isSelected()){
+            var.setEstado(true);
+        }else{
+            var.setEstado(false);
+        }
         ControladorUsuario controladorUsuario = new ControladorUsuario();
 
-        if (txtContraseña.getText().equals(txtConfirmarContraseña.getText())) {
+        if (pwContraseña.getText().equals(pwConfirmarContraseña.getText())) {
             Object[] object = new Object[2];
 
             if (id > 0) {
@@ -263,11 +287,20 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
             }
             if (object[0] == "Boolean") {
                 if (((boolean) object[1])) {
-                    JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                    if (id==0){
+                       JOptionPane.showMessageDialog(this, "Usuario Registrado."); 
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Usuario Actualizado.");                        
+                    }
+                    
                 } else {
-                    JOptionPane.showMessageDialog(this, "Registro Fallido");
+                   if (id==0){
+                        JOptionPane.showMessageDialog(this, "Registro Fallido.");
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Actualización fallida.");
+                        
+                    } 
                 }
-                return;
             }
         } else {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
@@ -277,10 +310,10 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDesactivar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbPregunta;
+    private javax.swing.JCheckBox checkEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -289,8 +322,8 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtConfirmarContraseña;
-    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JPasswordField pwConfirmarContraseña;
+    private javax.swing.JPasswordField pwContraseña;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtRespuesta;
     private javax.swing.JTextField txtUsuario;

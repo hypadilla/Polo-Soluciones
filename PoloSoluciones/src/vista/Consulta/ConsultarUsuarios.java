@@ -5,7 +5,6 @@
  */
 package vista.Consulta;
 
-import controlador.ControladorTerceros;
 import controlador.ControladorUsuario;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -13,11 +12,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import modelo.Entidades.Terceros;
 import modelo.Entidades.Usuarios;
 import vista.IntUsuarios;
 import vista.frmInicio;
-import vista.intTerceros;
 
 /**
  *
@@ -53,7 +50,7 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
     
 
     void LlenarTabla(String Consulta) {
-        String col[] = {"ID", "USUARIO", "CONTRASEÑA", "CORREO", "PREGUNTA SECRETA", "RESPUESTA SECRETA"};
+        String col[] = {"ID", "USUARIO", /*"CONTRASEÑA",*/ "CORREO", "PREGUNTA SECRETA", "RESPUESTA SECRETA", "ESTADO"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
@@ -71,7 +68,13 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
         ArrayList<Object> usuarios = controladorUsuario.MostrarTodos(Consulta);
         for (Object item : usuarios) {
             Usuarios usuario = (Usuarios) item;
-            tableModel.addRow(new Object[]{usuario.getId(),usuario.getUsuario(), usuario.getClave(), usuario.getCorreoElectronico(), usuario.getPregunta(), usuario.getRespuestaSecreta()});
+            String estado;
+            if (usuario.getEstado()){
+                estado="ACTIVO";
+            }else{
+                estado="INACTIVO";
+            }
+            tableModel.addRow(new Object[]{usuario.getId(),usuario.getUsuario(), /*usuario.getClave(),*/ usuario.getCorreoElectronico(), usuario.getPregunta(), usuario.getRespuestaSecreta(), estado});
         }
     }
 
@@ -84,10 +87,15 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGroupEstado = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         txtFiltro = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsulta = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        rBtnActivo = new javax.swing.JRadioButton();
+        rBtnInactivo = new javax.swing.JRadioButton();
+        rBtnCualquiera = new javax.swing.JRadioButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -118,6 +126,21 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblConsulta);
 
+        jLabel2.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        jLabel2.setText("ESTADO:");
+
+        btnGroupEstado.add(rBtnActivo);
+        rBtnActivo.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        rBtnActivo.setText("ACTIVO");
+
+        btnGroupEstado.add(rBtnInactivo);
+        rBtnInactivo.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        rBtnInactivo.setText("INACTIVO");
+
+        btnGroupEstado.add(rBtnCualquiera);
+        rBtnCualquiera.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        rBtnCualquiera.setText("CUALQUIERA");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,10 +149,19 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtFiltro)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rBtnActivo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rBtnInactivo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rBtnCualquiera)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -139,6 +171,12 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(rBtnActivo)
+                    .addComponent(rBtnInactivo)
+                    .addComponent(rBtnCualquiera))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -157,6 +195,7 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
             IntUsuarios t = new IntUsuarios(Integer.parseInt(model.getValueAt(row, 0).toString()));
             frmInicio.jdpEscritorio.add(t);
             t.show();
+            
             dispose();
             //JOptionPane.showMessageDialog(this, );
         }
@@ -164,8 +203,13 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btnGroupEstado;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rBtnActivo;
+    private javax.swing.JRadioButton rBtnCualquiera;
+    private javax.swing.JRadioButton rBtnInactivo;
     private static javax.swing.JTable tblConsulta;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables

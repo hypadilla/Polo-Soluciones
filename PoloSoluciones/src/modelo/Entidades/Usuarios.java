@@ -16,17 +16,19 @@ public class Usuarios {
     String CorreoElectronico;
     String Pregunta;
     String RespuestaSecreta;
+    Boolean Estado;
 
     public Usuarios() {
     }
 
-    public Usuarios( String Usuario, String Clave, String CorreoElectronico, String Pregunta, String RespuestaSecreta) {
-        
+    public Usuarios(int Id, String Usuario, String Clave, String CorreoElectronico, String Pregunta, String RespuestaSecreta, Boolean Estado) {
+        this.Id = Id;
         this.Usuario = Usuario;
         this.Clave = Clave;
         this.CorreoElectronico = CorreoElectronico;
         this.Pregunta = Pregunta;
         this.RespuestaSecreta = RespuestaSecreta;
+        this.Estado = Estado;
     }
 
     public int getId() {
@@ -76,5 +78,15 @@ public class Usuarios {
     public void setRespuestaSecreta(String RespuestaSecreta) {
         this.RespuestaSecreta = RespuestaSecreta;
     }
+
+    public Boolean getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(Boolean Estado) {
+        this.Estado = Estado;
+    }
+
+    
     
 }

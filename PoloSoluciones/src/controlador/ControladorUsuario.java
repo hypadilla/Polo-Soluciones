@@ -28,8 +28,19 @@ public class ControladorUsuario implements IUsuario {
      */
     @Override
     public Object Insertar(Object object) {
-        Usuarios usuario = (Usuarios) object;
+       
+        ArrayList<String> Filtro = new ArrayList();
         Object[] Rpta = new Object[2];
+        Usuarios usuario = (Usuarios) object;
+        Filtro.add("Usuario");
+        Filtro.add(usuario.getUsuario());
+        Filtro.add("String");
+        if(Existe(Filtro)) {
+            Rpta[0] = "String";
+                Rpta[1] = "El Usuario ya existe en la base de datos";
+                return Rpta;
+        }
+        
         if (usuario.getUsuario().length() > 10) {
             Rpta[0] = "String";
             Rpta[1] = "El nombre de usuario es demasiado largo";
@@ -80,8 +91,19 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public Object Editar(Object object) {
-        Usuarios usuario = (Usuarios) object;
+        
+        ArrayList<String> Filtro = new ArrayList();
         Object[] Rpta = new Object[2];
+        Usuarios usuario = (Usuarios) object;
+        Filtro.add("Usuario");
+        Filtro.add(usuario.getUsuario());
+        Filtro.add("String");
+        if(!Existe(Filtro)) {
+            Rpta[0] = "String";
+                Rpta[1] = "El Usuario no existe en la base de datos";
+                return Rpta;
+        } 
+        
         if (usuario.getUsuario().length() > 10) {
             Rpta[0] = "String";
             Rpta[1] = "El nombre de usuario es demasiado largo";
@@ -137,6 +159,6 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public Boolean Existe(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.Existe(object);
     }
 }

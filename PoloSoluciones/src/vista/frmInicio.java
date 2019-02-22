@@ -41,10 +41,6 @@ public class frmInicio extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -90,18 +86,6 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem1);
-
-        jMenuItem2.setText("PROVEEDORES");
-        jMenu3.add(jMenuItem2);
-
-        jMenuItem3.setText("PROVEEDORES DE SERVICIOS");
-        jMenu3.add(jMenuItem3);
-
-        jMenuItem4.setText("VENDEDORES");
-        jMenu3.add(jMenuItem4);
-
-        jMenuItem5.setText("EMPLEADOS");
-        jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("USUARIOS");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -274,24 +258,6 @@ public class frmInicio extends javax.swing.JFrame {
         var.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        IntClientes intClientes = new IntClientes();
-        jdpEscritorio.add(intClientes);
-        intClientes.setVisible(true);// TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        IntUsuarios var = new IntUsuarios();
-        jdpEscritorio.add(var);
-        var.setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        intTerceros var = new intTerceros();
-        jdpEscritorio.add(var);
-        var.setVisible(true);
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
-
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         ConsultarTerceros var = new ConsultarTerceros();
         jdpEscritorio.add(var);
@@ -334,6 +300,24 @@ public class frmInicio extends javax.swing.JFrame {
         jdpEscritorio.add(var);
         var.setVisible(true);
     }//GEN-LAST:event_menuConsultaConceptosActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        intTerceros var = new intTerceros();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        IntUsuarios var = new IntUsuarios();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        IntClientes intClientes = new IntClientes();
+        jdpEscritorio.add(intClientes);
+        intClientes.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -384,10 +368,6 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;

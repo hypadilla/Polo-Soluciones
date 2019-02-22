@@ -26,7 +26,7 @@ public class UsuarioDAO implements IUsuario {
         PreparedStatement ps = null;
         Connection acceDB = null;
 
-        String registrarSQL = "INSERT INTO " +Constantes.TABLAUSUARIOS+ " values (null,?,?,?,?,?)";
+        String registrarSQL = "INSERT INTO " +Constantes.TABLAUSUARIOS+ " values (null,?,?,?,?,?,?)";
 
         try {
             acceDB = Conexion.conectar();
@@ -36,6 +36,7 @@ public class UsuarioDAO implements IUsuario {
             ps.setString(3, usuario.getCorreoElectronico());
             ps.setString(4, usuario.getPregunta());
             ps.setString(5, usuario.getRespuestaSecreta());
+            ps.setBoolean(6, usuario.getEstado());
             ps.execute();
             ps.close();
             acceDB.close();
@@ -68,7 +69,8 @@ public class UsuarioDAO implements IUsuario {
                 usuarios.setClave(resultSet.getString("Contraseña"));
                 usuarios.setCorreoElectronico(resultSet.getString("Correo"));
                 usuarios.setPregunta(resultSet.getString("PreguntaSecreta"));
-                usuarios.setRespuestaSecreta(resultSet.getString("RespuestaSecreta"));                
+                usuarios.setRespuestaSecreta(resultSet.getString("RespuestaSecreta"));     
+                usuarios.setEstado(resultSet.getBoolean("Estado"));   
                 Respuesta.add(usuarios);
             }
             resultSet.close();
@@ -93,7 +95,7 @@ public class UsuarioDAO implements IUsuario {
         PreparedStatement ps = null;
         Connection acceDB = null;
 
-        String registrarSQL = "UPDATE "  +Constantes.TABLAUSUARIOS+ " SET Contraseña = ?,Correo = ?,PreguntaSecreta = ?,RespuestaSecreta = ? WHERE Usuario = ?";
+        String registrarSQL = "UPDATE "  +Constantes.TABLAUSUARIOS+ " SET Contraseña = ?,Correo = ?,PreguntaSecreta = ?,RespuestaSecreta = ?, Estado = ? WHERE Usuario = ?";
         Rpta[0] = "Boolean";
         try {
             acceDB = Conexion.conectar();
@@ -102,7 +104,9 @@ public class UsuarioDAO implements IUsuario {
             ps.setString(2, usuario.getCorreoElectronico());
             ps.setString(3, usuario.getPregunta());
             ps.setString(4, usuario.getRespuestaSecreta());
-            ps.setString(5, usuario.getUsuario());
+            ps.setBoolean(5, usuario.getEstado());
+            ps.setString(6, usuario.getUsuario());
+            
             ps.execute();
             ps.close();
             acceDB.close();
@@ -146,6 +150,7 @@ public class UsuarioDAO implements IUsuario {
                 Respuesta.setCorreoElectronico(resultSet.getString("Correo"));
                 Respuesta.setPregunta(resultSet.getString("PreguntaSecreta"));
                 Respuesta.setRespuestaSecreta(resultSet.getString("RespuestaSecreta"));
+                Respuesta.setEstado(resultSet.getBoolean("Estado"));
             }
             resultSet.close();
 
@@ -161,6 +166,39 @@ public class UsuarioDAO implements IUsuario {
 
     @Override
     public Boolean Existe(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> ListaVariables = (ArrayList<String>) object;
+        String CampoFiltro = ListaVariables.get(0);
+        String ValorFiltro = ListaVariables.get(1);
+        String TipoValorFiltro = ListaVariables.get(2);
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLAUSUARIOS + " WHERE " + CampoFiltro + " = ?";
+        boolean Respuesta = false;
+
+        ResultSet resultSet;
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            switch (TipoValorFiltro) {
+                case "String":
+                    preparedStatement.setString(1, ValorFiltro);
+                    break;
+                case "Int":
+                    preparedStatement.setInt(1, Integer.parseInt(ValorFiltro));
+                    break;
+                case "Boolean":
+                    preparedStatement.setBoolean(1, Boolean.parseBoolean(ValorFiltro));
+                    break;
+            }
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Respuesta = true;
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + UsuarioDAO.class
+                    .getName() + " Método Mostrar(object)\n"
+                    + "Parametros: Campo = " + CampoFiltro + "; Valor = " + ValorFiltro + "; Tipo = " + TipoValorFiltro);
+        }
+        return Respuesta;
     }
 }
