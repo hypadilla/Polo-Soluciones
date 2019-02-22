@@ -57,6 +57,7 @@ public class frmInicio extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
         menuConsultaProductos = new javax.swing.JMenuItem();
         menuConsultaDepartamentos = new javax.swing.JMenuItem();
         menuConsultaCategorias = new javax.swing.JMenuItem();
@@ -188,13 +189,15 @@ public class frmInicio extends javax.swing.JFrame {
 
         jMenu2.add(jMenu5);
 
+        jMenu6.setText("PRODUCTOS");
+
         menuConsultaProductos.setText("PRODUCTOS");
         menuConsultaProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuConsultaProductosActionPerformed(evt);
             }
         });
-        jMenu2.add(menuConsultaProductos);
+        jMenu6.add(menuConsultaProductos);
 
         menuConsultaDepartamentos.setText("DEPARTAMENTOS");
         menuConsultaDepartamentos.addActionListener(new java.awt.event.ActionListener() {
@@ -202,7 +205,7 @@ public class frmInicio extends javax.swing.JFrame {
                 menuConsultaDepartamentosActionPerformed(evt);
             }
         });
-        jMenu2.add(menuConsultaDepartamentos);
+        jMenu6.add(menuConsultaDepartamentos);
 
         menuConsultaCategorias.setText("CATEGORIAS");
         menuConsultaCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +213,7 @@ public class frmInicio extends javax.swing.JFrame {
                 menuConsultaCategoriasActionPerformed(evt);
             }
         });
-        jMenu2.add(menuConsultaCategorias);
+        jMenu6.add(menuConsultaCategorias);
 
         menuConsultaConceptos.setText("CONEPTOS");
         menuConsultaConceptos.addActionListener(new java.awt.event.ActionListener() {
@@ -218,7 +221,9 @@ public class frmInicio extends javax.swing.JFrame {
                 menuConsultaConceptosActionPerformed(evt);
             }
         });
-        jMenu2.add(menuConsultaConceptos);
+        jMenu6.add(menuConsultaConceptos);
+
+        jMenu2.add(jMenu6);
 
         jMenuBar1.add(jMenu2);
 
@@ -371,6 +376,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;

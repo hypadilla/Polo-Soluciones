@@ -151,9 +151,11 @@ public class ProductoDAO implements IProductos {
                 productos.setRutaImagen(resultSet.getString("RutaImagen"));
                 productos.setCantidad(resultSet.getDouble("Cantidad"));
                 productos.setCostoNeto(resultSet.getDouble("CostoNeto"));
-                productos.setCostoIva(resultSet.getDouble("PorcCostoIva"));
+                productos.setPorcCostoIva(resultSet.getDouble("PorcCostoIva"));
+                productos.setCostoIva(productos.getCostoNeto()*(1+productos.getPorcCostoIva()/100));
                 productos.setVentaNeto(resultSet.getDouble("VentaNeto"));
-                productos.setVentaIva(resultSet.getDouble("PorcVentaIva"));
+                productos.setPorcVentaIva(resultSet.getDouble("PorcVentaIva"));
+                productos.setVentaIva((productos.getVentaIva()*(1+productos.getPorcVentaIva()/100)));
                 productos.setVentaUtilidad(resultSet.getDouble("VentaUtilidad"));
                 Respuesta.add(productos);
             }
