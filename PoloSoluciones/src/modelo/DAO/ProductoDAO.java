@@ -58,7 +58,7 @@ public class ProductoDAO implements IProductos {
         String ValorFiltro = ListaVariables.get(1);
         String TipoValorFiltro = ListaVariables.get(2);
         String QuerySQL = "SELECT * FROM " + Constantes.TABLAPRODUCTOS + " WHERE " + CampoFiltro + " = ?";
-        Productos producto = new Productos();
+        Productos producto = null;
 
         ResultSet resultSet;
         try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
@@ -75,6 +75,7 @@ public class ProductoDAO implements IProductos {
             }
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                producto = new Productos();
                 producto.setId(resultSet.getInt("idProductos"));
                 producto.setCodigo(resultSet.getString("Codigo"));
                 producto.setReferencia(resultSet.getString("Referencia"));

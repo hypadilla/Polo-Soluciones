@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.Entidades.Conceptos;
 import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
@@ -24,11 +26,13 @@ import modelo.Entidades.Terceros;
  *
  * @author hypadilla
  */
-public class IntFacturacion extends javax.swing.JInternalFrame {
+public final class IntFacturacion extends javax.swing.JInternalFrame {
 
     Date date;
     DateFormat dateFormat;
     ArrayList<Conceptos> conceptos;
+    ArrayList<DetalleFacturacion>DetalleFactura;
+    DefaultTableModel tableModel;
 
     /**
      * Creates new form IntFacturacion
@@ -40,7 +44,20 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         txtFecha.setText(dateFormat.format(date));
 
         conceptos = new ArrayList<>();
+        DetalleFactura = new ArrayList<>();
         LlenarConceptos();
+        String col[] = {"ID", "CÓDIGO", "DESCRIPCIÓN", "VR NETO", "% DESCUENTO", "% IVA", "SUBTOTAL", "CANTIDAD", "TOTAL"};
+        tableModel = new DefaultTableModel(col, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+        jTable1.setModel(tableModel);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
     }
 
     /*int ObtenerConcepto() {
@@ -107,8 +124,6 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         txtEliminar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         cbFormaPago = new javax.swing.JComboBox<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtAreaObservacion = new javax.swing.JTextArea();
         cbConceptos = new javax.swing.JComboBox<>();
         txtCodigoProducto = new javax.swing.JTextField();
         txtProducto = new javax.swing.JTextField();
@@ -116,9 +131,11 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        txtVrVrVenta = new javax.swing.JTextField();
+        txtVrVenta = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        txtAreaObservacion = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -245,10 +262,6 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         cbFormaPago.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         cbFormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "CRÉDITO" }));
 
-        txtAreaObservacion.setColumns(20);
-        txtAreaObservacion.setRows(5);
-        jScrollPane2.setViewportView(txtAreaObservacion);
-
         cbConceptos.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         cbConceptos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -273,14 +286,19 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         jCheckBox1.setText("LECTOR CODIGO BARRA");
 
         jButton1.setText("AGREGAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel13.setText("VR VENTA");
 
-        txtVrVrVenta.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        txtVrVrVenta.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtVrVenta.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        txtVrVenta.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtVrVrVentaFocusLost(evt);
+                txtVrVentaFocusLost(evt);
             }
         });
 
@@ -293,6 +311,11 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
 
         jLabel14.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel14.setText("CANT");
+
+        txtAreaObservacion.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+
+        jLabel15.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        jLabel15.setText("OBSERVACIÓN");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -344,33 +367,6 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                     .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9)
-                                            .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(24, 24, 24)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(txtIva, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -379,7 +375,7 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
-                            .addComponent(txtVrVrVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtVrVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -387,7 +383,33 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                                 .addGap(0, 28, Short.MAX_VALUE))
                             .addComponent(txtCantidad))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addComponent(txtAreaObservacion)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCheckBox1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(txtIva, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel15))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -441,16 +463,18 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                             .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1)
-                            .addComponent(txtVrVrVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtVrVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addGap(5, 5, 5)
                         .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAreaObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
@@ -468,7 +492,7 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtGuardar)
                         .addComponent(txtEliminar)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -611,9 +635,9 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtIdTerceroFocusLost
 
-    private void txtVrVrVentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrVrVentaFocusLost
+    private void txtVrVentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrVentaFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtVrVrVentaFocusLost
+    }//GEN-LAST:event_txtVrVentaFocusLost
 
     private void txtCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusLost
         // TODO add your handling code here:
@@ -629,16 +653,20 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         producto = (Productos) controladorProductos.Mostrar(Filtro);
 
         if (producto != null) {
+            txtCodigoProducto.setToolTipText(String.valueOf(producto.getId()));
             txtProducto.setText(producto.getDescripcion());
-            txtVrVrVenta.setText(String.valueOf(producto.getVentaNeto() * (1 + (producto.getVentaIva()/100))) );
+            txtVrVenta.setText(String.valueOf(producto.getVentaNeto()));
         } else {
+            txtCodigoProducto.setText("");
+            txtProducto.setText("");
+            txtVrVenta.setText("");
             int seleccion = JOptionPane.showOptionDialog(
                     this,
                     "El Producto no existe ¿Deseas Consultar?",
                     "EL PRODUCTO NO EXISTE",
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
-                    null, // null para icono por defecto.
+                    null,
                     new Object[]{"Consultar"}, // null para YES, NO y CANCEL
                     "Consultar");
 
@@ -648,6 +676,42 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtCodigoProductoFocusLost
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (txtCodigoProducto.getText().equals("")) {
+            txtCodigoProducto.requestFocus();
+            JOptionPane.showMessageDialog(this, "No hay un producto seleccionado.");
+            return;
+        }
+        if (txtVrVenta.getText().equals("")) {
+            txtVrVenta.requestFocus();
+            JOptionPane.showMessageDialog(this, "El valor del producto no puede estar vacío.");
+            return;
+        }
+        if (txtCantidad.getText().equals("")) {
+            txtCantidad.requestFocus();
+            JOptionPane.showMessageDialog(this, "La cantidad no puede estar vacía.");
+            return;
+        }
+        
+        DetalleFacturacion detalleFacturacion = new DetalleFacturacion(0, 0, Integer.parseInt(txtCodigoProducto.getToolTipText()),Double.parseDouble(txtCantidad.getText()),Double.parseDouble(txtVrVenta.getText()),19,0);
+        DetalleFactura.add(detalleFacturacion);
+        tableModel.addRow(new Object[]  {Integer.parseInt(txtCodigoProducto.getToolTipText()), txtCodigoProducto.getText(), txtProducto.getText(), Double.parseDouble(txtVrVenta.getText()), 0, 19, (Double.parseDouble(txtVrVenta.getText()) * 1.19), Double.parseDouble(txtCantidad.getText()), Double.parseDouble(txtCantidad.getText()) * (Double.parseDouble(txtVrVenta.getText()) * 1.19)});
+        CalcularTotales();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    void CalcularTotales(){
+        double SubTotales = 0;
+        double IVA = 0;
+        double Total = 0;
+        for (DetalleFacturacion detalleFacturacion : DetalleFactura) {
+            SubTotales += detalleFacturacion.getVrProducto();
+            IVA += detalleFacturacion.getVrProducto() * (detalleFacturacion.getVrIVA()) /100;
+            Total += (SubTotales + IVA);
+        }
+        txtSubtotal.setText(String.valueOf(SubTotales));
+        txtIva.setText(String.valueOf(IVA));
+        txtTotal.setText(String.valueOf(Total));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbConceptos;
@@ -660,6 +724,7 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -669,9 +734,8 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea txtAreaObservacion;
+    private javax.swing.JTextField txtAreaObservacion;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtConceptos;
@@ -690,6 +754,6 @@ public class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTercero;
     private javax.swing.JTextField txtTotal;
-    private javax.swing.JTextField txtVrVrVenta;
+    private javax.swing.JTextField txtVrVenta;
     // End of variables declaration//GEN-END:variables
 }
