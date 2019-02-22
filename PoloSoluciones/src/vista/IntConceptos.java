@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.ControladorConceptos;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Conceptos;
 
@@ -15,11 +16,67 @@ import modelo.Entidades.Conceptos;
  */
 public class IntConceptos extends javax.swing.JInternalFrame {
 
+    int id;
+
     /**
      * Creates new form IntConceptos
      */
     public IntConceptos() {
         initComponents();
+        id = 0;
+    }
+
+    public IntConceptos(int id) {
+        initComponents();
+        this.id = id;
+        txtCodigo.setEnabled(false);
+        ArrayList<String> Filtro = new ArrayList();
+        Filtro.add("idConceptos");
+        Filtro.add(String.valueOf(id));
+        Filtro.add("Int");
+        ControladorConceptos controladorConceptos = new ControladorConceptos();
+        Conceptos conceptos = new Conceptos();
+        conceptos = (Conceptos) controladorConceptos.Mostrar(Filtro);
+        txtCodigo.setText(conceptos.getCodigo());
+        txtEtiqueta.setText(conceptos.getEtiqueta());
+        txtDescripcion.setText(conceptos.getDescripcion());
+        if (conceptos.isManejaConsecutivo()) {
+            checkManejaConsecutivo.setSelected(true);
+        } else {
+            checkManejaConsecutivo.setSelected(false);
+        }
+        txtPrefijo.setText(conceptos.getPrefijo());
+        txtUltConsecutivo.setText(String.valueOf(conceptos.getUltimoConsecutivo()));
+        txtResolucionDIAN.setText(conceptos.getResolucionDIAN());
+        switch (conceptos.getNaturalezaDinero()) {
+            case 1:
+                rbCredito.setSelected(true);
+                break;
+            case 2:
+                rbDebito.setSelected(true);
+                break;
+            case 3:
+                rbNingunDinero.setSelected(true);
+                break;
+            default:
+                break;
+        }
+        switch (conceptos.getNaturalezaInventario()) {
+            case 1:
+                rbEntrada.setSelected(true);
+                break;
+            case 2:
+                rbSalida.setSelected(true);
+                break;
+            case 3:
+                rbNingunInventario.setSelected(true);
+                break;
+            default:
+                break;
+        }
+
+        this.setTitle("ACTUALIZANDO CONCEPTO");
+        btnGuardar.setText("ACTUALIZAR");
     }
 
     /**
@@ -273,7 +330,9 @@ public class IntConceptos extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void Limpiar(){        
+private void Limpiar() {
+        this.setTitle("NUEVO CONCEPTO");
+        txtCodigo.setEnabled(true);
         txtCodigo.setText("");
         txtEtiqueta.setText("");
         txtDescripcion.setText("");
@@ -283,7 +342,9 @@ private void Limpiar(){
         checkManejaConsecutivo.setSelected(false);
         rbNingunDinero.setSelected(true);
         rbNingunInventario.setSelected(true);
-        
+        btnGuardar.setText("GUARDAR");
+        id = 0;
+
     }
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         Limpiar();
@@ -291,55 +352,70 @@ private void Limpiar(){
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Conceptos var = new Conceptos();
+        var.setId(id);
         var.setCodigo(txtCodigo.getText());
         var.setDescripcion(txtDescripcion.getText());
         var.setEtiqueta(txtEtiqueta.getText());
-        if (rbCredito.isSelected()){
+        if (rbCredito.isSelected()) {
             var.setNaturalezaDinero(1);
-        }else if (rbDebito.isSelected()){
+        } else if (rbDebito.isSelected()) {
             var.setNaturalezaDinero(2);
-        }else if (rbNingunDinero.isSelected()){
+        } else if (rbNingunDinero.isSelected()) {
             var.setNaturalezaDinero(3);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Seleecione una naturaleza del dinero");
             return;
         }
-        if (rbEntrada.isSelected()){
+        if (rbEntrada.isSelected()) {
             var.setNaturalezaInventario(1);
-        }else if (rbSalida.isSelected()){
+        } else if (rbSalida.isSelected()) {
             var.setNaturalezaInventario(2);
-        }else if (rbNingunInventario.isSelected()){
+        } else if (rbNingunInventario.isSelected()) {
             var.setNaturalezaInventario(3);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Seleecione una naturaleza de inventario");
             return;
         }
-        if (checkManejaConsecutivo.isSelected()){
+        if (checkManejaConsecutivo.isSelected()) {
             var.setManejaConsecutivo(true);
-        }else{
+        } else {
             var.setManejaConsecutivo(false);
         }
-        
+
         var.setPrefijo(txtPrefijo.getText());
         var.setUltimoConsecutivo(Integer.parseInt(txtUltConsecutivo.getText()));
         var.setResolucionDIAN(txtResolucionDIAN.getText());
-       
-        ControladorConceptos  controladorConceptos  = new ControladorConceptos();
-        
+
+        ControladorConceptos controladorConceptos = new ControladorConceptos();
+
         Object[] object = new Object[2];
-        object = (Object[])controladorConceptos.Insertar(var);
-        if(object[0]=="String"){
+
+        if (id > 0) {
+            object = (Object[]) controladorConceptos.Editar(var);
+        } else {
+            object = (Object[]) controladorConceptos.Insertar(var);
+        }
+
+        if (object[0] == "String") {
             JOptionPane.showMessageDialog(this, object[1]);
             return;
         }
-        if(object[0]=="Boolean"){
-            if(((boolean) object[1])){
+        if (object[0] == "Boolean") {
+            if (id > 0) {
+                if (((boolean) object[1])) {
+                    JOptionPane.showMessageDialog(this, "Actualización Exitoso");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Actualización Fallido");
+                }
+                return;
+            }
+
+            if (((boolean) object[1])) {
                 JOptionPane.showMessageDialog(this, "Registro Exitoso");
                 Limpiar();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }
-            return;
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

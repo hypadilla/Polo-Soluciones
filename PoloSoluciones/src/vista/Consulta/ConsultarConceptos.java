@@ -5,6 +5,7 @@
  */
 package vista.Consulta;
 
+import controlador.ControladorConceptos;
 import controlador.ControladorTerceros;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -12,7 +13,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import modelo.Entidades.Conceptos;
 import modelo.Entidades.Terceros;
+import vista.IntConceptos;
 import vista.frmInicio;
 import vista.intTerceros;
 
@@ -48,7 +51,7 @@ public class ConsultarConceptos extends javax.swing.JInternalFrame {
     }
 
     void LlenarTabla(String Consulta) {
-        String col[] = {"ID", "TIPO", "DOCUMENTO", "NOMBRE", "DIRECCIÓN", "CORREO", "TÉLEFONO"};
+        String col[] = {"ID", "CODIGO", "DESCRIPCION", "ETIQUETA", "NATURALEZA DINERO", "NATURALEZA INVENTARIO", "MANEJA CONSECUTIVO", "PREFIJO", "ULTIMO CONSECUTIVO", "RESOLUCION DIAN"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
@@ -62,11 +65,11 @@ public class ConsultarConceptos extends javax.swing.JInternalFrame {
         tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tblConsulta.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 
-        ControladorTerceros controladorTerceros = new ControladorTerceros();
-        ArrayList<Object> terceros = controladorTerceros.MostrarTodos(Consulta);
-        for (Object item : terceros) {
-            Terceros tercero = (Terceros) item;
-            tableModel.addRow(new Object[]{tercero.getIdTerceros(), tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getDireccion(), tercero.getCorreo(), tercero.getTelefono()});
+        ControladorConceptos controladorConceptos = new ControladorConceptos();
+        ArrayList<Object> conceptos = controladorConceptos.MostrarTodos(Consulta);
+        for (Object item : conceptos) {
+            Conceptos concepto = (Conceptos) item;
+            tableModel.addRow(new Object[]{concepto.getId(), concepto.getCodigo(), concepto.getDescripcion(), concepto.getEtiqueta(), concepto.getNaturalezaDinero(), concepto.getNaturalezaInventario(), concepto.isManejaConsecutivo(), concepto.getPrefijo(), concepto.getUltimoConsecutivo(), concepto.getResolucionDIAN()});
         }
     }
 
@@ -149,7 +152,7 @@ public class ConsultarConceptos extends javax.swing.JInternalFrame {
             int column = tblConsulta.columnAtPoint(point);
             TableModel model = tblConsulta.getModel();
 
-            intTerceros t = new intTerceros(Integer.parseInt(model.getValueAt(row, 0).toString()));
+            IntConceptos t = new IntConceptos(Integer.parseInt(model.getValueAt(row, 0).toString()));
             frmInicio.jdpEscritorio.add(t);
             t.show();
             dispose();
