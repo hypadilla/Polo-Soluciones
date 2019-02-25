@@ -22,20 +22,21 @@ public class Conexion {
     public static Connection conectar() {
         Connection con = null;
         // Librería de MySQL
-        String driver = "com.mysql.jdbc.Driver";
+        String driver = "com.mysql.jdbc.Driver" /*"com.mysql.jdbc.Driver"*/;
 
         // Nombre de la base de datos
-        String database = "sql10279128";
+        String database = "farodb" /*"sql10279128"*/;
 
         // Host
-        String hostname = "sql10.freemysqlhosting.net";
-        //String hostname = "localhost";
+        //String hostname = "sql10.freemysqlhosting.net";
+        String hostname = "localhost";
 
         // Nombre de usuario
-        String username = "sql10279128";
-
+        //String username = "sql10279128";
+        String username = "root";
         // Clave de usuario
-        String password = "r3UxKqFz9D";
+        //String password = "r3UxKqFz9D";
+        String password = "root";
         // Puerto
 
         String port = "3306";

@@ -129,7 +129,8 @@ public class UsuarioDAO implements IUsuario {
         Usuarios Respuesta = null;
 
         ResultSet resultSet;
-        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+        try (Connection connection = Conexion.conectar();
+                PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
             switch(TipoValorFiltro){
                 case "String":
                     preparedStatement.setString(1, ValorFiltro);
