@@ -20,6 +20,7 @@ import modelo.Entidades.Conceptos;
 import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 import modelo.Entidades.FacturacionDetalle;
+import modelo.Entidades.Productos;
 import modelo.Interfaces.IFacturacion;
 import src.Constantes;
 
@@ -158,12 +159,12 @@ public class FacturacionDAO implements IFacturacion {
                 facturacion.setIdTerceros(resultSet.getInt("idTercero"));
                 facturacion.setIdUsuarios(resultSet.getInt("idUsuario"));
                 facturacion.setFecha(resultSet.getString("fecha"));
-                facturacion.setFecha(resultSet.getString("consecutivo"));
-                facturacion.setFecha(resultSet.getString("observacion"));
-                facturacion.setFecha(resultSet.getString("subTotal"));
-                facturacion.setFecha(resultSet.getString("iva"));
-                facturacion.setFecha(resultSet.getString("formaPago"));
-                facturacion.setFecha(resultSet.getString("total"));
+                facturacion.setConsecutivo(resultSet.getInt("consecutivo"));
+                facturacion.setObservacion(resultSet.getString("observacion"));
+                facturacion.setSubTotal(resultSet.getDouble("subTotal"));
+                facturacion.setIVA(resultSet.getDouble("iva"));
+                facturacion.setFormaPago(resultSet.getString("formaPago"));
+                facturacion.setTotal(resultSet.getDouble("total"));
             }
             resultSet.close();
 
@@ -186,18 +187,20 @@ public class FacturacionDAO implements IFacturacion {
     public Object Insertar(Object object) {
         ArrayList<Object> obj = (ArrayList<Object>) object;
         Facturacion facturacion = (Facturacion) obj.get(0);
-        String QuerySQL = "INSERT INTO " + Constantes.TABLAFACTURACION + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)";
+        String QuerySQL = "INSERT INTO " + Constantes.TABLAFACTURACION + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?)";
+        String QueryUpdateProductos = "UPDATE " + Constantes.TABLAPRODUCTOS + " SET Cantidad = ? WHERE idProductos = ?";
         String QueryFacturacionDetalle = "INSERT INTO " + Constantes.TABLADETALLEFACTURACION + " VALUES (NULL,?,?,?,?,?,?)";
-        String QuerySelectConceptos = "SELECT * FROM " + Constantes.TABLACONCEPTOS + "WHERE idConceptos = ?";
-        String QueryUpdateConceptos = "UPDATE " + Constantes.TABLACONCEPTOS + " SET Codigo = ?,Descripción = ?,Etiqueta = ?,NaturalezaDinero = ?,NaturalezaInventario =? ,ManejaConsecutivo = ?,Prefijo = ?,UltimoConsecutivo = ?, ResolucionDIAN = ? WHERE idConceptos = ?";
-        String QuerySelectFacturacion = "SELECT * FROM " + Constantes.TABLAFACTURACION + "WHERE idConceptos = ? ORDER BY Consecutivo DESC";
+        String QuerySelectConceptos = "SELECT * FROM " + Constantes.TABLACONCEPTOS + " WHERE idConceptos = ?";
+        String QuerySelectProductos = "SELECT * FROM " + Constantes.TABLAPRODUCTOS + " WHERE idProductos = ?";
+        String QuerySelectFacturacion = "SELECT * FROM " + Constantes.TABLAFACTURACION + " WHERE idConcepto = ? ORDER BY Consecutivo DESC";
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
-        PreparedStatement preparedStatement = null;
-        PreparedStatement preparedStatementDetalle = null;
+        PreparedStatement preparedStatementInsertFacturacion = null;
+        PreparedStatement preparedStatementInsertDetalleFacturacion = null;
         PreparedStatement preparedStatementSelectConceptos = null;
-        PreparedStatement preparedStatementUpdateConceptos = null;
         PreparedStatement preparedStatementSelectFacturacion = null;
+        PreparedStatement preparedStatementSelectProducto = null;
+        PreparedStatement preparedStatementUpdateProductos = null;
         Savepoint saveObj = null;
         Connection connection = Conexion.conectar();
 
@@ -205,8 +208,11 @@ public class FacturacionDAO implements IFacturacion {
             connection.setAutoCommit(false);
             saveObj = connection.setSavepoint();
 
+            //Consulta el  Concepto
+            preparedStatementSelectConceptos = connection.prepareStatement(QuerySelectConceptos);
             preparedStatementSelectConceptos.setInt(1, facturacion.getIdConceptos());
-            ResultSet resultSetSelectConceptos = preparedStatementSelectConceptos.executeQuery(QuerySelectConceptos);
+
+            ResultSet resultSetSelectConceptos = preparedStatementSelectConceptos.executeQuery();
             Conceptos conceptos = null;
             if (resultSetSelectConceptos.next()) {
                 conceptos = new Conceptos();
@@ -216,73 +222,95 @@ public class FacturacionDAO implements IFacturacion {
                 conceptos.setNaturalezaDinero(resultSetSelectConceptos.getInt("NaturalezaDinero"));
                 conceptos.setNaturalezaInventario(resultSetSelectConceptos.getInt("NaturalezaInventario"));
             }
+            //Fin Consulta Concepto
 
-            preparedStatement = connection.prepareStatement(QuerySQL, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, facturacion.getIdConceptos());
-            preparedStatement.setInt(2, facturacion.getIdTerceros());
-            preparedStatement.setInt(3, facturacion.getIdUsuarios());
+            //Registro de Factura I
+            preparedStatementInsertFacturacion = connection.prepareStatement(QuerySQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatementInsertFacturacion.setInt(1, facturacion.getIdConceptos());
+            preparedStatementInsertFacturacion.setInt(2, facturacion.getIdTerceros());
+            preparedStatementInsertFacturacion.setInt(3, facturacion.getIdUsuarios());
             //SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd");
             //Date date;
             //date = sdf1.parse(var.getFecha());
             java.util.Date d = new java.util.Date();
             java.sql.Date date2 = new java.sql.Date(d.getTime());
-            preparedStatement.setDate(4, date2);
+            preparedStatementInsertFacturacion.setDate(4, date2);
+            //Fin Registro de Factura I
 
+            //Inicio de Consulta ultimo Consecutivo
             if (conceptos.isManejaConsecutivo()) {
-                int Consecutivo = 0;
-                preparedStatementSelectFacturacion.setInt(1, facturacion.getIdConceptos());
                 preparedStatementSelectFacturacion = connection.prepareStatement(QuerySelectFacturacion);
-                ResultSet resultSet = preparedStatement.executeQuery();
+                preparedStatementSelectFacturacion.setInt(1, facturacion.getIdConceptos());
+                
+                ResultSet resultSet = preparedStatementSelectFacturacion.executeQuery();
                 Facturacion facturacionTMP = null;
                 if (resultSet.next()) {
                     facturacionTMP = new Facturacion();
-                    facturacionTMP.setId(resultSet.getInt("idFacturacion"));
-                    facturacionTMP.setIdConceptos(resultSet.getInt("idConcepto"));
-                    facturacionTMP.setIdTerceros(resultSet.getInt("idTercero"));
-                    facturacionTMP.setIdUsuarios(resultSet.getInt("idUsuario"));
-                    facturacionTMP.setFecha(resultSet.getString("fecha"));
-                    facturacionTMP.setFecha(resultSet.getString("consecutivo"));
-                    facturacionTMP.setFecha(resultSet.getString("observacion"));
-                    facturacionTMP.setFecha(resultSet.getString("subTotal"));
-                    facturacionTMP.setFecha(resultSet.getString("iva"));
-                    facturacionTMP.setFecha(resultSet.getString("formaPago"));
-                    facturacionTMP.setFecha(resultSet.getString("total"));
+                    facturacionTMP.setConsecutivo(resultSet.getInt("consecutivo"));
                 }
                 if (facturacionTMP == null) {
-                    
-                }else{
-                    preparedStatement.setInt(5, facturacionTMP.getConsecutivo()+1);
+                    preparedStatementInsertFacturacion.setInt(5, conceptos.getUltimoConsecutivo() + 1);
+                } else {
+                    preparedStatementInsertFacturacion.setInt(5, facturacionTMP.getConsecutivo() + 1);
                 }
             } else {
-                preparedStatement.setInt(5, facturacion.getConsecutivo());
+                preparedStatementInsertFacturacion.setInt(5, facturacion.getConsecutivo());
             }
+            //Fin Consulta ultimo Consecutivo
 
-            preparedStatement.setString(6, facturacion.getObservacion());
-            preparedStatement.setDouble(7, facturacion.getSubTotal());
-            preparedStatement.setDouble(8, facturacion.getIVA());
-            preparedStatement.setDouble(9, facturacion.getDescuento());
-            preparedStatement.setString(10, facturacion.getFormaPago());
-            preparedStatement.setDouble(11, facturacion.getTotal());
-            preparedStatement.executeUpdate();
-            ResultSet rs = preparedStatement.getGeneratedKeys();
+            //Registro de Factura II
+            preparedStatementInsertFacturacion.setString(6, facturacion.getObservacion());
+            preparedStatementInsertFacturacion.setDouble(7, facturacion.getSubTotal());
+            preparedStatementInsertFacturacion.setDouble(8, facturacion.getIVA());
+            //preparedStatementInsertFacturacion.setDouble(9, facturacion.getDescuento());
+            preparedStatementInsertFacturacion.setString(9, facturacion.getFormaPago());
+            preparedStatementInsertFacturacion.setDouble(10, facturacion.getTotal());
+
+            preparedStatementInsertFacturacion.executeUpdate();
+            ResultSet rs = preparedStatementInsertFacturacion.getGeneratedKeys();
             int llave = 0;
             if (rs != null && rs.next()) {
                 llave = rs.getInt(1);
             }
+            //Fin de Factura II
 
             ArrayList<FacturacionDetalle> detalleFactura;
             detalleFactura = (ArrayList<FacturacionDetalle>) obj.get(1);
             for (Object item : detalleFactura) {
 
-                DetalleFacturacion var2 = (DetalleFacturacion) item;
-                preparedStatementDetalle = connection.prepareStatement(QueryFacturacionDetalle);
-                preparedStatementDetalle.setInt(1, llave);
-                preparedStatementDetalle.setInt(2, var2.getIdProducto());
-                preparedStatementDetalle.setDouble(3, var2.getCantidad());
-                preparedStatementDetalle.setDouble(4, var2.getVrProducto());
-                preparedStatementDetalle.setDouble(5, var2.getVrIVA());
-                preparedStatementDetalle.setDouble(6, var2.getVrDescuento());
-                preparedStatementDetalle.execute();
+                DetalleFacturacion detalleFacturacion = (DetalleFacturacion) item;
+                preparedStatementInsertDetalleFacturacion = connection.prepareStatement(QueryFacturacionDetalle);
+                preparedStatementInsertDetalleFacturacion.setInt(1, llave);
+                preparedStatementInsertDetalleFacturacion.setInt(2, detalleFacturacion.getIdProducto());
+                preparedStatementInsertDetalleFacturacion.setDouble(3, detalleFacturacion.getCantidad());
+                preparedStatementInsertDetalleFacturacion.setDouble(4, detalleFacturacion.getVrProducto());
+                preparedStatementInsertDetalleFacturacion.setDouble(5, detalleFacturacion.getVrIVA());
+                preparedStatementInsertDetalleFacturacion.setDouble(6, detalleFacturacion.getVrDescuento());
+                preparedStatementInsertDetalleFacturacion.execute();
+
+                if (conceptos.getNaturalezaInventario() != 3) {
+                    //Consultar cantidad del producto
+                    preparedStatementSelectProducto = connection.prepareStatement(QuerySelectProductos);
+                    preparedStatementSelectProducto.setInt(1, detalleFacturacion.getIdProducto());
+                    ResultSet resultSet = preparedStatementSelectProducto.executeQuery();
+                    Productos productoTMP = null;
+                    if (resultSet.next()) {
+                        productoTMP = new Productos();
+                        productoTMP.setCantidad(resultSet.getDouble("Cantidad"));
+                    }
+                    //Fin consulta de prodcuto
+
+                    preparedStatementUpdateProductos = connection.prepareStatement(QueryUpdateProductos);
+
+                    if (conceptos.getNaturalezaInventario() == 1) { // Entrada de producto
+                        preparedStatementUpdateProductos.setDouble(1, detalleFacturacion.getCantidad() + productoTMP.getCantidad());
+                    } else if (conceptos.getNaturalezaInventario() == 2) {//Sale Cantidad
+                        preparedStatementUpdateProductos.setDouble(1, productoTMP.getCantidad() - detalleFacturacion.getCantidad());
+                    }
+                    preparedStatementUpdateProductos.setInt(2, detalleFacturacion.getIdProducto());
+                    preparedStatementUpdateProductos.execute();
+                }
+
             }
 
             Rpta[1] = true;
@@ -297,8 +325,8 @@ public class FacturacionDAO implements IFacturacion {
             }
         } finally {
             try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
+                if (preparedStatementInsertFacturacion != null) {
+                    preparedStatementInsertFacturacion.close();
                 }
 
                 connection.setAutoCommit(true);

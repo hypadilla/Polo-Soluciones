@@ -26,7 +26,7 @@ public class ProductoDAO implements IProductos {
     @Override
     public Object Insertar(Object object) {
         Productos var = (Productos) object;
-        String QuerySQL = "INSERT INTO " + Constantes.TABLAPRODUCTOS + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?)";
+        String QuerySQL = "INSERT INTO " + Constantes.TABLAPRODUCTOS + " VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?)";
         Object[] Rpta = new Object[2];
         Rpta[0] = "Boolean";
 
@@ -35,12 +35,17 @@ public class ProductoDAO implements IProductos {
             preparedStatement.setString(2, var.getReferencia());
             preparedStatement.setString(3, var.getDescripcion());
             preparedStatement.setString(4, var.getRutaImagen());
-            preparedStatement.setDouble(5, var.getCantidad());//cantidad
-            preparedStatement.setDouble(6, var.getCostoNeto());
-            preparedStatement.setDouble(7, var.getPorcCostoIva());
-            preparedStatement.setDouble(8, var.getVentaNeto());
-            preparedStatement.setDouble(9, var.getPorcVentaIva());
-            preparedStatement.setDouble(10, var.getVentaUtilidad());
+            
+            preparedStatement.setDouble(5, var.getCostoNeto());
+            preparedStatement.setDouble(6, var.getPorcCostoIva());
+            preparedStatement.setDouble(7, var.getVentaNeto());
+            preparedStatement.setDouble(8, var.getPorcVentaIva());
+            preparedStatement.setDouble(9, var.getVentaUtilidad());
+            
+            preparedStatement.setInt(10, 1);
+            preparedStatement.setInt(11, 1);
+            
+            preparedStatement.setDouble(12, var.getCantidad());//cantidad
             preparedStatement.execute();
 
             Rpta[1] = true;
@@ -83,9 +88,9 @@ public class ProductoDAO implements IProductos {
                 producto.setRutaImagen(resultSet.getString("RutaImagen"));
                 producto.setCantidad(resultSet.getDouble("Cantidad"));
                 producto.setCostoNeto(resultSet.getDouble("CostoNeto"));
-                producto.setPorcCostoIva(resultSet.getDouble("PorcCostoIVA"));
+                producto.setPorcCostoIva(resultSet.getDouble("CostoIVA"));
                 producto.setVentaNeto(resultSet.getDouble("VentaNeto"));
-                producto.setPorcVentaIva(resultSet.getDouble("PorcVentaIVA"));
+                producto.setPorcVentaIva(resultSet.getDouble("VentaIVA"));
                 producto.setVentaUtilidad(resultSet.getDouble("VentaUtilidad"));
             }
             resultSet.close();
@@ -152,10 +157,10 @@ public class ProductoDAO implements IProductos {
                 productos.setRutaImagen(resultSet.getString("RutaImagen"));
                 productos.setCantidad(resultSet.getDouble("Cantidad"));
                 productos.setCostoNeto(resultSet.getDouble("CostoNeto"));
-                productos.setPorcCostoIva(resultSet.getDouble("PorcCostoIva"));
+                productos.setPorcCostoIva(resultSet.getDouble("CostoIVA"));
                 productos.setCostoIva(productos.getCostoNeto()*(1+productos.getPorcCostoIva()/100));
                 productos.setVentaNeto(resultSet.getDouble("VentaNeto"));
-                productos.setPorcVentaIva(resultSet.getDouble("PorcVentaIva"));
+                productos.setPorcVentaIva(resultSet.getDouble("VentaIVA"));
                 productos.setVentaIva((productos.getVentaIva()*(1+productos.getPorcVentaIva()/100)));
                 productos.setVentaUtilidad(resultSet.getDouble("VentaUtilidad"));
                 Respuesta.add(productos);
