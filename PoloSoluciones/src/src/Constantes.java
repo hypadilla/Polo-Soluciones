@@ -25,7 +25,7 @@ public class Constantes {
     public static Usuarios USUARIO;
     public static String TABLATERCEROS = "Terceros";
     public static String TABLACATEGORIAS = "Categorias";
-    public static String TABLAUSUARIOS = "Usuario";
+    public static String TABLAUSUARIOS = "Usuarios";
     public static String TABLADEPARTAMENTOS = "Departamentos";
     public static String TABLACONCEPTOS = "Conceptos";
     public static String TABLAPRODUCTOS = "Productos";

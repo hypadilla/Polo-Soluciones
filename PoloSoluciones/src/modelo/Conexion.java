@@ -43,7 +43,7 @@ public class Conexion {
 
         // Ruta de nuestra base de datos (desactivamos el uso de SSL con "?useSSL=false")
         String url = driver + ";Server=" + hostname + ";Database=" + database + ";User=" + username + ";Password=" + password + ";Option=3";
-        String url2 = "jdbc:mysql://"+hostname+":" + port + "/" + database;
+        String url2 = "jdbc:mysql://"+hostname+":" + port + "/" + database + "?useSSL=false";
         
         //String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=true";
 

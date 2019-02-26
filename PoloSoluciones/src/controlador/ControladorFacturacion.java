@@ -53,4 +53,14 @@ public class ControladorFacturacion implements IFacturacion {
     public Object RegistrarFactura(Object object, Object object2) {
        return var.RegistrarFactura(object, object2);
     }
+
+    @Override
+    public Object MostrarTodoEnCaja(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object MostrarResumenEnCaja(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
