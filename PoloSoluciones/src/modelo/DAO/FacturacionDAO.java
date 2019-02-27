@@ -241,7 +241,7 @@ public class FacturacionDAO implements IFacturacion {
             if (conceptos.isManejaConsecutivo()) {
                 preparedStatementSelectFacturacion = connection.prepareStatement(QuerySelectFacturacion);
                 preparedStatementSelectFacturacion.setInt(1, facturacion.getIdConceptos());
-                
+
                 ResultSet resultSet = preparedStatementSelectFacturacion.executeQuery();
                 Facturacion facturacionTMP = null;
                 if (resultSet.next()) {
@@ -340,7 +340,32 @@ public class FacturacionDAO implements IFacturacion {
 
     @Override
     public Object MostrarTodoEnCaja(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String QuerySQL = "SELECT * FROM " + Constantes.TABLAFACTURACION + " WHERE";
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar();
+                PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, "%" + String.valueOf(object) + "%");
+            preparedStatement.setString(2, "%" + String.valueOf(object) + "%");
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                /*Departamentos departamentos = new Departamentos();
+                departamentos.setId(resultSet.getInt("idDepartamentos"));
+                departamentos.setCodigo(resultSet.getString("Codigo"));
+                departamentos.setDepartamento(resultSet.getString("Departamento"));
+                departamentos.setDescripcion(resultSet.getString("Descripcion"));
+                Respuesta.add(departamentos);*/
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartamentoDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + DepartamentoDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
     }
 
     @Override

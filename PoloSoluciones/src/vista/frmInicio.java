@@ -10,6 +10,7 @@ import vista.Consulta.ConsultarDepartamentos;
 import vista.Consulta.ConsultarProductos;
 import vista.Consulta.ConsultarTerceros;
 import vista.Consulta.ConsultarUsuarios;
+import vista.Consulta.CuadreCaja;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -67,6 +68,8 @@ public class frmInicio extends javax.swing.JFrame {
         menuConsultaDepartamentos = new javax.swing.JMenuItem();
         menuConsultaCategorias = new javax.swing.JMenuItem();
         menuConsultaConceptos = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faro Soluciones");
@@ -220,6 +223,18 @@ public class frmInicio extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu7.setText("CAJA");
+
+        jMenuItem2.setText("CUADRE CAJA");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu7);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -325,8 +340,14 @@ public class frmInicio extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         IntClientes intClientes = new IntClientes();
         jdpEscritorio.add(intClientes);
-        intClientes.setVisible(true);// TODO add your handling code here:
+        intClientes.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        CuadreCaja var = new CuadreCaja();
+        jdpEscritorio.add(var);
+        var.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,6 +391,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -377,6 +399,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;

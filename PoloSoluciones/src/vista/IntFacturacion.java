@@ -21,6 +21,7 @@ import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 import modelo.Entidades.Productos;
 import modelo.Entidades.Terceros;
+import src.Sesion;
 
 /**
  *
@@ -500,16 +501,19 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
 
     private void txtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGuardarActionPerformed
-        Facturacion var = new Facturacion();
-        var.setIdConceptos(Integer.parseInt(txtConceptos.getText()));
-        var.setIdTerceros(Integer.parseInt(txtIdTercero.getText()));
-        var.setIdUsuarios(1);
-        var.setFecha(txtFecha.getText());
-        var.setObservacion(txtAreaObservacion.getText());
-        var.setFormaPago(cbFormaPago.getSelectedItem().toString());
+        Facturacion facturacion = new Facturacion();
+        facturacion.setIdConceptos(Integer.parseInt(txtConceptos.getText()));
+        facturacion.setIdTerceros(Integer.parseInt(txtIdTercero.getText()));
+        facturacion.setIdUsuarios(Sesion.usuarios.getId());
+        facturacion.setFecha(txtFecha.getText());
+        facturacion.setObservacion(txtAreaObservacion.getText());
+        facturacion.setFormaPago(cbFormaPago.getSelectedItem().toString());
+        facturacion.setSubTotal(Double.parseDouble(txtSubtotal.getText()));
+        facturacion.setIVA(Double.parseDouble(txtIva.getText()));
+        facturacion.setTotal(Double.parseDouble(txtTotal.getText()));
         
         ArrayList<Object> Parametros = new ArrayList<>();
-        Parametros.add(var);
+        Parametros.add(facturacion);
         Parametros.add(DetalleFactura);
 
         ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
@@ -642,8 +646,8 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         double IVA = 0;
         double Total = 0;
         for (DetalleFacturacion detalleFacturacion : DetalleFactura) {
-            SubTotales += detalleFacturacion.getVrProducto();
-            IVA += detalleFacturacion.getVrProducto() * (detalleFacturacion.getVrIVA()) /100;
+            SubTotales += (detalleFacturacion.getVrProducto() * detalleFacturacion.getCantidad());
+            IVA += (detalleFacturacion.getVrProducto() * (detalleFacturacion.getVrIVA()) /100 * detalleFacturacion.getCantidad());
             Total += (SubTotales + IVA);
         }
         txtSubtotal.setText(String.valueOf(SubTotales));

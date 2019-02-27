@@ -5,6 +5,8 @@
  */
 package vista.Consulta;
 
+import java.util.Date;
+
 /**
  *
  * @author hypadilla
@@ -14,8 +16,16 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
     /**
      * Creates new form CuadreCaja
      */
+    Date date;
+    
     public CuadreCaja() {
         initComponents();
+        date = new Date();
+        txtFecha.setDate(date);
+    }
+    
+    void LlenarTablas(){
+        
     }
 
     /**
@@ -29,9 +39,9 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        dpFecha = new com.toedter.calendar.JDateChooser();
+        txtFecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDetalle = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -48,9 +58,9 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
         jButton1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jButton1.setText("BUSCAR");
 
-        dpFecha.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        txtFecha.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -58,7 +68,7 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
                 "CONCEPTO", "TERCERO", "Nº DOCUMENTO", "VALOR"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblDetalle);
 
         jLabel2.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel2.setText("DETALLE DE MOVIMIENTOS DE DINERO");
@@ -104,7 +114,7 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -133,7 +143,7 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addComponent(jButton1)
                         .addComponent(jButton2))
-                    .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -158,7 +168,6 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser dpFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -168,9 +177,10 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tblDetalle;
+    private com.toedter.calendar.JDateChooser txtFecha;
     // End of variables declaration//GEN-END:variables
 }
