@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Conexion;
@@ -340,13 +341,16 @@ public class FacturacionDAO implements IFacturacion {
 
     @Override
     public Object MostrarTodoEnCaja(Object object) {
-        String QuerySQL = "SELECT * FROM " + Constantes.TABLAFACTURACION + " WHERE";
+        String QuerySQL = "SELECT a.idFacturacion, a.fecha, a.formaPago, a.idConcepto, b.Descripcion, b.NaturalezaDinero, a.idTercero, c.Nombre, if(b.NaturalezaDinero = 1, a.total * 1, a.total*-1) as Totales\n"
+                + "FROM farodb.facturacion as a\n"
+                + "inner join conceptos as b on  b.idConceptos = a.idConcepto\n"
+                + "inner join terceros as c on c.idTerceros = a.idTercero\n"
+                + "where b.NaturalezaDinero <> 0 and Fecha = ?";
         ResultSet resultSet;
         ArrayList<Object> Respuesta = new ArrayList<>();
         try (Connection connection = Conexion.conectar();
                 PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
-            preparedStatement.setString(1, "%" + String.valueOf(object) + "%");
-            preparedStatement.setString(2, "%" + String.valueOf(object) + "%");
+                preparedStatement.setDate(1, (java.sql.Date)object);
 
             resultSet = preparedStatement.executeQuery();
 

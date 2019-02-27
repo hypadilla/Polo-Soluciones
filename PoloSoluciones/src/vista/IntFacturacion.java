@@ -503,7 +503,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     private void txtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGuardarActionPerformed
         Facturacion facturacion = new Facturacion();
         facturacion.setIdConceptos(Integer.parseInt(txtConceptos.getText()));
-        facturacion.setIdTerceros(Integer.parseInt(txtIdTercero.getText()));
+        facturacion.setIdTerceros(Integer.parseInt(txtIdTercero.getToolTipText()));
         facturacion.setIdUsuarios(Sesion.usuarios.getId());
         facturacion.setFecha(txtFecha.getText());
         facturacion.setObservacion(txtAreaObservacion.getText());
@@ -557,6 +557,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         tercero = (Terceros) controladorTerceros.Mostrar(Filtro);
 
         if (tercero != null) {
+            txtIdTercero.setToolTipText(String.valueOf(tercero.getIdTerceros()));
             txtTercero.setText(tercero.getNombre());
             txtDireccion.setText(tercero.getDireccion());
             txtTelefono.setText(tercero.getTelefono());
