@@ -32,6 +32,16 @@ public class IntProductos extends javax.swing.JInternalFrame {
         int id;
         ArrayList<Departamentos> departamentos;
         ArrayList<Categorias> categorias;
+        Double valorNetoCompra=0.0;
+        Double porcIvaCompra=19.0;
+        Double valorPorcIvaCompra=valorNetoCompra*(porcIvaCompra/100);
+        Double valorTotalCompra = valorNetoCompra*(1+(porcIvaCompra/100));
+        Double valorNetoVenta=0.0;
+        Double porcIvaVenta=19.0;
+        Double valorPorcIvaVenta=valorNetoVenta*(porcIvaVenta/100);
+        Double valorTotalVenta = valorNetoVenta*(1+(porcIvaVenta/100));
+        Double valorUtilidad = valorTotalVenta - valorTotalCompra;
+        Double porcUtilidad = (valorUtilidad*100)/valorTotalCompra;
     /**
      * Creates new form IntProductos
      */
@@ -42,6 +52,16 @@ public class IntProductos extends javax.swing.JInternalFrame {
         ListaDepartamentos();
         ListaCategorias();
         id = 0;
+        txtVrNetoCosto.setText(""+valorNetoCompra);
+        txtVrNetoVenta.setText(""+valorNetoVenta);
+        txtPorcIvaCosto.setText(""+porcIvaCompra);
+        txtPorcIvaVenta.setText(""+porcIvaVenta);
+        lblCostoIva.setText(""+valorPorcIvaCompra);
+        lblIvaVenta.setText(""+valorPorcIvaVenta);
+        txtCostoTotalCosto.setText(""+valorTotalCompra);
+        txtCostoTotalVenta.setText(""+valorTotalVenta);
+        txtVrUtilidad.setText(""+(valorUtilidad));
+        txtPorcUtilidad.setText(""+porcUtilidad);
     }
 
  public IntProductos(int id) {
@@ -210,6 +230,11 @@ public class IntProductos extends javax.swing.JInternalFrame {
         jLabel11.setText("VR NETO");
 
         txtVrNetoCosto.setText("0");
+        txtVrNetoCosto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtVrNetoCostoFocusLost(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel13.setText("% IVA");
@@ -549,10 +574,6 @@ private void ListaCategorias(){
          return idCategorias;
     }
     
-
-    
-    
-    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Productos var = new Productos();
         var.setId(id);
@@ -686,6 +707,82 @@ private void ListaCategorias(){
         // TODO add your handling code here:
     }//GEN-LAST:event_cbDepartamentoActionPerformed
 
+    private void txtVrNetoCostoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrNetoCostoFocusLost
+       if(validarTxtVrNetoCosto()==true){
+           return;
+       }else{
+           validarTxtPorcIvaCosto();
+           return;
+       }
+       
+    }//GEN-LAST:event_txtVrNetoCostoFocusLost
+
+private boolean validarTxtVrNetoCosto(){
+    try{
+        valorNetoCompra=Double.parseDouble(txtVrNetoCosto.getText());
+        System.out.println("El valor neto es: " + valorNetoCompra);
+        return true;
+    }catch(Exception e){
+        txtVrNetoCosto.setText(valorNetoCompra.toString());
+        System.out.println("Error validar "  + valorNetoCompra);
+        return false;
+    }
+}
+
+private boolean validarTxtPorcIvaCosto(){
+    try{
+        porcIvaCompra=Double.parseDouble(txtPorcIvaCosto.getText());
+        System.out.println("El valor neto es: " + porcIvaCompra);
+    }catch(Exception e){
+        txtPorcIvaCosto.setText(porcIvaCompra.toString());
+        System.out.println("Error validar "  + porcIvaCompra);
+    }
+    return false;
+}
+
+private boolean validarTxtCostoTotalCosto(){
+    try{
+        valorTotalCompra=Double.parseDouble(txtCostoTotalCosto.getText());
+        System.out.println("El valor neto es: " + porcIvaCompra);
+    }catch(Exception e){
+        txtCostoTotalCosto.setText(valorTotalCompra.toString());
+        System.out.println("Error validar "  + valorTotalCompra);
+    }
+    return false;
+}
+
+private boolean validarTxtVrNetoVenta(){
+    try{
+        valorNetoVenta=Double.parseDouble(txtVrNetoVenta.getText());
+        System.out.println("El valor neto es: " + valorNetoVenta);
+    }catch(Exception e){
+        txtVrNetoCosto.setText(valorNetoVenta.toString());
+        System.out.println("Error validar "  + valorNetoVenta);
+    }
+    return false;
+}
+
+private boolean validarTxtPorcIvaVenta(){
+    try{
+        porcIvaVenta=Double.parseDouble(txtPorcIvaVenta.getText());
+        System.out.println("El valor neto es: " + porcIvaVenta);
+    }catch(Exception e){
+        txtPorcIvaVenta.setText(porcIvaVenta.toString());
+        System.out.println("Error validar "  + porcIvaVenta);
+    }
+    return false;
+}
+
+private boolean validarTxtCostoTotalVenta(){
+    try{
+        valorTotalVenta=Double.parseDouble(txtCostoTotalVenta.getText());
+        System.out.println("El valor neto es: " + porcIvaVenta);
+    }catch(Exception e){
+        txtCostoTotalVenta.setText(valorTotalVenta.toString());
+        System.out.println("Error validar "  + valorTotalVenta);
+    }
+    return false;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargarImagen;
