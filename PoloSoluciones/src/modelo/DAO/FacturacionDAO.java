@@ -22,6 +22,7 @@ import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 import modelo.Entidades.FacturacionDetalle;
 import modelo.Entidades.Productos;
+import modelo.Entidades.TMPDetalleCuadreCaja;
 import modelo.Interfaces.IFacturacion;
 import src.Constantes;
 
@@ -91,11 +92,9 @@ public class FacturacionDAO implements IFacturacion {
             connection.commit();
         } catch (Exception sqlException) {
             Rpta[1] = false;
-            sqlException.printStackTrace();
             try {
                 connection.rollback(saveObj);
             } catch (SQLException sqlEx) {
-                sqlEx.printStackTrace();
             }
         } finally {
             try {
@@ -105,7 +104,6 @@ public class FacturacionDAO implements IFacturacion {
 
                 connection.setAutoCommit(true);
             } catch (Exception sqlException) {
-                sqlException.printStackTrace();
             }
         }
         return Rpta;
@@ -341,7 +339,7 @@ public class FacturacionDAO implements IFacturacion {
 
     @Override
     public Object MostrarTodoEnCaja(Object object) {
-        String QuerySQL = "SELECT a.idFacturacion, a.fecha, a.formaPago, a.idConcepto, b.Descripcion, b.NaturalezaDinero, a.idTercero, c.Nombre, if(b.NaturalezaDinero = 1, a.total * 1, a.total*-1) as Totales\n"
+        String QuerySQL = "SELECT a.idFacturacion, a.fecha, a.formaPago,  a.Consecutivo ,a.idConcepto, b.Descripcion, b.NaturalezaDinero, a.idTercero, c.Nombre, if(b.NaturalezaDinero = 1, a.total * 1, a.total*-1) as Totales\n"
                 + "FROM farodb.facturacion as a\n"
                 + "inner join conceptos as b on  b.idConceptos = a.idConcepto\n"
                 + "inner join terceros as c on c.idTerceros = a.idTercero\n"
@@ -350,24 +348,30 @@ public class FacturacionDAO implements IFacturacion {
         ArrayList<Object> Respuesta = new ArrayList<>();
         try (Connection connection = Conexion.conectar();
                 PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
-                preparedStatement.setDate(1, (java.sql.Date)object);
+                preparedStatement.setString(1, String.valueOf(object));
 
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                /*Departamentos departamentos = new Departamentos();
-                departamentos.setId(resultSet.getInt("idDepartamentos"));
-                departamentos.setCodigo(resultSet.getString("Codigo"));
-                departamentos.setDepartamento(resultSet.getString("Departamento"));
-                departamentos.setDescripcion(resultSet.getString("Descripcion"));
-                Respuesta.add(departamentos);*/
+                TMPDetalleCuadreCaja caja = new TMPDetalleCuadreCaja();
+                caja.setIdFactura(resultSet.getInt("idFacturacion"));
+                caja.setFecha(resultSet.getString("fecha"));
+                caja.setFormaPago(resultSet.getString("formaPago"));
+                caja.setIdConceptos(resultSet.getInt("idConcepto"));
+                caja.setDescripcion(resultSet.getString("Descripcion"));
+                caja.setNaturalezaDinero(resultSet.getInt("NaturalezaDinero"));
+                caja.setIdTerceros(resultSet.getInt("idTercero"));
+                caja.setConsecutivo(resultSet.getInt("Consecutivo"));
+                caja.setNombre(resultSet.getString("Nombre"));
+                caja.setTotales(resultSet.getDouble("Totales"));
+                Respuesta.add(caja);
             }
             resultSet.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(DepartamentoDAO.class
+            Logger.getLogger(FacturacionDAO.class
                     .getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Error al consultar en " + DepartamentoDAO.class.getName() + " Método Mostrar(object)");
+            System.err.println("Error al consultar en " + FacturacionDAO.class.getName() + " Método Mostrar(object)");
         }
         return Respuesta;
     }

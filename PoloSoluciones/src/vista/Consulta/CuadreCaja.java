@@ -5,27 +5,54 @@
  */
 package vista.Consulta;
 
+import controlador.ControladorFacturacion;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+import modelo.Entidades.TMPDetalleCuadreCaja;
 
 /**
  *
  * @author hypadilla
  */
-public class CuadreCaja extends javax.swing.JInternalFrame {
+public final class CuadreCaja extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form CuadreCaja
      */
     Date date;
+    DateFormat dateFormat;
     
     public CuadreCaja() {
         initComponents();
         date = new Date();
-        txtFecha.setDate(date);
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        txtFecha.setText(dateFormat.format(date));
+        LlenarTablas(txtFecha.getText());
     }
     
-    void LlenarTablas(){
-        
+    void LlenarTablas(String d){
+        String col[] = {"idFactura", "CONCEPTO", "TERCERO", "N° DOCUMENTO", "VALOR"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+        tblDetalle.setModel(tableModel);
+
+        tblDetalle.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblDetalle.getColumnModel().getColumn(0).setMinWidth(0);
+        tblDetalle.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tblDetalle.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+
+        ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
+        ArrayList<Object> detalles = (ArrayList<Object>) controladorFacturacion.MostrarTodoEnCaja(d);
+        detalles.stream().map((item) -> (TMPDetalleCuadreCaja) item).forEach((caja) -> {
+            tableModel.addRow(new Object[]{caja.getIdFactura(),caja.getDescripcion(), caja.getNombre(), caja.getConsecutivo() ,caja.getTotales()});
+        });
     }
 
     /**
@@ -39,7 +66,6 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        txtFecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalle = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -51,6 +77,7 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        txtFecha = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -60,8 +87,6 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
 
         jButton1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jButton1.setText("BUSCAR");
-
-        txtFecha.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
         tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,6 +129,8 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
         jButton2.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jButton2.setText("REFRESCAR");
 
+        txtFecha.setText("jTextField3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,8 +144,8 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(85, 85, 85)
                                 .addComponent(jButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
@@ -141,11 +168,10 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -163,7 +189,7 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -184,6 +210,6 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblDetalle;
-    private com.toedter.calendar.JDateChooser txtFecha;
+    private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

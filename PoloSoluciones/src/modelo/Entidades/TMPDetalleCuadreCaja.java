@@ -5,7 +5,6 @@
  */
 package modelo.Entidades;
 
-import java.util.Date;
 
 /**
  *
@@ -15,17 +14,18 @@ public class TMPDetalleCuadreCaja {
     private int idFactura;
     private int idConceptos;
     private int idTerceros;
-    private Date Fecha;
+    private String Fecha;
     private String FormaPago;
     private String Descripcion;
     private int NaturalezaDinero;
     private String Nombre;
     private double Totales;
+    private int Consecutivo;
 
     public TMPDetalleCuadreCaja() {
     }
 
-    public TMPDetalleCuadreCaja(int idFactura, int idConceptos, int idTerceros, Date Fecha, String FormaPago, String Descripcion, int NaturalezaDinero, String Nombre, double Totales) {
+    public TMPDetalleCuadreCaja(int idFactura, int idConceptos, int idTerceros, String Fecha, String FormaPago, String Descripcion, int NaturalezaDinero, String Nombre, double Totales, int Consecutivo) {
         this.idFactura = idFactura;
         this.idConceptos = idConceptos;
         this.idTerceros = idTerceros;
@@ -35,14 +35,7 @@ public class TMPDetalleCuadreCaja {
         this.NaturalezaDinero = NaturalezaDinero;
         this.Nombre = Nombre;
         this.Totales = Totales;
-    }
-
-    public double getTotales() {
-        return Totales;
-    }
-
-    public void setTotales(double Totales) {
-        this.Totales = Totales;
+        this.Consecutivo = Consecutivo;
     }
 
     public int getIdFactura() {
@@ -69,11 +62,11 @@ public class TMPDetalleCuadreCaja {
         this.idTerceros = idTerceros;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
-    public void setFecha(Date Fecha) {
+    public void setFecha(String Fecha) {
         this.Fecha = Fecha;
     }
 
@@ -108,4 +101,22 @@ public class TMPDetalleCuadreCaja {
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
+
+    public double getTotales() {
+        return Totales;
+    }
+
+    public void setTotales(double Totales) {
+        this.Totales = Totales;
+    }
+
+    public int getConsecutivo() {
+        return Consecutivo;
+    }
+
+    public void setConsecutivo(int Consecutivo) {
+        this.Consecutivo = Consecutivo;
+    }
+    
+    
 }

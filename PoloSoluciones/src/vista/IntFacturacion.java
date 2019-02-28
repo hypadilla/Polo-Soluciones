@@ -61,19 +61,6 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
     }
 
-    /*int ObtenerConcepto() {
-        int i;
-        boolean flat = false;
-        for (i = 0; i < conceptos.size(); i++) {
-            if (conceptos.get(i).getCodigo().equals(txtConceptos.getText())) {
-                flat = true;
-                break;
-            }
-        }
-        if (flat) {
-            return i;
-        }else{return -1;}
-    }*/
     void LlenarConceptos() {
         conceptos.clear();
         ArrayList<Object> objects = new ArrayList<>();

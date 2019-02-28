@@ -25,7 +25,7 @@ public class ControladorFacturacion implements IFacturacion {
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.MostrarTodos(object);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ControladorFacturacion implements IFacturacion {
 
     @Override
     public Object MostrarTodoEnCaja(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return var.MostrarTodoEnCaja(object);
     }
 
     @Override
