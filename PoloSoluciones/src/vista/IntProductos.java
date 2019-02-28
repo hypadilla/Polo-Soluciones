@@ -1,5 +1,7 @@
 package vista;
 
+import controlador.ControladorCategoria;
+import controlador.ControladorDepartamentos;
 import controlador.ControladorProductos;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.DAO.DepartamentoDAO;
+import modelo.Entidades.Categorias;
 import modelo.Entidades.Departamentos;
 import modelo.Entidades.Productos;
 
@@ -27,17 +30,27 @@ import modelo.Entidades.Productos;
  */
 public class IntProductos extends javax.swing.JInternalFrame {
         int id;
+        ArrayList<Departamentos> departamentos;
+        ArrayList<Categorias> categorias;
     /**
      * Creates new form IntProductos
      */
-    public IntProductos() {
+    public IntProductos() {        
         initComponents();
+        departamentos = new ArrayList<>();
+        categorias = new ArrayList<>();        
+        ListaDepartamentos();
+        ListaCategorias();
         id = 0;
     }
 
  public IntProductos(int id) {
         initComponents();
-        this.id = id;
+        departamentos = new ArrayList<>();
+        categorias = new ArrayList<>();
+        ListaDepartamentos();
+        ListaCategorias();
+        this.id = id;        
         txtCodigo.setEnabled(false);
         ArrayList<String> Filtro = new ArrayList();
         Filtro.add("IdProductos");
@@ -485,7 +498,27 @@ public class IntProductos extends javax.swing.JInternalFrame {
         Limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
     private void ListaDepartamentos(){
-        //
+        departamentos.clear();
+        ArrayList<Object> objects = new ArrayList<>();
+        ControladorDepartamentos controladorDepartamentos = new ControladorDepartamentos();
+        objects = controladorDepartamentos.MostrarTodos("");
+        for (Object object : objects) {
+            Departamentos departamento = (Departamentos) object;
+            departamentos.add(departamento);
+            cbDepartamento.addItem(departamento.getDepartamento());
+        }
+    }
+
+private void ListaCategorias(){
+        categorias.clear();
+        ArrayList<Object> objects = new ArrayList<>();
+        ControladorCategoria controladorCategoria = new ControladorCategoria();
+        objects = controladorCategoria.MostrarTodos("");
+        for (Object object : objects) {
+            Categorias categoria = (Categorias) object;
+            categorias.add(categoria);
+            cbCategoria.addItem(categoria.getCategoria());
+        }
     }
             
     private double calcularCostoIva(double costoNeto, double porcIva) {
