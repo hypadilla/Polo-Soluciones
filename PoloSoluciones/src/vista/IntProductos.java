@@ -152,7 +152,6 @@ public class IntProductos extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnLEliminar = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -189,24 +188,20 @@ public class IntProductos extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel4.setText("DESCRIPCIÓN");
 
-        txtCodigo.setText("jTextField1");
-
         jLabel5.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel5.setText("REFERENCIA");
-
-        txtReferencia.setText("jTextField1");
 
         jLabel6.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel6.setText("CÓDIGO");
 
-        txtDescripcion.setText("jTextField1");
-
         jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel7.setText("DEPARTAMENTO");
 
-        cbDepartamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbDepartamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDepartamentoActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel8.setText("CATEGORÍA");
@@ -407,8 +402,6 @@ public class IntProductos extends javax.swing.JInternalFrame {
 
         btnLEliminar.setText("DESHABILITAR");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -418,10 +411,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
                     .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2)
                     .addComponent(lblRutaImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCargarImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnCargarImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -500,9 +490,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCargarImagen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(40, 150, Short.MAX_VALUE))
         );
 
         jPanel1.getAccessibleContext().setAccessibleDescription("");
@@ -647,6 +635,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
         }  
     }//GEN-LAST:event_btnCargarImagenActionPerformed
 
+    private void cbDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDepartamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbDepartamentoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargarImagen;
@@ -655,7 +647,6 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbDepartamento;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
