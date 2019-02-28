@@ -255,7 +255,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         txtLimpiar.setText("LIMPIAR");
 
         txtEliminar.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
-        txtEliminar.setText("ELIMINAR");
+        txtEliminar.setText("ANULAR");
 
         jLabel8.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel8.setText("FORMA DE PAGO");

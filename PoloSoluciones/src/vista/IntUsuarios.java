@@ -151,10 +151,6 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pwContraseña.setText("jPasswordField1");
-
-        pwConfirmarContraseña.setText("jPasswordField1");
-
         checkEstado.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         checkEstado.setSelected(true);
         checkEstado.setText("Activo");
@@ -230,7 +226,7 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -252,6 +248,7 @@ public class IntUsuarios extends javax.swing.JInternalFrame {
         btnGuardar.setText("GUARDAR");
         btnLimpiar.setText("LIMPIAR");
         this.setTitle("REGISTRAR USUARIO");
+        btnLimpiar.setText("LIMPIAR");
         id=0;
     }
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed

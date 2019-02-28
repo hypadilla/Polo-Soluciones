@@ -53,7 +53,7 @@ public class UsuarioDAO implements IUsuario {
 
     @Override
     public ArrayList<Object> MostrarTodos(Object object) {
-        String QuerySQL = "SELECT * FROM Usuario WHERE ((Usuario like ?)|| (Correo like ?) )";
+        String QuerySQL = "SELECT * FROM Usuarios WHERE ((Usuario like ?)|| (Correo like ?) )";
         ResultSet resultSet;
         ArrayList<Object> Respuesta = new ArrayList<>();
         try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {

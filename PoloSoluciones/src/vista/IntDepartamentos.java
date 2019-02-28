@@ -40,6 +40,7 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         txtDescripcion.setText(departamentos.getDescripcion());
         this.setTitle("ACTUALIZANDO DEPARTAMENTO");
         btnGuardar.setText("ACTUALIZAR");
+        btnLimpiar.setText("NUEVO");
     }
      
      void Limpiar() {
@@ -49,6 +50,7 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         txtDepartamento.setText("");
         txtDescripcion.setText("");     
         btnGuardar.setText("GUARDAR");
+        btnLimpiar.setText("LIMPIAR");
         id = 0;
     }
 
@@ -66,14 +68,12 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         txtDepartamento = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
         setTitle("NUEVO DEPARTAMENTO");
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
@@ -99,14 +99,6 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEliminar.setText("ELIMINAR");
-
-        txtCodigo.setText("jTextField1");
-
-        txtDepartamento.setText("jTextField2");
-
-        txtDescripcion.setText("jTextField3");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,14 +108,12 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDescripcion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 124, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)
-                        .addGap(9, 9, 9)
                         .addComponent(btnGuardar))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDepartamento))
                     .addGroup(layout.createSequentialGroup()
@@ -133,7 +123,7 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 160, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,12 +142,10 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLimpiar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnGuardar)
-                        .addComponent(btnEliminar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnLimpiar))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -209,7 +197,6 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;

@@ -41,6 +41,7 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         txtDescripcion.setText(categorias.getDescripcion());
         this.setTitle("ACTUALIZANDO CATEGORIA");
         btnGuardar.setText("ACTUALIZAR");
+        btnLimpiar.setText("NUEVO");
     }
 
     /**
@@ -54,7 +55,6 @@ public class IntCategoria extends javax.swing.JInternalFrame {
 
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         txtCategoria = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
@@ -64,7 +64,7 @@ public class IntCategoria extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
+        setTitle("NUEVA CATEGORÍA");
 
         btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -79,14 +79,6 @@ public class IntCategoria extends javax.swing.JInternalFrame {
                 btnLimpiarActionPerformed(evt);
             }
         });
-
-        btnEliminar.setText("ELIMINAR");
-
-        txtCodigo.setText("jTextField1");
-
-        txtCategoria.setText("jTextField2");
-
-        txtDescripcion.setText("jTextField3");
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("CÓDIGO");
@@ -106,14 +98,12 @@ public class IntCategoria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDescripcion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 124, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)
-                        .addGap(9, 9, 9)
                         .addComponent(btnGuardar))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCategoria))
                     .addGroup(layout.createSequentialGroup()
@@ -123,7 +113,7 @@ public class IntCategoria extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 186, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -142,12 +132,10 @@ public class IntCategoria extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLimpiar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnGuardar)
-                        .addComponent(btnEliminar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnLimpiar))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,6 +148,7 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         txtCategoria.setText("");
         txtDescripcion.setText("");     
         btnGuardar.setText("GUARDAR");
+        btnLimpiar.setText("LIMPIAR");
         id = 0;    
     }
     
@@ -209,7 +198,6 @@ public class IntCategoria extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;

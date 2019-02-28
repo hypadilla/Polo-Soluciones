@@ -77,6 +77,7 @@ public class IntConceptos extends javax.swing.JInternalFrame {
 
         this.setTitle("ACTUALIZANDO CONCEPTO");
         btnGuardar.setText("ACTUALIZAR");
+        btnLimpiar.setText("NUEVO");
     }
 
     /**
@@ -114,11 +115,9 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         txtResolucionDIAN = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
         setTitle("NUEVO CONCEPTO");
         setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
@@ -134,10 +133,6 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel6.setText("ETIQUETA ");
 
-        txtCodigo.setText("jTextField1");
-
-        txtDescripcion.setText("jTextField2");
-
         gbxNaturalezaDinero.add(rbCredito);
         rbCredito.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
         rbCredito.setSelected(true);
@@ -147,14 +142,8 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         rbDebito.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
         rbDebito.setText("DÉBITO");
 
-        txtEtiqueta.setText("jTextField5");
-
         checkManejaConsecutivo.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         checkManejaConsecutivo.setText("¿MANEJA CONSECUTIVO?");
-
-        txtPrefijo.setText("jTextField3");
-
-        txtUltConsecutivo.setText("jTextField4");
 
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel3.setText("ÚLTIMO CONSECUTIVO");
@@ -174,8 +163,8 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtPrefijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPrefijo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtUltConsecutivo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -212,8 +201,6 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel8.setText("RESOLUCIÓN DIAN");
 
-        txtResolucionDIAN.setText("jTextField6");
-
         btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,8 +215,6 @@ public class IntConceptos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEliminar.setText("ELIMINAR");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -240,7 +225,7 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtDescripcion))
                             .addGroup(layout.createSequentialGroup()
@@ -278,8 +263,6 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)
-                        .addGap(9, 9, 9)
                         .addComponent(btnGuardar)))
                 .addContainerGap())
         );
@@ -320,11 +303,9 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtResolucionDIAN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLimpiar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnGuardar)
-                        .addComponent(btnEliminar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnLimpiar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -343,6 +324,7 @@ private void Limpiar() {
         rbNingunDinero.setSelected(true);
         rbNingunInventario.setSelected(true);
         btnGuardar.setText("GUARDAR");
+        btnLimpiar.setText("LIMPIAR");
         id = 0;
 
     }
@@ -421,7 +403,6 @@ private void Limpiar() {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JCheckBox checkManejaConsecutivo;

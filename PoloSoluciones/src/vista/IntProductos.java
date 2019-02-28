@@ -80,6 +80,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         
         this.setTitle("ACTUALIZANDO PRODUCTO");
         btnGuardar.setText("ACTUALIZAR");
+        btnLimpiar.setText("NUEVO");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -102,6 +103,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         txtCostoTotalVenta.setText("");
         txtPorcUtilidad.setText("");
         txtVrUtilidad.setText("");
+        btnLimpiar.setText("LIMPIAR");
         id=0;
     }
     
@@ -232,7 +234,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         jLabel14.setText("VR IVA");
 
         lblCostoIva.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        lblCostoIva.setText("VR IVA");
+        lblCostoIva.setText("0.0");
 
         jLabel20.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel20.setText("COSTO TOTAL");
@@ -296,7 +298,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         txtPorcIvaVenta.setText("19");
 
         lblIvaVenta.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        lblIvaVenta.setText("VR IVA");
+        lblIvaVenta.setText("0.0");
 
         jLabel24.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel24.setText("COSTO TOTAL");
@@ -403,7 +405,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnLEliminar.setText("ELIMINAR");
+        btnLEliminar.setText("DESHABILITAR");
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 

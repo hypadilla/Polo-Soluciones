@@ -211,7 +211,7 @@ public class frmInicio extends javax.swing.JFrame {
         });
         jMenu6.add(menuConsultaCategorias);
 
-        menuConsultaConceptos.setText("CONEPTOS");
+        menuConsultaConceptos.setText("CONCEPTOS");
         menuConsultaConceptos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuConsultaConceptosActionPerformed(evt);

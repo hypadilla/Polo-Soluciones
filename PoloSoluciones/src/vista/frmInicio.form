@@ -148,7 +148,7 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="menuConsultaConceptos">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CONEPTOS"/>
+                    <Property name="text" type="java.lang.String" value="CONCEPTOS"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuConsultaConceptosActionPerformed"/>

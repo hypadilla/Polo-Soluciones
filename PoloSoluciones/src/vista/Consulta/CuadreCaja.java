@@ -52,6 +52,9 @@ public class CuadreCaja extends javax.swing.JInternalFrame {
         jTable2 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("FECHA");
 

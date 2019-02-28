@@ -25,6 +25,7 @@ public class intTerceros extends javax.swing.JInternalFrame {
     public intTerceros() {
         initComponents();
         id = 0;
+        
     }
 
     public intTerceros(int id) {
@@ -46,10 +47,11 @@ public class intTerceros extends javax.swing.JInternalFrame {
         txtDireccion.setText(terceros.getDireccion());
         this.setTitle("ACTUALIZANDO TERCERO");
         btnGuardar.setText("ACTUALIZAR");
+        btnLimpiar.setText("NUEVO");
     }
 
     void Limpiar() {
-        this.setTitle("NUEVO TERCERO");
+        btnGuardar.setText("GUARDAR");
         txtDocumento.setEnabled(true);
         cbTipoTercero.setSelectedIndex(0);
         txtDocumento.setText("");
@@ -57,6 +59,7 @@ public class intTerceros extends javax.swing.JInternalFrame {
         txtTelefono.setText("");
         txtCorreo.setText("");
         txtDireccion.setText("");
+        btnLimpiar.setText("LIMPIAR");
         id = 0;
     }
 
@@ -75,7 +78,6 @@ public class intTerceros extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cbTipoTercero = new javax.swing.JComboBox<>();
-        btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         txtTelefono = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
@@ -86,6 +88,8 @@ public class intTerceros extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
         setTitle("NUEVO TERCERO");
 
         txtCorreo.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
@@ -110,8 +114,6 @@ public class intTerceros extends javax.swing.JInternalFrame {
 
         cbTipoTercero.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         cbTipoTercero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CLIENTE", "PROVEEDOR" }));
-
-        btnEliminar.setText("ELIMINAR");
 
         btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -178,8 +180,6 @@ public class intTerceros extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardar)))
                 .addContainerGap())
         );
@@ -213,7 +213,6 @@ public class intTerceros extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimpiar)
-                    .addComponent(btnEliminar)
                     .addComponent(btnGuardar))
                 .addContainerGap())
         );
@@ -231,7 +230,7 @@ public class intTerceros extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
@@ -293,7 +292,6 @@ public class intTerceros extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbTipoTercero;

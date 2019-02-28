@@ -426,7 +426,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial Narrow" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="VR IVA"/>
+                <Property name="text" type="java.lang.String" value="0.0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel20">
@@ -570,7 +570,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial Narrow" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="VR IVA"/>
+                <Property name="text" type="java.lang.String" value="0.0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCostoTotalVenta">
@@ -625,7 +625,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnLEliminar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ELIMINAR"/>
+        <Property name="text" type="java.lang.String" value="DESHABILITAR"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
