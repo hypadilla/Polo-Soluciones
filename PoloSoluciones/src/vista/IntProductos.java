@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import modelo.DAO.DepartamentoDAO;
+import modelo.Entidades.Departamentos;
 import modelo.Entidades.Productos;
 
 /*
@@ -32,26 +34,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         initComponents();
         id = 0;
     }
-            
-            /*
-            txtVrNetoCosto.getDocument().addDocumentListener(new DocumentListener() {
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-               lblCostoIva.setText("" + calcularCostoIva(Double.parseDouble(txtVrNetoCosto.getText()),Double.parseDouble(txtPorcIvaCosto.getText())));
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                lblCostoIva.setText("" + calcularCostoIva(Double.parseDouble(txtVrNetoCosto.getText()),Double.parseDouble(txtPorcIvaCosto.getText())));
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                lblCostoIva.setText("" + calcularCostoIva(Double.parseDouble(txtVrNetoCosto.getText()),Double.parseDouble(txtPorcIvaCosto.getText())));
-            }
-        });
-        */
  public IntProductos(int id) {
         initComponents();
         this.id = id;
@@ -501,6 +484,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         Limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+    private void ListaDepartamentos(){
+        //
+    }
+            
     private double calcularCostoIva(double costoNeto, double porcIva) {
         try {
             double costoIva = costoNeto *porcIva / 100;
