@@ -42,8 +42,8 @@ public class ProductoDAO implements IProductos {
             preparedStatement.setDouble(8, var.getPorcVentaIva());
             preparedStatement.setDouble(9, var.getVentaUtilidad());
             
-            preparedStatement.setInt(10, 1);
-            preparedStatement.setInt(11, 1);
+            preparedStatement.setInt(10, 1/*var.getIdCategoria()*/);
+            preparedStatement.setInt(11, 1/*var.getIdDepartamento()*/);
             
             preparedStatement.setDouble(12, var.getCantidad());//cantidad
             preparedStatement.execute();

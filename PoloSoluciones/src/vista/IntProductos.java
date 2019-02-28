@@ -531,7 +531,23 @@ private void ListaCategorias(){
         return 0.0;
     }
     
+    public int getIdDepartamento(int indice){
+        int indiceDepartamento = indice;
+        if (indiceDepartamento == -1) {            
+            return 0;
+        }
+         int idDepartamento =departamentos.get(indiceDepartamento).getId();
+         return idDepartamento;
+    }
     
+     public int getIdCategoria(int indice){
+        int indiceCategoria = indice;
+        if (indiceCategoria == -1) {            
+            return 0;
+        }
+         int idCategorias =categorias.get(indiceCategoria).getId();
+         return idCategorias;
+    }
     
 
     
@@ -544,7 +560,18 @@ private void ListaCategorias(){
         var.setReferencia(txtReferencia.getText());
         var.setDescripcion(txtDescripcion.getText());
         var.setRutaImagen("Pendiente de agregar");
+        if (cbDepartamento.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un departamento");
+        }else{
+            var.setIdDepartamento(getIdDepartamento(cbDepartamento.getSelectedIndex()));
+        }
         
+        if (cbCategoria.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una categoría");
+        }else{
+            var.setIdDepartamento(getIdDepartamento(cbCategoria.getSelectedIndex()));
+        }
+               
         try {
             var.setCostoNeto(Double.parseDouble(txtVrNetoCosto.getText()));
         } catch (NumberFormatException e) {
