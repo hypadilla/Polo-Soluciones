@@ -9,6 +9,8 @@ import controlador.ControladorConceptos;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Conceptos;
+import vista.Consulta.ConsultarConceptos;
+import static vista.frmInicio.jdpEscritorio;
 
 /**
  *
@@ -115,6 +117,7 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         txtResolucionDIAN = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -215,6 +218,13 @@ public class IntConceptos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -261,6 +271,8 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                     .addComponent(txtResolucionDIAN)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardar)))
@@ -305,8 +317,9 @@ public class IntConceptos extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnLimpiar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnConsultar))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -401,8 +414,15 @@ private void Limpiar() {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        ConsultarConceptos var = new ConsultarConceptos();
+        jdpEscritorio.add(var);
+        var.setVisible(true);      // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JCheckBox checkManejaConsecutivo;

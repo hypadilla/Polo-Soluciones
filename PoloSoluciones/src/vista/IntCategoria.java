@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Categorias;
 import modelo.Entidades.Usuarios;
+import vista.Consulta.ConsultarCategorias;
+import static vista.frmInicio.jdpEscritorio;
 
 /**
  *
@@ -61,6 +63,7 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btnConsultar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -89,6 +92,13 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel3.setText("DESCRIPCIÓN");
 
+        btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,6 +109,8 @@ public class IntCategoria extends javax.swing.JInternalFrame {
                     .addComponent(txtDescripcion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardar))
@@ -134,8 +146,9 @@ public class IntCategoria extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnLimpiar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnConsultar))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -196,8 +209,15 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        ConsultarCategorias var = new ConsultarCategorias();
+        jdpEscritorio.add(var);
+        var.setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;

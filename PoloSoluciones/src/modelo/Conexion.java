@@ -29,7 +29,7 @@ public class Conexion {
 
         // Host
         //String hostname = "sql10.freemysqlhosting.net";
-        String hostname = "DESKTOP-E0OVML7";
+        String hostname = "localhost";
 
         // Nombre de usuario
         //String username = "sql10279128";

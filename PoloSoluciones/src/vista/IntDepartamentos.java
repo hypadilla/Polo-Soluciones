@@ -9,6 +9,8 @@ import controlador.ControladorDepartamentos;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Departamentos;
+import vista.Consulta.ConsultarDepartamentos;
+import static vista.frmInicio.jdpEscritorio;
 
 /**
  *
@@ -71,6 +73,7 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         txtCodigo = new javax.swing.JTextField();
         txtDepartamento = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
+        btnConsultar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -99,6 +102,13 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,6 +119,8 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                     .addComponent(txtDescripcion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardar))
@@ -144,8 +156,9 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnLimpiar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnConsultar))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -195,8 +208,15 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         Limpiar();        
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        ConsultarDepartamentos var = new ConsultarDepartamentos();
+        jdpEscritorio.add(var);
+        var.setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
