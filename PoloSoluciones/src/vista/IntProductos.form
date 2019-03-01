@@ -315,9 +315,6 @@
               </Border>
             </Property>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Informaci&#xf3;n del precio de compra"/>
-          </AccessibilityProperties>
 
           <Layout>
             <DimensionLayout dim="0">

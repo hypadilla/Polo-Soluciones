@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -31,6 +32,7 @@ import static vista.frmInicio.jdpEscritorio;
  */
 public class IntProductos extends javax.swing.JInternalFrame {
         int id;
+        public static DecimalFormat formato = new DecimalFormat("#.000");
         ArrayList<Departamentos> departamentos;
         ArrayList<Categorias> categorias;
         Double valorNetoCompra=0.0;
@@ -42,7 +44,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
         Double valorPorcIvaVenta=valorNetoVenta*(porcIvaVenta/100);
         Double valorTotalVenta = valorNetoVenta*(1+(porcIvaVenta/100));
         Double valorUtilidad = valorTotalVenta - valorTotalCompra;
-        Double porcUtilidad = (valorUtilidad*100)/valorTotalCompra;
+        Double porcUtilidad = 0.0;//(valorUtilidad*100)/valorTotalCompra;
     /**
      * Creates new form IntProductos
      */
@@ -230,15 +232,70 @@ public class IntProductos extends javax.swing.JInternalFrame {
     }
 
 
-    private double calcularCostoIva(double costoNeto, double porcIva) {
+    private double calcularValorIva(double precioNeto, double porcIva) {
             try {
-                double costoIva = costoNeto *porcIva / 100;
-                return costoIva;
+                double valorIva = precioNeto *porcIva / 100;
+                return valorIva;
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-            return 0.0;
+                return -99999.987654321;
+            }            
         }
+    
+    private double calcularPrecioTotal(double precioNeto, double porcIva) {
+            try {
+                double precioTotal = precioNeto*(1+ porcIva / 100);
+                return precioTotal;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -99999.987654321; //valor sentinela
+            }            
+        }
+
+    private double calcularPorcIva(double precioNeto, double precioTotal) {
+        try {
+            double porcIva = (((precioTotal/precioNeto)-1)*100);                
+            return porcIva;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -99999.987654321; //valor sentinela
+        }            
+    }
+    
+    private double calcularPrecioNeto(double porcIva, double precioTotal) {
+        try {
+            double precioNeto = precioTotal/(1+ porcIva/100);
+            return precioNeto;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -99999.987654321; //valor sentinela
+        }            
+    }
+    
+    private double calcularValorUtilidad(double precioTotalCompra, double precioTotalVenta) {
+        try {
+            double valorUtilidad = precioTotalVenta-precioTotalCompra;
+            return valorUtilidad;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -99999.987654321; //valor sentinela
+        }            
+    }
+    
+    private double calcularPorcUtilidad(double valorUtilidad, double precioTotalCompra) {
+        try {
+            double porcUtilidad;
+            if (precioTotalCompra==0.0){
+                return -99999.987654321; //no es posible calcular utilidad
+            } else{
+                porcUtilidad=valorUtilidad*100/precioTotalCompra;
+                return porcUtilidad;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -99999.987654321; //valor sentinela
+        }            
+    }
 
     private void ListaDepartamentos(){
         departamentos.clear();
@@ -878,6 +935,27 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private void txtVrNetoCompraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrNetoCompraFocusLost
         if (validarTxtVrNetoCosto()){
             valorNetoCompra=Double.parseDouble(txtVrNetoCompra.getText());
+            try{
+                if(validarTxtPorcIvaCosto()){
+                porcIvaCompra=Double.parseDouble(txtPorcIvaCompra.getText());
+                valorTotalCompra= calcularPrecioTotal(valorNetoCompra, porcIvaCompra);
+                    if (valorTotalCompra==-99999.987654321){
+                        JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de compra 2");
+                    }else{
+                        txtCostoTotalCosto.setText(valorTotalCompra.toString());                    
+                    }
+                }
+                Double valorIva=calcularValorIva(valorNetoCompra, porcIvaCompra);
+                    if (valorIva==-99999.987654321){
+                        JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor del Iva");
+                    }else{
+                        lblCostoIva.setText(valorIva.toString());                    
+                    }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(rootPane, "Error calculando precio Total de compra");
+                txtVrNetoCompra.requestFocus();
+                return;
+            }  
         }else{      
             txtVrNetoCompra.setText(valorNetoCompra.toString());
             JOptionPane.showMessageDialog(rootPane, "El valor neto de compra debe ser numérico positivo");
@@ -893,17 +971,61 @@ public class IntProductos extends javax.swing.JInternalFrame {
 
     private void txtPorcIvaCompraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPorcIvaCompraFocusLost
         if(validarTxtPorcIvaCosto()){
-           porcIvaCompra=Double.parseDouble(txtPorcIvaCompra.getText());
-       }else{
-           txtPorcIvaCompra.setText(porcIvaCompra.toString());
-           JOptionPane.showMessageDialog(rootPane, "El  Porcentaje de iva de la compra debe ser numérico positivo menor que 100");
-           txtPorcIvaCompra.requestFocus();
-       }        
+            porcIvaCompra=Double.parseDouble(txtPorcIvaCompra.getText());
+                try{
+                    if(validarTxtVrNetoCosto()){
+                        valorNetoCompra=Double.parseDouble(txtVrNetoCompra.getText());
+                        valorTotalCompra= calcularPrecioTotal(valorNetoCompra, porcIvaCompra);
+                        if (valorTotalCompra==-99999.987654321){
+                            JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de compra 2");
+                        }else{
+                            txtCostoTotalCosto.setText(valorTotalCompra.toString());                    
+                        }
+                        Double valorIva=calcularValorIva(valorNetoCompra, porcIvaCompra);
+                        if (valorIva==-99999.987654321){
+                            JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor del Iva");
+                        }else{
+                            lblCostoIva.setText(valorIva.toString());                    
+                        }
+                    }
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(rootPane, "Error calculando precio Total de compra");
+                    txtPorcIvaCompra.requestFocus();
+                    return;
+                }  
+        }else{
+            txtPorcIvaCompra.setText(porcIvaCompra.toString());
+            JOptionPane.showMessageDialog(rootPane, "El  Porcentaje de iva de la compra debe ser numérico positivo menor que 100");
+            txtPorcIvaCompra.requestFocus();
+        } 
     }//GEN-LAST:event_txtPorcIvaCompraFocusLost
 
     private void txtCostoTotalCostoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostoTotalCostoFocusLost
         if (validarTxtCostoTotalCosto()){
             valorTotalCompra=Double.parseDouble(txtCostoTotalCosto.getText());
+            if(validarTxtPorcIvaCosto()){
+               porcIvaCompra=Double.parseDouble(txtPorcIvaCompra.getText());
+               valorNetoCompra= calcularPrecioNeto(porcIvaCompra, valorTotalCompra);
+                if (valorNetoCompra==-99999.987654321){
+                    JOptionPane.showMessageDialog(rootPane, "Error Calculando precio neto de compra 2");
+                }else{
+                    txtVrNetoCompra.setText(valorNetoCompra.toString());
+                }
+                Double valorIva=calcularValorIva(valorNetoCompra, porcIvaCompra);
+                        if (valorIva==-99999.987654321){
+                            JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor del Iva");
+                        }else{
+                            lblCostoIva.setText(valorIva.toString());                    
+                        }
+                    
+            }
+            try{
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(rootPane, "Error calculando precio Neto de compra");
+                txtVrNetoCompra.requestFocus();
+                return;
+            }
         }else{  
             txtCostoTotalCosto.setText(valorTotalCompra.toString());
             JOptionPane.showMessageDialog(rootPane, "El valor total de compra debe ser númerico positivo");
