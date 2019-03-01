@@ -16,8 +16,14 @@ public class IntClientes extends javax.swing.JInternalFrame {
      */
     public IntClientes() {
         initComponents();
+        jTextField19.setVisible(false);
+        jTextField24.setVisible(false);
+        jTextField23.setVisible(false);
+        jLabel29.setVisible(false);
+        jLabel34.setVisible(false);
+        jLabel35.setVisible(false);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
