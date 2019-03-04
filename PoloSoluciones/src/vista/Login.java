@@ -139,6 +139,11 @@ public class Login extends javax.swing.JFrame {
         jButton2.setMaximumSize(new java.awt.Dimension(93, 25));
         jButton2.setMinimumSize(new java.awt.Dimension(93, 25));
         jButton2.setPreferredSize(new java.awt.Dimension(93, 25));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel6.setText("CONTRASEÑA");
@@ -236,6 +241,10 @@ public class Login extends javax.swing.JFrame {
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
