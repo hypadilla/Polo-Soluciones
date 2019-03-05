@@ -116,14 +116,14 @@ public class IntProductos extends javax.swing.JInternalFrame {
         txtDescripcion.setText("");
         cbDepartamento.setSelectedIndex(0);
         cbCategoria.setSelectedIndex(0);
-        txtVrNetoCompra.setText("");
-        txtPorcIvaCompra.setText("");
-        txtCostoTotalCosto.setText("");
-        txtVrNetoVenta.setText("");
-        txtPorcIvaVenta.setText("");
-        txtCostoTotalVenta.setText("");
-        txtPorcUtilidad.setText("");
-        txtVrUtilidad.setText("");
+        txtVrNetoCompra.setText("100.0");
+        txtPorcIvaCompra.setText("19.0");
+        txtCostoTotalCosto.setText("119.0");
+        txtVrNetoVenta.setText("0.0");
+        txtPorcIvaVenta.setText("19.0");
+        txtCostoTotalVenta.setText("0.0");
+        txtPorcUtilidad.setText("-100.0");
+        txtVrUtilidad.setText("-100.0");
         btnLimpiar.setText("LIMPIAR");
         id=0;
     }
@@ -357,13 +357,13 @@ public class IntProductos extends javax.swing.JInternalFrame {
         }            
     }
     
-    private double calcularPorcUtilidadxPrecioTotalVenta(double precioTotalVenta, double precioTotalCompra) {
+    private double calcularPorcUtilidadxPrecioNetoVenta(double precioNetoVenta, double precioNetoCompra) {
         try {
             double porcUtilidad;
-            if (precioTotalCompra==0.0){
+            if (precioNetoCompra==0.0){
                 return -99999.987654321; //no es posible calcular utilidad
             } else{
-                porcUtilidad=(precioTotalVenta-precioTotalCompra)*100/precioTotalCompra;
+                porcUtilidad=(precioNetoVenta-precioNetoCompra)*100/precioNetoCompra;
                 return porcUtilidad;
             }
         } catch (Exception e) {
@@ -1048,7 +1048,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de venta");
                 }else{
                     valorTotalVenta= calcularPrecioTotal(valorNetoVenta, porcIvaVenta);
-                    txtCostoTotalVenta.setText(valorNetoVenta.toString());
+                    txtCostoTotalVenta.setText(valorTotalVenta.toString());
                 }
                 //ValorIvaCompra
                 if (calcularValorIva(valorNetoCompra, porcIvaCompra)==-99999.987654321){
@@ -1065,10 +1065,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
                     lblIvaVenta.setText(valorPorcIvaVenta.toString());                    
                 }
                 //porcUtilidad
-                if (calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra)==-99999.987654321){
+                if (calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra)==-99999.987654321){
                     JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor de la utilidad");
                 }else{
-                    porcUtilidad= calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra);
+                    porcUtilidad= calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra);
                     txtPorcUtilidad.setText(porcUtilidad.toString());                    
                 }
                 
@@ -1118,7 +1118,7 @@ public class IntProductos extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de venta");
                 }else{
                     valorTotalVenta= calcularPrecioTotal(valorNetoVenta, porcIvaVenta);
-                    txtCostoTotalVenta.setText(valorNetoVenta.toString());
+                    txtCostoTotalVenta.setText(valorTotalVenta.toString());
                 }
                 //ValorIvaCompra
                 if (calcularValorIva(valorNetoCompra, porcIvaCompra)==-99999.987654321){
@@ -1199,10 +1199,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
                     txtVrUtilidad.setText(valorUtilidad.toString());                    
                 }
                 //porcUtilidad
-                if (calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra)==-99999.987654321){
+                if (calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra)==-99999.987654321){
                     JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor de la utilidad");
                 }else{
-                    porcUtilidad= calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra);
+                    porcUtilidad= calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra);
                     txtPorcUtilidad.setText(porcUtilidad.toString());                    
                 }
             }
@@ -1256,10 +1256,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
                     txtVrUtilidad.setText(valorUtilidad.toString());                    
                 }
                 //porcUtilidad
-                if (calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra)==-99999.987654321){
+                if (calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra)==-99999.987654321){
                     JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor de la utilidad");
                 }else{
-                    porcUtilidad= calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra);
+                    porcUtilidad= calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra);
                     txtPorcUtilidad.setText(porcUtilidad.toString());                    
                 }
             }
@@ -1313,10 +1313,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
                     txtVrUtilidad.setText(valorUtilidad.toString());                    
                 }
                 //porcUtilidad
-                if (calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra)==-99999.987654321){
+                if (calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra)==-99999.987654321){
                     JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor de la utilidad");
                 }else{
-                    porcUtilidad= calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra);
+                    porcUtilidad= calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra);
                     txtPorcUtilidad.setText(porcUtilidad.toString());                    
                 }
             }
@@ -1371,10 +1371,10 @@ public class IntProductos extends javax.swing.JInternalFrame {
                     txtVrUtilidad.setText(valorUtilidad.toString());                    
                 }
                 //porcUtilidad
-                if (calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra)==-99999.987654321){
+                if (calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra)==-99999.987654321){
                     JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor de la utilidad");
                 }else{
-                    porcUtilidad= calcularPorcUtilidadxPrecioTotalVenta(valorTotalVenta, valorTotalCompra);
+                    porcUtilidad= calcularPorcUtilidadxPrecioNetoVenta(valorNetoVenta, valorNetoCompra);
                     txtPorcUtilidad.setText(porcUtilidad.toString());                    
                 }
             }
@@ -1448,65 +1448,72 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private void txtVrUtilidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrUtilidadFocusLost
         if (validarTxtVrUtilidad(txtVrUtilidad)){
             if(validarTodos()){
-                valorUtilidad = Double.parseDouble(txtVrUtilidad.getText());
-                valorNetoCompra=Double.parseDouble(txtVrNetoCompra.getText());
-                porcIvaCompra=Double.parseDouble(txtPorcIvaCompra.getText());                
-                porcIvaVenta = Double.parseDouble(txtPorcIvaVenta.getText());
-                //PrecioTotalCompra
-                if(calcularPrecioTotal(valorNetoCompra, porcIvaCompra)==-99999.987654321){
-                        JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de compra ");
+                if(Double.parseDouble(txtVrUtilidad.getText())+Double.parseDouble(txtCostoTotalCosto.getText())<-1*Double.parseDouble(txtCostoTotalCosto.getText())){
+                    System.out.println("valor muy negativo");
+                    txtVrUtilidad.setText(valorUtilidad.toString());            
+                    txtVrUtilidad.requestFocus();
                 }else{
-                    valorTotalCompra= calcularPrecioTotal(valorNetoCompra, porcIvaCompra);
-                    txtCostoTotalCosto.setText(valorTotalCompra.toString());
+                   valorUtilidad = Double.parseDouble(txtVrUtilidad.getText());
+                   valorNetoCompra=Double.parseDouble(txtVrNetoCompra.getText());
+                   porcIvaCompra=Double.parseDouble(txtPorcIvaCompra.getText());                
+                   porcIvaVenta = Double.parseDouble(txtPorcIvaVenta.getText());
+                   //PrecioTotalCompra
+                   if(calcularPrecioTotal(valorNetoCompra, porcIvaCompra)==-99999.987654321){
+                           JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de compra ");
+                   }else{
+                       valorTotalCompra= calcularPrecioTotal(valorNetoCompra, porcIvaCompra);
+                       txtCostoTotalCosto.setText(valorTotalCompra.toString());
+                   }
+
+                   //ValorIvaCompra
+                   if (calcularValorIva(valorNetoCompra, porcIvaCompra)==-99999.987654321){
+                       JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor del Iva de la compra");
+                   }else{
+                       valorPorcIvaCompra=calcularValorIva(valorNetoCompra, porcIvaCompra);
+                       lblCostoIva.setText(valorPorcIvaCompra.toString());                    
+                   } 
+
+
+                   //Porcentaje de Utilidad
+
+                   if (calcularPorcUtilidadxValorUtilidad(valorUtilidad, valorNetoCompra)==-99999.987654321){
+                       JOptionPane.showMessageDialog(rootPane, "Error Calculando el porcentaje de la utilidad");
+                   }else{
+                       porcUtilidad= calcularPorcUtilidadxValorUtilidad(valorUtilidad, valorNetoCompra);
+                       txtPorcUtilidad.setText(porcUtilidad.toString());                    
+                   }
+                   //PrecioNetoVenta
+                   if(calcularPrecioVentaNetoxValorUtilidad(valorNetoCompra, valorUtilidad)==-99999.987654321){
+                           JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de venta");
+                   }else{
+                       valorNetoVenta= calcularPrecioVentaNetoxValorUtilidad(valorNetoCompra, valorUtilidad);
+                       txtVrNetoVenta.setText(valorNetoVenta.toString());
+                   }
+
+                   //PrecioTotalVenta
+                   if(calcularPrecioTotal(valorNetoVenta, porcIvaVenta)==-99999.987654321){
+                           JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de venta");
+                   }else{
+                       valorTotalVenta= calcularPrecioTotal(valorNetoVenta, porcIvaVenta);
+                       txtCostoTotalVenta.setText(valorTotalVenta.toString());
+                   }
+
+                   //ValorIvaVenta
+                   if (calcularValorIva(valorNetoVenta, porcIvaVenta)==-99999.987654321){
+                       JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor del Iva de la venta");
+                   }else{
+                       valorPorcIvaVenta=calcularValorIva(valorNetoVenta, porcIvaVenta);
+                       lblIvaVenta.setText(valorPorcIvaVenta.toString());                    
+                   }
                 }
-                
-                //ValorIvaCompra
-                if (calcularValorIva(valorNetoCompra, porcIvaCompra)==-99999.987654321){
-                    JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor del Iva de la compra");
-                }else{
-                    valorPorcIvaCompra=calcularValorIva(valorNetoCompra, porcIvaCompra);
-                    lblCostoIva.setText(valorPorcIvaCompra.toString());                    
-                } 
-                
-                
-                //Porcentaje de Utilidad
-               
-                if (calcularPorcUtilidadxValorUtilidad(valorUtilidad, valorNetoCompra)==-99999.987654321){
-                    JOptionPane.showMessageDialog(rootPane, "Error Calculando el porcentaje de la utilidad");
-                }else{
-                    porcUtilidad= calcularPorcUtilidadxValorUtilidad(valorUtilidad, valorNetoCompra);
-                    txtPorcUtilidad.setText(porcUtilidad.toString());                    
-                }
-                //PrecioNetoVenta
-                if(calcularPrecioVentaNetoxValorUtilidad(valorNetoCompra, valorUtilidad)==-99999.987654321){
-                        JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de venta");
-                }else{
-                    valorNetoVenta= calcularPrecioVentaNetoxValorUtilidad(valorNetoCompra, valorUtilidad);
-                    txtVrNetoVenta.setText(valorNetoVenta.toString());
-                }
-                
-                //PrecioTotalVenta
-                if(calcularPrecioTotal(valorNetoVenta, porcIvaVenta)==-99999.987654321){
-                        JOptionPane.showMessageDialog(rootPane, "Error Calculando precio total de venta");
-                }else{
-                    valorTotalVenta= calcularPrecioTotal(valorNetoVenta, porcIvaVenta);
-                    txtCostoTotalVenta.setText(valorTotalVenta.toString());
-                }
-                
-                //ValorIvaVenta
-                if (calcularValorIva(valorNetoVenta, porcIvaVenta)==-99999.987654321){
-                    JOptionPane.showMessageDialog(rootPane, "Error Calculando el valor del Iva de la venta");
-                }else{
-                    valorPorcIvaVenta=calcularValorIva(valorNetoVenta, porcIvaVenta);
-                    lblIvaVenta.setText(valorPorcIvaVenta.toString());                    
-                }
-                
-            }
         }else{      
-            txtPorcUtilidad.setText(porcUtilidad.toString());            
-            txtPorcUtilidad.requestFocus();
+            txtVrUtilidad.setText(valorUtilidad.toString());            
+            txtVrUtilidad.requestFocus();
             //JOptionPane.showMessageDialog(rootPane, "El valor neto de compra debe ser numérico positivo");
-        }  
+        }     
+                }
+                        
+                
     }//GEN-LAST:event_txtVrUtilidadFocusLost
 
     private void txtVrNetoCompraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrNetoCompraFocusGained
