@@ -384,6 +384,7 @@
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtVrNetoCompraFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtVrNetoCompraFocusLost"/>
               </Events>
             </Component>
@@ -400,6 +401,7 @@
                 <Property name="text" type="java.lang.String" value="19"/>
               </Properties>
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPorcIvaCompraFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPorcIvaCompraFocusLost"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPorcIvaCompraActionPerformed"/>
               </Events>
@@ -430,6 +432,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtCostoTotalCosto">
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCostoTotalCostoFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCostoTotalCostoFocusLost"/>
               </Events>
             </Component>
@@ -540,6 +543,7 @@
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtVrNetoVentaFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtVrNetoVentaFocusLost"/>
               </Events>
             </Component>
@@ -564,6 +568,7 @@
                 <Property name="text" type="java.lang.String" value="19"/>
               </Properties>
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPorcIvaVentaFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPorcIvaVentaFocusLost"/>
               </Events>
             </Component>
@@ -577,6 +582,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtCostoTotalVenta">
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCostoTotalVentaFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCostoTotalVentaFocusLost"/>
               </Events>
             </Component>
@@ -606,11 +612,13 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtPorcUtilidad">
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPorcUtilidadFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPorcUtilidadFocusLost"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtVrUtilidad">
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtVrUtilidadFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtVrUtilidadFocusLost"/>
               </Events>
             </Component>
