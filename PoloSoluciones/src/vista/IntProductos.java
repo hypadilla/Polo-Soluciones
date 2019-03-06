@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.Entidades.Categorias;
 import modelo.Entidades.Departamentos;
@@ -116,7 +118,13 @@ public class IntProductos extends javax.swing.JInternalFrame {
         txtDescripcion.setText("");
         cbDepartamento.setSelectedIndex(0);
         cbCategoria.setSelectedIndex(0);
-        txtVrNetoCompra.setText("100.0");
+        
+        
+        
+        
+        
+        
+        txtVrNetoCompra.setText("");
         txtPorcIvaCompra.setText("19.0");
         txtCostoTotalCosto.setText("119.0");
         txtVrNetoVenta.setText("0.0");
@@ -1448,10 +1456,13 @@ public class IntProductos extends javax.swing.JInternalFrame {
     private void txtVrUtilidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrUtilidadFocusLost
         if (validarTxtVrUtilidad(txtVrUtilidad)){
             if(validarTodos()){
-                if(Double.parseDouble(txtVrUtilidad.getText())+Double.parseDouble(txtCostoTotalCosto.getText())<-1*Double.parseDouble(txtCostoTotalCosto.getText())){
+                if ((Double.parseDouble(txtVrUtilidad.getText()) + Double.parseDouble(txtCostoTotalCosto.getText())) < 0) {
+                    
+                //if(Double.parseDouble(txtVrUtilidad.getText())+Double.parseDouble(txtCostoTotalCosto.getText())<-1*Double.parseDouble(txtCostoTotalCosto.getText())){
                     System.out.println("valor muy negativo");
                     txtVrUtilidad.setText(valorUtilidad.toString());            
-                    txtVrUtilidad.requestFocus();
+                    //txtVrUtilidad.requestFocus();
+                    return;
                 }else{
                    valorUtilidad = Double.parseDouble(txtVrUtilidad.getText());
                    valorNetoCompra=Double.parseDouble(txtVrNetoCompra.getText());
@@ -1472,8 +1483,6 @@ public class IntProductos extends javax.swing.JInternalFrame {
                        valorPorcIvaCompra=calcularValorIva(valorNetoCompra, porcIvaCompra);
                        lblCostoIva.setText(valorPorcIvaCompra.toString());                    
                    } 
-
-
                    //Porcentaje de Utilidad
 
                    if (calcularPorcUtilidadxValorUtilidad(valorUtilidad, valorNetoCompra)==-99999.987654321){

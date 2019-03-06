@@ -641,6 +641,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodigoProductoFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
         if (txtCodigoProducto.getText().equals("")) {
             txtCodigoProducto.requestFocus();
             JOptionPane.showMessageDialog(this, "No hay un producto seleccionado.");
