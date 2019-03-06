@@ -12,17 +12,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Conexion;
-import modelo.Entidades.Categorias;
 import modelo.Entidades.Conceptos;
 import modelo.Entidades.DetalleFacturacion;
 import modelo.Entidades.Facturacion;
 import modelo.Entidades.FacturacionDetalle;
 import modelo.Entidades.Productos;
 import modelo.Entidades.TMPDetalleCuadreCaja;
+import modelo.Entidades.TMPResumenCaja;
 import modelo.Interfaces.IFacturacion;
 import src.Constantes;
 
@@ -340,7 +339,7 @@ public class FacturacionDAO implements IFacturacion {
     @Override
     public Object MostrarTodoEnCaja(Object object) {
         String QuerySQL = "SELECT a.idFacturacion, a.fecha, a.formaPago,  a.Consecutivo ,a.idConcepto, b.Descripcion, b.NaturalezaDinero, a.idTercero, c.Nombre, if(b.NaturalezaDinero = 1, a.total * 1, a.total*-1) as Totales\n"
-                + "FROM farodb.facturacion as a\n"
+                + "FROM facturacion as a\n"
                 + "inner join conceptos as b on  b.idConceptos = a.idConcepto\n"
                 + "inner join terceros as c on c.idTerceros = a.idTercero\n"
                 + "where b.NaturalezaDinero <> 0 and Fecha = ?";
@@ -348,7 +347,7 @@ public class FacturacionDAO implements IFacturacion {
         ArrayList<Object> Respuesta = new ArrayList<>();
         try (Connection connection = Conexion.conectar();
                 PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
-                preparedStatement.setString(1, String.valueOf(object));
+            preparedStatement.setString(1, String.valueOf(object));
 
             resultSet = preparedStatement.executeQuery();
 
@@ -378,7 +377,34 @@ public class FacturacionDAO implements IFacturacion {
 
     @Override
     public Object MostrarResumenEnCaja(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String QuerySQL = "SELECT b.Descripcion, sum( if(b.NaturalezaDinero = 1, a.total * 1, a.total*-1)) as Totales\n"
+                + "FROM facturacion as a\n"
+                + "inner join conceptos as b on  b.idConceptos = a.idConcepto\n"
+                + "inner join terceros as c on c.idTerceros = a.idTercero\n"
+                + "where b.NaturalezaDinero <> 0 and Fecha = ?\n"
+                + "group by b.Descripcion ";
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar();
+                PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+            preparedStatement.setString(1, String.valueOf(object));
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                TMPResumenCaja caja = new TMPResumenCaja();
+                caja.setConceptos(resultSet.getString("Descripcion"));
+                caja.setTotales(resultSet.getDouble("Totales"));
+                Respuesta.add(caja);
+            }
+            resultSet.close();
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturacionDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + FacturacionDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
     }
 
 }

@@ -13,6 +13,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.Entidades.Terceros;
+import vista.IntFacturacion;
 import vista.frmInicio;
 import vista.intTerceros;
 
@@ -20,7 +21,10 @@ import vista.intTerceros;
  *
  * @author hypadilla
  */
-public class ConsultarTerceros extends javax.swing.JInternalFrame {
+public final class ConsultarTerceros extends javax.swing.JInternalFrame {
+
+    int Interfaz;
+    IntFacturacion facturacion;
 
     /**
      * Creates new form ConsultarTerceros
@@ -45,6 +49,32 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
                 LlenarTabla(txtFiltro.getText());
             }
         });
+        Interfaz = 0;
+    }
+
+    public ConsultarTerceros(String text, IntFacturacion aThis) {
+        initComponents();
+        LlenarTabla("");
+        txtFiltro.setText(text);
+        this.facturacion = aThis;
+        txtFiltro.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                LlenarTabla(txtFiltro.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                LlenarTabla(txtFiltro.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                LlenarTabla(txtFiltro.getText());
+            }
+        });
+        Interfaz = 1;
     }
 
     void LlenarTabla(String Consulta) {
@@ -64,10 +94,9 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
 
         ControladorTerceros controladorTerceros = new ControladorTerceros();
         ArrayList<Object> terceros = controladorTerceros.MostrarTodos(Consulta);
-        for (Object item : terceros) {
-            Terceros tercero = (Terceros) item;
+        terceros.stream().map((item) -> (Terceros) item).forEach((tercero) -> {
             tableModel.addRow(new Object[]{tercero.getIdTerceros(), tercero.getTipoTercero(), tercero.getDocumento(), tercero.getNombre(), tercero.getDireccion(), tercero.getCorreo(), tercero.getTelefono()});
-        }
+        });
     }
 
     /**
@@ -149,9 +178,19 @@ public class ConsultarTerceros extends javax.swing.JInternalFrame {
             int column = tblConsulta.columnAtPoint(point);
             TableModel model = tblConsulta.getModel();
 
-            intTerceros t = new intTerceros(Integer.parseInt(model.getValueAt(row, 0).toString()));
-            frmInicio.jdpEscritorio.add(t);
-            t.show();
+            switch (Interfaz) {
+                case 0:
+                    intTerceros t = new intTerceros(Integer.parseInt(model.getValueAt(row, 0).toString()));
+                    frmInicio.jdpEscritorio.add(t);
+                    t.show();
+                    break;
+                case 1:
+                    facturacion.txtIdTercero.setText(model.getValueAt(row, 1).toString());
+                    facturacion.txtIdTercero.requestFocus();
+                    facturacion.txtCodigoProducto.requestFocus();
+                    break;
+            }
+
             dispose();
             //JOptionPane.showMessageDialog(this, );
         }

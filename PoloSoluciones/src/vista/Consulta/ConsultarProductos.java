@@ -13,6 +13,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.Entidades.Productos;
+import vista.IntFacturacion;
 import vista.IntProductos;
 import vista.frmInicio;
 
@@ -20,7 +21,10 @@ import vista.frmInicio;
  *
  * @author hypadilla
  */
-public class ConsultarProductos extends javax.swing.JInternalFrame {
+public final class ConsultarProductos extends javax.swing.JInternalFrame {
+
+    int Interfaz;
+    IntFacturacion facturacion;
 
     /**
      * Creates new form ConsultarTerceros
@@ -32,7 +36,7 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-               LlenarTabla(txtFiltro.getText());
+                LlenarTabla(txtFiltro.getText());
             }
 
             @Override
@@ -45,6 +49,32 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
                 LlenarTabla(txtFiltro.getText());
             }
         });
+        Interfaz = 0;
+    }
+
+    public ConsultarProductos(String Codigo, IntFacturacion facturacion) {
+        initComponents();
+        LlenarTabla("");
+        txtFiltro.setText(Codigo);
+        this.facturacion = facturacion;
+        txtFiltro.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                LlenarTabla(txtFiltro.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                LlenarTabla(txtFiltro.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                LlenarTabla(txtFiltro.getText());
+            }
+        });
+        Interfaz = 1;
     }
 
     void LlenarTabla(String Consulta) {
@@ -65,22 +95,9 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
         ControladorProductos controladorProductos = new ControladorProductos();
         ArrayList<Object> productos = controladorProductos.MostrarTodos(Consulta);
         for (Object item : productos) {
-            Productos producto = (Productos) item;            
-            tableModel.addRow(new Object[]{producto.getId(), producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getCantidad(), (producto.getVentaNeto()*(1+(producto.getPorcVentaIva()/100)))});
-        }
-        
-        /*
-        
-        String col[] = {"CODIGO", "REFERENCIA", "DESCRIPCION", "VR VENTA", "CANT"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-        tblConsulta.setModel(tableModel);
-        ControladorProductos controladorProductos = new ControladorProductos();
-        ArrayList<Object> productos = controladorProductos.MostrarTodos(Consulta);
-        for (Object item : productos) {
             Productos producto = (Productos) item;
-            tableModel.addRow(new Object[]{producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getVentaIva()+producto.getVentaNeto(), 0});
+            tableModel.addRow(new Object[]{producto.getId(), producto.getCodigo(), producto.getReferencia(), producto.getDescripcion(), producto.getCantidad(), (producto.getVentaNeto() * (1 + (producto.getPorcVentaIva() / 100)))});
         }
-        */
     }
 
     /**
@@ -160,23 +177,32 @@ public class ConsultarProductos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-            
+
     private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFiltroActionPerformed
 
     private void tblConsultaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultaMousePressed
-      if (evt.getClickCount() > 1) {
+        if (evt.getClickCount() > 1) {
             Point point = evt.getPoint();
             int row = tblConsulta.rowAtPoint(point);
             int column = tblConsulta.columnAtPoint(point);
             TableModel model = tblConsulta.getModel();
 
-            IntProductos t = new IntProductos(Integer.parseInt(model.getValueAt(row, 0).toString()));
-            frmInicio.jdpEscritorio.add(t);
-            t.show();
+            switch (Interfaz) {
+                case 0:
+                    IntProductos t = new IntProductos(Integer.parseInt(model.getValueAt(row, 0).toString()));
+                    frmInicio.jdpEscritorio.add(t);
+                    t.show();
+                    break;
+                case 1:
+                    facturacion.txtCodigoProducto.setText(model.getValueAt(row, 1).toString());
+                    facturacion.txtCodigoProducto.requestFocus();
+                    facturacion.txtCantidad.setText("1");
+                    facturacion.txtCantidad.requestFocus();
+                    break;
+            }
             dispose();
-            //JOptionPane.showMessageDialog(this, );
         }
     }//GEN-LAST:event_tblConsultaMousePressed
 

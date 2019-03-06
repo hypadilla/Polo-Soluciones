@@ -9,6 +9,7 @@ import controlador.ControladorConceptos;
 import controlador.ControladorFacturacion;
 import controlador.ControladorProductos;
 import controlador.ControladorTerceros;
+import java.awt.Point;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import modelo.Entidades.Facturacion;
 import modelo.Entidades.Productos;
 import modelo.Entidades.Terceros;
 import src.Sesion;
+import vista.Consulta.ConsultarProductos;
+import vista.Consulta.ConsultarTerceros;
 
 /**
  *
@@ -32,7 +35,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     Date date;
     DateFormat dateFormat;
     ArrayList<Conceptos> conceptos;
-    ArrayList<DetalleFacturacion>DetalleFactura;
+    ArrayList<DetalleFacturacion> DetalleFactura;
     DefaultTableModel tableModel;
 
     /**
@@ -116,7 +119,6 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         txtCodigoProducto = new javax.swing.JTextField();
         txtProducto = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         txtVrVenta = new javax.swing.JTextField();
@@ -159,6 +161,9 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
         txtIdTercero.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtIdTercero.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtIdTerceroFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtIdTerceroFocusLost(evt);
             }
@@ -193,6 +198,16 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -259,6 +274,9 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
         txtCodigoProducto.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtCodigoProducto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodigoProductoFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCodigoProductoFocusLost(evt);
             }
@@ -270,9 +288,6 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel7.setText("PRODUCTO");
 
-        jCheckBox1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        jCheckBox1.setText("LECTOR CODIGO BARRA");
-
         jButton1.setText("AGREGAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,10 +296,13 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         });
 
         jLabel13.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        jLabel13.setText("VR VENTA");
+        jLabel13.setText("VALOR");
 
         txtVrVenta.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtVrVenta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtVrVentaFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtVrVentaFocusLost(evt);
             }
@@ -292,6 +310,9 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
         txtCantidad.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCantidadFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCantidadFocusLost(evt);
             }
@@ -376,10 +397,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox1))
+                            .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
@@ -437,9 +455,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1))
+                .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -480,7 +496,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtGuardar)
                         .addComponent(txtEliminar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -498,7 +514,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         facturacion.setSubTotal(Double.parseDouble(txtSubtotal.getText()));
         facturacion.setIVA(Double.parseDouble(txtIva.getText()));
         facturacion.setTotal(Double.parseDouble(txtTotal.getText()));
-        
+
         ArrayList<Object> Parametros = new ArrayList<>();
         Parametros.add(facturacion);
         Parametros.add(DetalleFactura);
@@ -560,7 +576,16 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                     "Consultar");
 
             if (seleccion != -1) {
-                System.out.println("seleccionada opcion " + (seleccion + 1));
+                switch (seleccion) {
+                    case 0:
+
+                        break;
+                    case 1:
+                        ConsultarTerceros consultarTerceros = new ConsultarTerceros(txtIdTercero.getText(), this);
+                        frmInicio.jdpEscritorio.add(consultarTerceros);
+                        consultarTerceros.show();
+                        break;
+                }
             }
         }
     }//GEN-LAST:event_txtIdTerceroFocusLost
@@ -574,6 +599,9 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCantidadFocusLost
 
     private void txtCodigoProductoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoProductoFocusLost
+        if (txtCodigoProducto.getText().equals("")) {
+            return;
+        }
         Productos producto;
         ArrayList<String> Filtro = new ArrayList<>();
         Filtro.add("Codigo");
@@ -601,7 +629,13 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                     "Consultar");
 
             if (seleccion != -1) {
-                System.out.println("seleccionada opcion " + (seleccion + 1));
+                switch (seleccion) {
+                    case 0:
+                        ConsultarProductos consultarProductos = new ConsultarProductos(txtCodigoProducto.getText(), this);
+                        frmInicio.jdpEscritorio.add(consultarProductos);
+                        consultarProductos.show();
+                        break;
+                }
             }
         }
     }//GEN-LAST:event_txtCodigoProductoFocusLost
@@ -622,32 +656,83 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "La cantidad no puede estar vacía.");
             return;
         }
-        
-        DetalleFacturacion detalleFacturacion = new DetalleFacturacion(0, 0, Integer.parseInt(txtCodigoProducto.getToolTipText()),Double.parseDouble(txtCantidad.getText()),Double.parseDouble(txtVrVenta.getText()),19,0);
+
+        DetalleFacturacion detalleFacturacion = new DetalleFacturacion(0, 0, Integer.parseInt(txtCodigoProducto.getToolTipText()), Double.parseDouble(txtCantidad.getText()), Double.parseDouble(txtVrVenta.getText()), 19, 0);
         DetalleFactura.add(detalleFacturacion);
-        tableModel.addRow(new Object[]  {Integer.parseInt(txtCodigoProducto.getToolTipText()), txtCodigoProducto.getText(), txtProducto.getText(), Double.parseDouble(txtVrVenta.getText()), 0, 19, (Double.parseDouble(txtVrVenta.getText()) * 1.19), Double.parseDouble(txtCantidad.getText()), Double.parseDouble(txtCantidad.getText()) * (Double.parseDouble(txtVrVenta.getText()) * 1.19)});
+        tableModel.addRow(new Object[]{Integer.parseInt(txtCodigoProducto.getToolTipText()), txtCodigoProducto.getText(), txtProducto.getText(), Double.parseDouble(txtVrVenta.getText()), 0, 19, (Double.parseDouble(txtVrVenta.getText()) * 1.19), Double.parseDouble(txtCantidad.getText()), Double.parseDouble(txtCantidad.getText()) * (Double.parseDouble(txtVrVenta.getText()) * 1.19)});
         CalcularTotales();
+        LimpiarProducto();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    void CalcularTotales(){
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        int code = evt.getKeyCode();
+        if (code == evt.VK_DELETE) {
+            DefaultTableModel miTableModel = (DefaultTableModel) jTable1.getModel();
+            int indFil = jTable1.getSelectedRow();
+            if (indFil >= 0) {
+                miTableModel.removeRow(indFil);
+                DetalleFactura.remove(indFil);
+                CalcularTotales();
+            }
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        if (evt.getClickCount() > 1) {
+            Point point = evt.getPoint();
+            int row = jTable1.rowAtPoint(point);
+            int column = jTable1.columnAtPoint(point);
+            TableModel model = jTable1.getModel();
+
+            txtCodigoProducto.setToolTipText(String.valueOf(model.getValueAt(row, 0)));
+            txtCodigoProducto.setText(String.valueOf(model.getValueAt(row, 1)));
+            txtProducto.setText(String.valueOf(model.getValueAt(row, 2)));
+            txtVrVenta.setText(String.valueOf(model.getValueAt(row, 3)));
+            txtCantidad.setText(String.valueOf(model.getValueAt(row, 7)));
+        }
+    }//GEN-LAST:event_jTable1MousePressed
+
+    private void txtCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusGained
+        src.JTextField.SeleccionarTexto(evt);
+    }//GEN-LAST:event_txtCantidadFocusGained
+
+    private void txtCodigoProductoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoProductoFocusGained
+        src.JTextField.SeleccionarTexto(evt);
+    }//GEN-LAST:event_txtCodigoProductoFocusGained
+
+    private void txtVrVentaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtVrVentaFocusGained
+        src.JTextField.SeleccionarTexto(evt);
+    }//GEN-LAST:event_txtVrVentaFocusGained
+
+    private void txtIdTerceroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdTerceroFocusGained
+        src.JTextField.SeleccionarTexto(evt);
+    }//GEN-LAST:event_txtIdTerceroFocusGained
+
+    void LimpiarProducto() {
+        txtCodigoProducto.setToolTipText("");
+        txtCodigoProducto.setText("");
+        txtProducto.setText("");
+        txtVrVenta.setText("");
+        txtCantidad.setText("");
+    }
+
+    void CalcularTotales() {
         double SubTotales = 0;
         double IVA = 0;
         double Total = 0;
         for (DetalleFacturacion detalleFacturacion : DetalleFactura) {
             SubTotales += (detalleFacturacion.getVrProducto() * detalleFacturacion.getCantidad());
-            IVA += (detalleFacturacion.getVrProducto() * (detalleFacturacion.getVrIVA()) /100 * detalleFacturacion.getCantidad());
+            IVA += (detalleFacturacion.getVrProducto() * (detalleFacturacion.getVrIVA()) / 100 * detalleFacturacion.getCantidad());
             Total += (SubTotales + IVA);
         }
         txtSubtotal.setText(String.valueOf(SubTotales));
         txtIva.setText(String.valueOf(IVA));
         txtTotal.setText(String.valueOf(Total));
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbConceptos;
     private javax.swing.JComboBox<String> cbFormaPago;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -666,8 +751,8 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtAreaObservacion;
-    private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCodigoProducto;
+    public javax.swing.JTextField txtCantidad;
+    public javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtConceptos;
     private javax.swing.JTextField txtConsecutivo;
     private javax.swing.JTextField txtDescuento;
@@ -675,7 +760,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton txtEliminar;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JButton txtGuardar;
-    private javax.swing.JTextField txtIdTercero;
+    public javax.swing.JTextField txtIdTercero;
     private javax.swing.JTextField txtIva;
     private javax.swing.JButton txtLimpiar;
     private javax.swing.JTextField txtPrefijoConsecutivo;

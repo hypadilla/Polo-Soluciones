@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import modelo.Entidades.TMPDetalleCuadreCaja;
+import modelo.Entidades.TMPResumenCaja;
 
 /**
  *
@@ -24,7 +25,7 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
      */
     Date date;
     DateFormat dateFormat;
-    
+
     public CuadreCaja() {
         initComponents();
         date = new Date();
@@ -32,16 +33,16 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
         txtFecha.setText(dateFormat.format(date));
         LlenarTablas(txtFecha.getText());
     }
-    
-    void LlenarTablas(String d){
-        String col[] = {"idFactura", "CONCEPTO", "TERCERO", "N° DOCUMENTO", "VALOR"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0) {
+
+    void LlenarTablas(String d) {
+        String colDetalle[] = {"idFactura", "CONCEPTO", "TERCERO", "N° DOCUMENTO", "VALOR"};
+        DefaultTableModel tableModelDetalle = new DefaultTableModel(colDetalle, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
                 return false;
             }
         };
-        tblDetalle.setModel(tableModel);
+        tblDetalle.setModel(tableModelDetalle);
 
         tblDetalle.getColumnModel().getColumn(0).setMaxWidth(0);
         tblDetalle.getColumnModel().getColumn(0).setMinWidth(0);
@@ -49,10 +50,32 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
         tblDetalle.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 
         ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
+
         ArrayList<Object> detalles = (ArrayList<Object>) controladorFacturacion.MostrarTodoEnCaja(d);
-        detalles.stream().map((item) -> (TMPDetalleCuadreCaja) item).forEach((caja) -> {
-            tableModel.addRow(new Object[]{caja.getIdFactura(),caja.getDescripcion(), caja.getNombre(), caja.getConsecutivo() ,caja.getTotales()});
-        });
+
+        int i = 0;
+        i = detalles.stream().map((detalle) -> (TMPDetalleCuadreCaja) detalle).map((caja) -> {
+            tableModelDetalle.addRow(new Object[]{caja.getIdFactura(), caja.getDescripcion(), caja.getNombre(), caja.getConsecutivo(), caja.getTotales()});
+            return caja;
+        }).map((_item) -> 1).reduce(i, Integer::sum);
+        txtCantidadRegistros.setText(String.valueOf(i));
+
+        String colResumen[] = {"CONCEPTO", "VALOR"};
+        DefaultTableModel tableModelResumen = new DefaultTableModel(colResumen, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+        tblResumen.setModel(tableModelResumen);
+        double SaldoCaja = 0;
+        ArrayList<Object> resumenes = (ArrayList<Object>) controladorFacturacion.MostrarResumenEnCaja(d);
+        SaldoCaja = resumenes.stream().map((resumene) -> (TMPResumenCaja) resumene).map((caja) -> {
+            tableModelResumen.addRow(new Object[]{caja.getConceptos(), caja.getTotales()});
+            return caja;
+        }).map((caja) -> caja.getTotales()).reduce(SaldoCaja, (accumulator, _item) -> accumulator + _item);
+
+        txtTotalCaja.setText(String.valueOf(SaldoCaja));
     }
 
     /**
@@ -70,12 +93,12 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
         tblDetalle = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTotalCaja = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCantidadRegistros = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblResumen = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         txtFecha = new javax.swing.JTextField();
 
@@ -87,6 +110,11 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
 
         jButton1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jButton1.setText("BUSCAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,19 +132,18 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel3.setText("SALDO EN CAJA");
 
-        jTextField1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        jTextField1.setText("jTextField1");
+        txtTotalCaja.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        txtTotalCaja.setText("jTextField1");
 
         jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel4.setText("Nº DOCUMENTOS");
 
-        jTextField2.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        jTextField2.setText("jTextField1");
+        txtCantidadRegistros.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel5.setText("RESUMEN DE MOVIMIENTOS");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblResumen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -124,12 +151,10 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
                 "CONCEPTO", "VALOR"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblResumen);
 
         jButton2.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jButton2.setText("REFRESCAR");
-
-        txtFecha.setText("jTextField3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,14 +178,14 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(340, 340, 340))
+                        .addComponent(txtCantidadRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(333, 333, 333))
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTotalCaja, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -180,7 +205,7 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCantidadRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -188,12 +213,16 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(txtTotalCaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LlenarTablas(txtFecha.getText());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -206,10 +235,10 @@ public final class CuadreCaja extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblDetalle;
+    private javax.swing.JTable tblResumen;
+    private javax.swing.JTextField txtCantidadRegistros;
     private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtTotalCaja;
     // End of variables declaration//GEN-END:variables
 }
