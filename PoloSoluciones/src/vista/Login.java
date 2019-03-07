@@ -3,12 +3,17 @@ package vista;
 import controlador.ControladorUsuario;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Usuarios;
+import reporte.ReporteProductos;
 import src.Sesion;
 
 /*
@@ -243,7 +248,15 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    System.exit(0);        // TODO add your handling code here:
+    ReporteProductos reporteProductos = new ReporteProductos();
+        try {
+            reporteProductos.crearPdf("reporteProductos.Pdf");
+            //System.exit(0);        // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

@@ -116,4 +116,9 @@ public class ControladorProductos implements IProductos {
         return var.Existe(object);
     }
 
+    @Override
+    public ArrayList<Object> MostrarTodosReportes() {
+        return var.MostrarTodosReportes();
+    }
+
 }

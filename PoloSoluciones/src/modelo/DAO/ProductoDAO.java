@@ -213,4 +213,35 @@ public class ProductoDAO implements IProductos {
         return Respuesta;
     }
 
+    @Override
+    public ArrayList<Object> MostrarTodosReportes() {
+        String QuerySQL = "Select Codigo, Referencia, Descripcion, CostoNeto, VentaNeto, CostoIva, VentaUtilidad, Cantidad from " +Constantes.TABLAPRODUCTOS;
+        ResultSet resultSet;
+        ArrayList<Object> Respuesta = new ArrayList<>();
+        try (Connection connection = Conexion.conectar(); PreparedStatement preparedStatement = connection.prepareStatement(QuerySQL)) {
+           
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Productos productos = new Productos();               
+                productos.setCodigo(resultSet.getString("Codigo"));
+                productos.setReferencia(resultSet.getString("Referencia"));
+                productos.setDescripcion(resultSet.getString("Descripcion"));  
+                productos.setCostoNeto(resultSet.getDouble("CostoNeto"));
+                productos.setVentaNeto(resultSet.getDouble("VentaNeto"));
+                productos.setPorcCostoIva(resultSet.getDouble("CostoIVA"));
+                productos.setVentaUtilidad(resultSet.getDouble("VentaUtilidad"));
+                productos.setCantidad(resultSet.getDouble("Cantidad"));
+                Respuesta.add(productos);
+            }
+            resultSet.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TerceroDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al consultar en " + TerceroDAO.class.getName() + " Método Mostrar(object)");
+        }
+        return Respuesta;
+    }
+
 }
