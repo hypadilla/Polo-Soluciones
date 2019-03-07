@@ -5,10 +5,12 @@
  */
 package modelo.Interfaces;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author hypadilla
  */
 public interface IProductos extends ICrud{
-    
+    public ArrayList<Object> MostrarTodosReportes();
 }
