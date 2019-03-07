@@ -126,6 +126,9 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         txtAreaObservacion = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        txtGuardar1 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        cbFormaPago1 = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -258,6 +261,11 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
         txtEliminar.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         txtEliminar.setText("ANULAR");
+        txtEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEliminarActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel8.setText("FORMA DE PAGO");
@@ -326,6 +334,20 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         jLabel15.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel15.setText("OBSERVACIÓN");
 
+        txtGuardar1.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        txtGuardar1.setText("PENDIENTE");
+        txtGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGuardar1ActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        jLabel16.setText("MESA");
+
+        cbFormaPago1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        cbFormaPago1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "CRÉDITO" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -348,13 +370,6 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel5)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEliminar)
-                        .addGap(9, 9, 9)
-                        .addComponent(txtGuardar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -389,15 +404,13 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel14)
-                                .addGap(0, 28, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtCantidad))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addComponent(txtAreaObservacion)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
@@ -410,12 +423,33 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
                                     .addComponent(txtIva, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel15))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(31, 31, 31)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel12)
+                                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtLimpiar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtEliminar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtGuardar1))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel16)
+                                            .addComponent(cbFormaPago1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtGuardar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -451,11 +485,17 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jLabel6)
                 .addGap(5, 5, 5)
-                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbFormaPago1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -495,8 +535,9 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
                     .addComponent(txtLimpiar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtGuardar)
-                        .addComponent(txtEliminar)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(txtEliminar)
+                        .addComponent(txtGuardar1)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -505,7 +546,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
     private void txtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGuardarActionPerformed
         Facturacion facturacion = new Facturacion();
-        facturacion.setIdConceptos(Integer.parseInt(txtConceptos.getText()));
+        facturacion.setIdConceptos(Integer.parseInt(txtConceptos.getToolTipText()));
         facturacion.setIdTerceros(Integer.parseInt(txtIdTercero.getToolTipText()));
         facturacion.setIdUsuarios(Sesion.usuarios.getId());
         facturacion.setFecha(txtFecha.getText());
@@ -514,6 +555,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         facturacion.setSubTotal(Double.parseDouble(txtSubtotal.getText()));
         facturacion.setIVA(Double.parseDouble(txtIva.getText()));
         facturacion.setTotal(Double.parseDouble(txtTotal.getText()));
+        facturacion.setEstado(0);//0 Pagado
 
         ArrayList<Object> Parametros = new ArrayList<>();
         Parametros.add(facturacion);
@@ -529,6 +571,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         if (object[0] == "Boolean") {
             if (((boolean) object[1])) {
                 JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                Limpiar();
             } else {
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }
@@ -537,6 +580,11 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
     void Limpiar() {
         txtFecha.setText(dateFormat.format(date));
+        txtPrefijoConsecutivo.setText("");
+        txtConsecutivo.setText("0");
+        txtIdTercero.setText("");
+        txtIdTercero.setToolTipText("");
+        txtTercero.setText("");
     }
 
     private void txtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIvaActionPerformed
@@ -545,12 +593,16 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
 
     private void cbConceptosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbConceptosItemStateChanged
         txtConceptos.setText(conceptos.get(cbConceptos.getSelectedIndex()).getCodigo());
+        txtConceptos.setToolTipText(String.valueOf(conceptos.get(cbConceptos.getSelectedIndex()).getId()));
         txtPrefijoConsecutivo.setText(conceptos.get(cbConceptos.getSelectedIndex()).getPrefijo());
         txtConsecutivo.setText("");
         txtConsecutivo.setEditable(!conceptos.get(cbConceptos.getSelectedIndex()).isManejaConsecutivo());
     }//GEN-LAST:event_cbConceptosItemStateChanged
 
     private void txtIdTerceroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdTerceroFocusLost
+        if (txtIdTercero.getText().equals("")) {
+            return;
+        }
         Terceros tercero;
         ArrayList<String> Filtro = new ArrayList<>();
         Filtro.add("Documento");
@@ -578,7 +630,9 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
             if (seleccion != -1) {
                 switch (seleccion) {
                     case 0:
-
+                        intTerceros terceros = new intTerceros(txtIdTercero.getText(), this);
+                        frmInicio.jdpEscritorio.add(terceros);
+                        terceros.show();
                         break;
                     case 1:
                         ConsultarTerceros consultarTerceros = new ConsultarTerceros(txtIdTercero.getText(), this);
@@ -641,7 +695,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodigoProductoFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+
         if (txtCodigoProducto.getText().equals("")) {
             txtCodigoProducto.requestFocus();
             JOptionPane.showMessageDialog(this, "No hay un producto seleccionado.");
@@ -709,6 +763,44 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
         src.JTextField.SeleccionarTexto(evt);
     }//GEN-LAST:event_txtIdTerceroFocusGained
 
+    private void txtGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGuardar1ActionPerformed
+        Facturacion facturacion = new Facturacion();
+        facturacion.setIdConceptos(Integer.parseInt(txtConceptos.getToolTipText()));
+        facturacion.setIdTerceros(Integer.parseInt(txtIdTercero.getToolTipText()));
+        facturacion.setIdUsuarios(Sesion.usuarios.getId());
+        facturacion.setFecha(txtFecha.getText());
+        facturacion.setObservacion(txtAreaObservacion.getText());
+        facturacion.setFormaPago(cbFormaPago.getSelectedItem().toString());
+        facturacion.setSubTotal(Double.parseDouble(txtSubtotal.getText()));
+        facturacion.setIVA(Double.parseDouble(txtIva.getText()));
+        facturacion.setTotal(Double.parseDouble(txtTotal.getText()));
+        facturacion.setEstado(1);//1 pENDIENTE
+
+        ArrayList<Object> Parametros = new ArrayList<>();
+        Parametros.add(facturacion);
+        Parametros.add(DetalleFactura);
+
+        ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
+        Object[] object = (Object[]) controladorFacturacion.Insertar(Parametros);
+
+        if (object[0] == "String") {
+            JOptionPane.showMessageDialog(this, object[1]);
+            return;
+        }
+        if (object[0] == "Boolean") {
+            if (((boolean) object[1])) {
+                JOptionPane.showMessageDialog(this, "Almacenado Exitosamente");
+                Limpiar();
+            } else {
+                JOptionPane.showMessageDialog(this, "Registro Fallido");
+            }
+        }
+    }//GEN-LAST:event_txtGuardar1ActionPerformed
+
+    private void txtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEliminarActionPerformed
+
     void LimpiarProducto() {
         txtCodigoProducto.setToolTipText("");
         txtCodigoProducto.setText("");
@@ -733,6 +825,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbConceptos;
     private javax.swing.JComboBox<String> cbFormaPago;
+    private javax.swing.JComboBox<String> cbFormaPago1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -741,6 +834,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -761,6 +855,7 @@ public final class IntFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton txtEliminar;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JButton txtGuardar;
+    private javax.swing.JButton txtGuardar1;
     public javax.swing.JTextField txtIdTercero;
     private javax.swing.JTextField txtIva;
     private javax.swing.JButton txtLimpiar;

@@ -8,6 +8,8 @@ package vista;
 import controlador.ControladorConceptos;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import modelo.Entidades.Conceptos;
 import vista.Consulta.ConsultarConceptos;
 import static vista.frmInicio.jdpEscritorio;
@@ -30,6 +32,7 @@ public class IntConceptos extends javax.swing.JInternalFrame {
 
     public IntConceptos(int id) {
         initComponents();
+
         this.id = id;
         txtCodigo.setEnabled(false);
         ArrayList<String> Filtro = new ArrayList();
@@ -138,7 +141,6 @@ public class IntConceptos extends javax.swing.JInternalFrame {
 
         gbxNaturalezaDinero.add(rbCredito);
         rbCredito.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
-        rbCredito.setSelected(true);
         rbCredito.setText("CRÉDITO");
 
         gbxNaturalezaDinero.add(rbDebito);
@@ -147,6 +149,13 @@ public class IntConceptos extends javax.swing.JInternalFrame {
 
         checkManejaConsecutivo.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         checkManejaConsecutivo.setText("¿MANEJA CONSECUTIVO?");
+
+        txtUltConsecutivo.setText("0");
+        txtUltConsecutivo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUltConsecutivoFocusLost(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel3.setText("ÚLTIMO CONSECUTIVO");
@@ -187,6 +196,7 @@ public class IntConceptos extends javax.swing.JInternalFrame {
 
         gbxNaturalezaDinero.add(rbNingunDinero);
         rbNingunDinero.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
+        rbNingunDinero.setSelected(true);
         rbNingunDinero.setText("NINGUNA");
 
         jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
@@ -199,6 +209,7 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         rbSalida.setText("SALIDA");
 
         gbxNaturalezaInventario.add(rbNingunInventario);
+        rbNingunInventario.setSelected(true);
         rbNingunInventario.setText("NINGUNA");
 
         jLabel8.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
@@ -419,6 +430,12 @@ private void Limpiar() {
         jdpEscritorio.add(var);
         var.setVisible(true);      // TODO add your handling code here:
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void txtUltConsecutivoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUltConsecutivoFocusLost
+        if (txtUltConsecutivo.getText().equals("")) {
+            txtUltConsecutivo.setText("0");
+        }
+    }//GEN-LAST:event_txtUltConsecutivoFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

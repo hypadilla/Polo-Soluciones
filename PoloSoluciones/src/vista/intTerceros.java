@@ -18,6 +18,8 @@ import modelo.Entidades.Terceros;
 public class intTerceros extends javax.swing.JInternalFrame {
 
     int id;
+    int Interfaz;
+    IntFacturacion facturacion;
 
     /**
      * Creates new form intTerceros
@@ -25,7 +27,7 @@ public class intTerceros extends javax.swing.JInternalFrame {
     public intTerceros() {
         initComponents();
         id = 0;
-        
+        Interfaz = 0;
     }
 
     public intTerceros(int id) {
@@ -48,6 +50,14 @@ public class intTerceros extends javax.swing.JInternalFrame {
         this.setTitle("ACTUALIZANDO TERCERO");
         btnGuardar.setText("ACTUALIZAR");
         btnLimpiar.setText("NUEVO");
+        Interfaz = 0;
+    }
+
+    intTerceros(String text, IntFacturacion aThis) {
+        initComponents();
+        txtDocumento.setText(text);
+        Interfaz = 1;
+        facturacion = aThis;
     }
 
     void Limpiar() {
@@ -279,7 +289,15 @@ public class intTerceros extends javax.swing.JInternalFrame {
                 return;
             }
             if (((boolean) object[1])) {
-                JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                if (Interfaz == 0) {
+                    JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                }else{
+                    
+                    facturacion.txtIdTercero.setText(var.getDocumento());
+                    facturacion.txtIdTercero.requestFocus();
+                    facturacion.txtCodigoProducto.requestFocus();
+                    dispose();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Registro Fallido");
             }

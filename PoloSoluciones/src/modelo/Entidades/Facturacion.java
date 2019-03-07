@@ -12,23 +12,24 @@ package modelo.Entidades;
  * @author hypadilla
  */
 public class Facturacion {
-    int id;
-    int idConceptos;
-    int idTerceros;
-    int idUsuarios;
-    String Fecha;
-    int Consecutivo;
-    String Observacion;
-    double SubTotal;
-    double IVA;
-    double Descuento;
-    String FormaPago;
-    double Total;
+    private int id;
+    private int idConceptos;
+    private int idTerceros;
+    private int idUsuarios;
+    private String Fecha;
+    private int Consecutivo;
+    private String Observacion;
+    private double SubTotal;
+    private double IVA;
+    private double Descuento;
+    private String FormaPago;
+    private double Total;
+    private int Estado;
 
     public Facturacion() {
     }
 
-    public Facturacion(int id, int idConceptos, int idTerceros, int idUsuarios, String Fecha, int Consecutivo, String Observacion, double SubTotal, double IVA, double Descuento, String FormaPago, double Total) {
+    public Facturacion(int id, int idConceptos, int idTerceros, int idUsuarios, String Fecha, int Consecutivo, String Observacion, double SubTotal, double IVA, double Descuento, String FormaPago, double Total, int Estado) {
         this.id = id;
         this.idConceptos = idConceptos;
         this.idTerceros = idTerceros;
@@ -41,6 +42,15 @@ public class Facturacion {
         this.Descuento = Descuento;
         this.FormaPago = FormaPago;
         this.Total = Total;
+        this.Estado = Estado;
+    }
+
+    public int getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(int Estado) {
+        this.Estado = Estado;
     }
 
     public int getId() {
@@ -138,6 +148,5 @@ public class Facturacion {
     public void setTotal(double Total) {
         this.Total = Total;
     }
-    
     
 }
