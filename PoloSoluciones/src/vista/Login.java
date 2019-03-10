@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Entidades.Usuarios;
 import reporte.ReporteProductos;
@@ -96,6 +97,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INICIAR SESIÓN");
         setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        setIconImage(new ImageIcon(getClass().getResource("/src/icono2.png")).getImage());
         setResizable(false);
         setSize(new java.awt.Dimension(445, 336));
 
@@ -270,7 +272,7 @@ public class Login extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 

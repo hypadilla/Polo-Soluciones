@@ -85,8 +85,8 @@ public class ConsultarFacturas extends javax.swing.JInternalFrame {
         tblConsulta = new javax.swing.JTable();
 
         setClosable(true);
-        setIconifiable(true);
         setTitle("Consultar Facturas");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("FILTRAR POR CÓDIGO O NOMBRE");

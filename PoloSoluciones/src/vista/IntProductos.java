@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -483,9 +484,9 @@ public class IntProductos extends javax.swing.JInternalFrame {
         );
 
         setClosable(true);
-        setIconifiable(true);
         setMaximizable(true);
         setTitle("NUEVO PRODUCTO");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         lblImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/image.png"))); // NOI18N

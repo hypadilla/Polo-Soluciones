@@ -123,9 +123,9 @@ public class IntConceptos extends javax.swing.JInternalFrame {
         btnConsultar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setTitle("NUEVO CONCEPTO");
         setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("CÓDIGO");

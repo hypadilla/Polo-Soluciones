@@ -100,8 +100,8 @@ public class IntEmpleados extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
-        setIconifiable(true);
         setTitle("NUEVO EMPLEADO");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REGISTRO DE EMPLEADOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Narrow", 1, 18))); // NOI18N
 

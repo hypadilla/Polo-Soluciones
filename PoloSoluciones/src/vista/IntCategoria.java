@@ -66,8 +66,8 @@ public class IntCategoria extends javax.swing.JInternalFrame {
         btnConsultar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setTitle("NUEVA CATEGORÍA");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {

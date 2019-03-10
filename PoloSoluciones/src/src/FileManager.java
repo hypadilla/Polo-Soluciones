@@ -5,10 +5,23 @@
  */
 package src;
 
+import java.io.File;
+
 /**
  *
  * @author cdap_
  */
 public class FileManager {
+
+    public static boolean Existe(String path) {
+        File archivo = new File(path);
+        return archivo.exists();
+    }
     
+    public static void Crear (String path){
+        if (!Existe(path)) {
+            File archivo = new File(path);
+            archivo.mkdirs();
+        }
+    }
 }

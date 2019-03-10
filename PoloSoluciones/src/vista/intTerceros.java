@@ -99,8 +99,8 @@ public class intTerceros extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setClosable(true);
-        setIconifiable(true);
         setTitle("NUEVO TERCERO");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         txtCorreo.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
@@ -259,6 +259,14 @@ public class intTerceros extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (txtDocumento.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El documento no puede estar vacío");
+            return;
+        }
+        if (txtNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
+            return;
+        }
         Terceros var = new Terceros();
         var.setIdTerceros(id);
         var.setTipoTercero(cbTipoTercero.getSelectedItem().toString());

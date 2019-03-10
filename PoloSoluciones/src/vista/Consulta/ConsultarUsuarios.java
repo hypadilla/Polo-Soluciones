@@ -98,8 +98,8 @@ public class ConsultarUsuarios extends javax.swing.JInternalFrame {
         rBtnCualquiera = new javax.swing.JRadioButton();
 
         setClosable(true);
-        setIconifiable(true);
         setTitle("Consultar Usuarios");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("FILTRAR POR CÓDIGO O NOMBRE");

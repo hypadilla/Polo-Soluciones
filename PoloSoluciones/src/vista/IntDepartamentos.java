@@ -76,8 +76,8 @@ public class IntDepartamentos extends javax.swing.JInternalFrame {
         btnConsultar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setTitle("NUEVO DEPARTAMENTO");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         jLabel1.setText("CÓDIGO");

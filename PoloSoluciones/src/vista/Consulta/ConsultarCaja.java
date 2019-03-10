@@ -28,7 +28,7 @@ public class ConsultarCaja extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         setClosable(true);
-        setIconifiable(true);
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/src/icono2.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
